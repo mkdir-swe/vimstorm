@@ -1,0 +1,86 @@
+{
+  "kind": "Island",
+  "id": "board",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "sizes": [
+          "auto",
+          {
+            "flex": 1
+          }
+        ]
+      },
+      "children": [
+        {
+          "kind": "BoardHeader",
+          "id": "board-head",
+          "props": {
+            "title": "Board",
+            "tabs": [
+              {
+                "id": "tab:mine",
+                "label": "Mine"
+              },
+              {
+                "id": "tab:team",
+                "label": "Team"
+              },
+              {
+                "id": "tab:sessions",
+                "label": "Sessions"
+              }
+            ],
+            "selected": "tab:mine",
+            "active": true,
+            "counts": []
+          }
+        },
+        {
+          "kind": "BoardColumns",
+          "id": "columns",
+          "props": {},
+          "children": [
+            {
+              "kind": "BoardColumn",
+              "id": "col:New",
+              "props": {
+                "name": "New",
+                "focused": true,
+                "empty": "Reading the board…"
+              },
+              "children": []
+            },
+            {
+              "kind": "BoardColumn",
+              "id": "col:Active",
+              "props": {
+                "name": "Active"
+              },
+              "children": []
+            },
+            {
+              "kind": "BoardColumn",
+              "id": "col:Resolved",
+              "props": {
+                "name": "Resolved"
+              },
+              "children": []
+            },
+            {
+              "kind": "BoardColumn",
+              "id": "col:Closed",
+              "props": {
+                "name": "Closed"
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

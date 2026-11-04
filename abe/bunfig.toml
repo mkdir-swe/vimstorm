@@ -1,0 +1,3 @@
+[test]
+# a serve a failed or timed-out test left running is ended when the run ends (#232)
+preload = ["./packages/testing/src/preload.ts"]

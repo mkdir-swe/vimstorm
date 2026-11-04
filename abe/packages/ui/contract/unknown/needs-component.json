@@ -1,0 +1,20 @@
+{
+  "kind": "Island",
+  "props": {},
+  "children": [
+    {
+      "kind": "Chooser",
+      "id": "chooser",
+      "props": {
+        "title": "Pick one"
+      }
+    },
+    {
+      "kind": "Empty",
+      "props": {
+        "title": "Known",
+        "line": "drawn as usual"
+      }
+    }
+  ]
+}

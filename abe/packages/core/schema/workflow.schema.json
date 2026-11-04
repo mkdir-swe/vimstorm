@@ -1,0 +1,355 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The workflow's name, as the Editor's preview and the Launch box show it."
+    },
+    "description": {
+      "description": "One line: what it is for.",
+      "type": "string"
+    },
+    "on": {
+      "description": "Which cards it is preselected for; none: offered at launch, never preselected.",
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "description": "A card type (bug), or default: a card no other workflow takes."
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "description": "Card types it takes.",
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              ]
+            },
+            "tags": {
+              "description": "Tags a card has, any of them.",
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "branch": {
+      "description": "The branch a run works on: card/<card>.",
+      "type": "string"
+    },
+    "steps": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "type": "string",
+            "minLength": 1,
+            "description": "A skill, or a built-in step: create-specification, reproduce, build, checks, review, verify, pr."
+          },
+          {
+            "type": "object",
+            "propertyNames": {
+              "type": "string",
+              "minLength": 1
+            },
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "skill": {
+                  "description": "The step's one main skill (Abe's, the repo's or yours); every other skill is there by its description. checks has none: serve runs them.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                "fresh": {
+                  "description": "true: a fresh subagent with only the card, the spec, the diff and the findings carried to it. loop: fresh on each loop back to it.",
+                  "anyOf": [
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "string",
+                      "const": "loop"
+                    }
+                  ]
+                },
+                "when": {
+                  "description": "A gate: the step runs only when it holds (check:) or its one yes/no call says yes (judge:, with what it sees: card, spec, diff); else it is skipped.",
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "check": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "An expression over the facts the steps report: > < >= <= == != and or not. Abe evaluates it, no model."
+                        }
+                      },
+                      "required": [
+                        "check"
+                      ],
+                      "additionalProperties": false,
+                      "description": "check: a fact a step reports, compared"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "judge": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "One yes/no question, ending in ?, the step's own agent answers."
+                        },
+                        "sees": {
+                          "minItems": 1,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "description": "What the agent looks at to answer: facts or evidence."
+                        }
+                      },
+                      "required": [
+                        "judge",
+                        "sees"
+                      ],
+                      "additionalProperties": false,
+                      "description": "judge: a yes/no question the step's own agent answers"
+                    }
+                  ]
+                },
+                "ends": {
+                  "type": "object",
+                  "properties": {
+                    "check": {
+                      "description": "A fact the step reports, compared: the run ends when it holds.",
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "judge": {
+                      "description": "One yes/no question, ending in ?: the run ends on yes.",
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "sees": {
+                      "description": "What the judge's call looks at.",
+                      "minItems": 1,
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "then": {
+                      "type": "string",
+                      "enum": [
+                        "report"
+                      ],
+                      "description": "report: the run ends with the step's report (its Run page)."
+                    }
+                  },
+                  "required": [
+                    "then"
+                  ],
+                  "additionalProperties": false,
+                  "description": "The run ends after this step, with its report: always, or when check: or judge: says."
+                },
+                "pin": {
+                  "description": "A Layer that pins this step: a nearer copy keeps it, in order.",
+                  "type": "string",
+                  "enum": [
+                    "yours",
+                    "repo",
+                    "built-in"
+                  ]
+                },
+                "reviewers": {
+                  "description": "Who reviews what this step makes.",
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "reports": {
+                  "description": "Facts this step reports, beside a built-in step's own.",
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "done_when": {
+                  "description": "When the step is done: exactly one of check: or judge:.",
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "check": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "An expression over the facts the steps report: > < >= <= == != and or not. Abe evaluates it, no model."
+                        }
+                      },
+                      "required": [
+                        "check"
+                      ],
+                      "additionalProperties": false,
+                      "description": "check: a fact a step reports, compared"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "judge": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "One yes/no question, ending in ?, the step's own agent answers."
+                        },
+                        "sees": {
+                          "minItems": 1,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "description": "What the agent looks at to answer: facts or evidence."
+                        }
+                      },
+                      "required": [
+                        "judge",
+                        "sees"
+                      ],
+                      "additionalProperties": false,
+                      "description": "judge: a yes/no question the step's own agent answers"
+                    }
+                  ]
+                },
+                "into": {
+                  "description": "pr only: a text fact an earlier step reports (its reports:), naming the branch its pull request goes into, like a teammate's pull request's head. The card branch starts from it once reported; nothing is pushed onto it. None: the repo's default branch.",
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false,
+              "description": "A step's options."
+            },
+            "description": "One skill with its options."
+          }
+        ]
+      },
+      "description": "The steps, in order."
+    },
+    "loops": {
+      "description": "Loops back to earlier steps.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The step it goes back from."
+          },
+          "to": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The step it goes back to: before from, or the same step."
+          },
+          "when": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "check": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "An expression over the facts the steps report: > < >= <= == != and or not. Abe evaluates it, no model."
+                  }
+                },
+                "required": [
+                  "check"
+                ],
+                "additionalProperties": false,
+                "description": "check: a fact a step reports, compared"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "judge": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "One yes/no question, ending in ?, the step's own agent answers."
+                  },
+                  "sees": {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "description": "What the agent looks at to answer: facts or evidence."
+                  }
+                },
+                "required": [
+                  "judge",
+                  "sees"
+                ],
+                "additionalProperties": false,
+                "description": "judge: a yes/no question the step's own agent answers"
+              }
+            ],
+            "description": "When it goes back: exactly one of check: or judge:."
+          },
+          "carries": {
+            "description": "What goes back: facts, or the step's evidence.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "max": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Required: how many times it may go back; past it the run stops at Needs you."
+          }
+        },
+        "required": [
+          "from",
+          "to",
+          "when",
+          "max"
+        ],
+        "additionalProperties": false,
+        "description": "A loop back to an earlier step."
+      }
+    }
+  },
+  "required": [
+    "name",
+    "steps"
+  ],
+  "additionalProperties": false,
+  "description": "An Abe workflow: steps in order and the loops back between them.",
+  "$id": "https://vimstorm.dev/abe/workflow.schema.json",
+  "title": "Abe workflow"
+}

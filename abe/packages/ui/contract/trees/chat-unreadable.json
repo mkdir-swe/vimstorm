@@ -1,0 +1,90 @@
+{
+  "kind": "Island",
+  "id": "chat",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "sizes": [
+          "auto",
+          {
+            "flex": 1
+          },
+          "auto"
+        ]
+      },
+      "children": [
+        {
+          "kind": "ChatHeader",
+          "id": "chat-header",
+          "props": {
+            "title": "Chat",
+            "env": "Local sandbox",
+            "story": {
+              "id": "#2",
+              "title": "The cart total ignores quantity"
+            },
+            "hint": "⌘⏎",
+            "rail": {
+              "segments": [
+                "done",
+                "now",
+                "todo",
+                "todo",
+                "todo"
+              ],
+              "stage": "Build",
+              "state": "running",
+              "glyph": "●",
+              "word": "Running",
+              "elapsed": "21 min"
+            }
+          }
+        },
+        {
+          "kind": "Empty",
+          "props": {
+            "title": "",
+            "line": "Transcript not readable here · ⌃⌘→ Terminal mode"
+          }
+        },
+        {
+          "kind": "Stack",
+          "id": "composer:dock",
+          "props": {
+            "direction": "column",
+            "gap": 4,
+            "pad": [
+              4,
+              12,
+              12,
+              12
+            ]
+          },
+          "children": [
+            {
+              "kind": "ChatStatus",
+              "id": "chat:status",
+              "props": {
+                "tone": "working",
+                "words": "Thinking",
+                "since": 1792806151000
+              }
+            },
+            {
+              "kind": "Composer",
+              "id": "composer:composer",
+              "props": {
+                "text": "",
+                "placeholder": "Message #2 The cart total ignores quantity…"
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

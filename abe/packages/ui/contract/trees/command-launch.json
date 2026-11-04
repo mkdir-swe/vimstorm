@@ -1,0 +1,114 @@
+{
+  "kind": "LaunchBox",
+  "id": "launch:1262",
+  "props": {
+    "title": "Launch #1262 Greeted by time of day",
+    "label": "Notes for the agent (optional)",
+    "draft": "use the existing price helper\ndon't add a dependency",
+    "placeholder": "What the agent should know, as markdown",
+    "along": [
+      "+ standing · write the test first · yours"
+    ],
+    "where": "where serve.target says",
+    "workflows": {
+      "rows": [
+        {
+          "kind": "head",
+          "text": "Repo’s"
+        },
+        {
+          "kind": "item",
+          "id": "docs-only",
+          "name": "Docs only",
+          "desc": "Docs changes; no verify, one review round.",
+          "on": "tags docs",
+          "takes": false,
+          "picked": false
+        },
+        {
+          "kind": "item",
+          "id": "quick-fix",
+          "name": "Quick fix",
+          "desc": "A bug, reproduced first; no spec, one review.",
+          "on": "type bug",
+          "takes": false,
+          "picked": false
+        },
+        {
+          "kind": "head",
+          "text": "Yours"
+        },
+        {
+          "kind": "item",
+          "id": "spike",
+          "name": "Spike",
+          "desc": "Try it; a draft PR.",
+          "on": "tags spike",
+          "takes": false,
+          "picked": false
+        },
+        {
+          "kind": "head",
+          "text": "Abe’s"
+        },
+        {
+          "kind": "item",
+          "id": "bug",
+          "name": "Bug",
+          "desc": "Reproduced first, then fixed and shown gone.",
+          "on": "type Bug",
+          "takes": false,
+          "picked": false
+        },
+        {
+          "kind": "item",
+          "id": "feature",
+          "name": "Feature",
+          "desc": "Made sure of first: specified, sliced into tickets, built, checked, reviewed, verified.",
+          "on": "default",
+          "takes": false,
+          "picked": true
+        },
+        {
+          "kind": "item",
+          "id": "investigate",
+          "name": "Investigate",
+          "desc": "A cited report on its Run page; no pull request.",
+          "on": "",
+          "takes": false,
+          "picked": false
+        }
+      ],
+      "note": "Preselected: Feature, for any card no other workflow takes. Any other runs this card too."
+    },
+    "runs": [
+      {
+        "id": "local-sandbox",
+        "label": "Local · its card worktree"
+      },
+      {
+        "id": "cloud",
+        "label": "A box · your environment"
+      }
+    ],
+    "ran": "",
+    "reach": [
+      {
+        "env": "dev",
+        "label": "✓ dev",
+        "on": true
+      },
+      {
+        "env": "test",
+        "label": "✓ test",
+        "on": true
+      },
+      {
+        "env": "prod",
+        "label": "○ prod off · on for one session only locally",
+        "on": false
+      }
+    ],
+    "hint": "⏎ Launch · ↑↓ workflow · ⌃R runs · ⌃P prod · ⇧⏎ new line · Esc"
+  }
+}

@@ -1,0 +1,258 @@
+{
+  "kind": "Island",
+  "id": "boxes",
+  "props": {},
+  "children": [
+    {
+      "kind": "Table",
+      "id": "boxes-table",
+      "props": {
+        "columns": [
+          {
+            "label": "Box",
+            "width": {
+              "fixed": 100
+            }
+          },
+          {
+            "label": "Story",
+            "width": {
+              "flex": 1
+            }
+          },
+          {
+            "label": "State",
+            "width": {
+              "fixed": 180
+            }
+          },
+          {
+            "label": "Size",
+            "width": {
+              "fixed": 72
+            }
+          },
+          {
+            "label": "Disk",
+            "width": {
+              "fixed": 76
+            }
+          },
+          {
+            "label": "Release",
+            "width": {
+              "fixed": 52
+            }
+          },
+          {
+            "label": "Up",
+            "width": {
+              "fixed": 70
+            }
+          },
+          {
+            "label": "Cost",
+            "width": {
+              "fixed": 80
+            }
+          },
+          {
+            "label": "Until",
+            "width": {
+              "fixed": 92
+            }
+          }
+        ],
+        "rows": [
+          {
+            "id": "box:demo-shop",
+            "cells": [
+              {
+                "text": "demo-shop"
+              },
+              {
+                "text": "2 workspaces",
+                "hue": "dim"
+              },
+              {
+                "mark": "●",
+                "text": "running",
+                "hue": "warn"
+              },
+              {
+                "text": "m8g.large",
+                "hue": "dim"
+              },
+              {
+                "text": "31 / 60 GB",
+                "hue": "dim",
+                "tooltip": "29 GB free · grows by itself under 20 % free"
+              },
+              {
+                "text": "v11",
+                "hue": "dim"
+              },
+              {
+                "text": "1 h 12 min"
+              },
+              {
+                "text": "$0.12 today",
+                "tooltip": "today since 00:00 · on-demand estimate"
+              },
+              {
+                "text": "stops at 10:30",
+                "hue": "dim"
+              }
+            ]
+          },
+          {
+            "id": "box:demo-shop:ws:101",
+            "cells": [
+              {
+                "text": ""
+              },
+              {
+                "accent": "#101",
+                "text": "show stock on cards",
+                "hue": "dim",
+                "tooltip": "Show stock on cards"
+              },
+              {
+                "mark": "●",
+                "text": "workspace up",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "4.1 GB",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              }
+            ]
+          },
+          {
+            "id": "box:demo-shop:ws:102",
+            "cells": [
+              {
+                "text": ""
+              },
+              {
+                "accent": "#102",
+                "text": "cart total",
+                "hue": "dim",
+                "tooltip": "Cart total"
+              },
+              {
+                "mark": "○",
+                "text": "workspace stopped",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "3.8 GB",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              }
+            ]
+          },
+          {
+            "id": "box:demo-shop-9",
+            "cells": [
+              {
+                "text": "demo-shop-9"
+              },
+              {
+                "accent": "#9",
+                "text": "saved carts",
+                "hue": "dim",
+                "tooltip": "Saved carts"
+              },
+              {
+                "mark": "⚠",
+                "text": "old box · asleep",
+                "hue": "dim",
+                "tooltip": "a 2.2 box made for one card: never launched on · Download locally or Terminate"
+              },
+              {
+                "text": "m8g.large",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "v11",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              }
+            ]
+          }
+        ],
+        "selected": "box:demo-shop",
+        "note": "Read 10:00",
+        "foot": [
+          {
+            "keys": "⏎",
+            "label": "box shell"
+          },
+          {
+            "keys": "⌘⏎",
+            "label": "actions"
+          },
+          {
+            "keys": "r",
+            "label": "read again"
+          }
+        ]
+      }
+    }
+  ]
+}

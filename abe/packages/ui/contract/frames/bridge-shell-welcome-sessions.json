@@ -1,0 +1,10 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "welcome",
+    "needsYou": 2,
+    "crumb": "Sandbox · Sprint 14",
+    "page": "sessions"
+  }
+}

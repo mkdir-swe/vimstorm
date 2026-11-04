@@ -1,0 +1,199 @@
+{
+  "kind": "Island",
+  "id": "boxes",
+  "props": {},
+  "children": [
+    {
+      "kind": "Table",
+      "id": "boxes-table",
+      "props": {
+        "columns": [
+          {
+            "label": "Box",
+            "width": {
+              "fixed": 140
+            }
+          },
+          {
+            "label": "Story",
+            "width": {
+              "fixed": 220
+            }
+          },
+          {
+            "label": "State",
+            "width": {
+              "fixed": 100
+            }
+          },
+          {
+            "label": "Size",
+            "width": {
+              "fixed": 90
+            }
+          },
+          {
+            "label": "Up",
+            "width": {
+              "fixed": 90
+            },
+            "align": "end"
+          },
+          {
+            "label": "Cost",
+            "width": {
+              "fixed": 100
+            },
+            "align": "end"
+          },
+          {
+            "label": "Until",
+            "width": {
+              "flex": 1
+            }
+          }
+        ],
+        "rows": [
+          {
+            "id": "box:demo-shop-1",
+            "cells": [
+              {
+                "cloud": "running",
+                "text": "demo-shop-1",
+                "tooltip": "Box demo-shop-1 · running"
+              },
+              {
+                "accent": "#1",
+                "text": "Show stock on a product card",
+                "hue": "dim"
+              },
+              {
+                "mark": "●",
+                "text": "running",
+                "hue": "warn"
+              },
+              {
+                "text": "m7g.large",
+                "hue": "dim"
+              },
+              {
+                "text": "1 h 12 min"
+              },
+              {
+                "text": "$0.21",
+                "tooltip": "today since 00:00 · on-demand estimate"
+              },
+              {
+                "text": "stops at 01:30",
+                "hue": "dim"
+              }
+            ]
+          },
+          {
+            "id": "box:demo-shop-2",
+            "hue": "bad",
+            "cells": [
+              {
+                "cloud": "starting",
+                "text": "demo-shop-2"
+              },
+              {
+                "accent": "#2",
+                "text": "The cart total ignores quantity",
+                "hue": "dim"
+              },
+              {
+                "mark": "●",
+                "text": "starting · 6 min",
+                "hue": "bad"
+              },
+              {
+                "text": "m7g.large",
+                "hue": "dim"
+              },
+              {
+                "text": "6 min"
+              },
+              {
+                "text": "$0.01"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              }
+            ]
+          },
+          {
+            "id": "box:demo-shop-3",
+            "cells": [
+              {
+                "cloud": "asleep",
+                "text": "demo-shop-3"
+              },
+              {
+                "accent": "#3",
+                "text": "Pin the Node version",
+                "hue": "dim"
+              },
+              {
+                "mark": "○",
+                "text": "asleep",
+                "hue": "dim"
+              },
+              {
+                "text": "m7g.large",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "$0.84 today"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              }
+            ]
+          },
+          {
+            "id": "box:4",
+            "cells": [
+              {
+                "rail": [
+                  "done",
+                  "need",
+                  "todo",
+                  "todo",
+                  "todo"
+                ],
+                "text": "Build"
+              }
+            ]
+          },
+          {
+            "cells": [
+              {
+                "text": "Box sessions not read: AWS login expired",
+                "hue": "dim"
+              }
+            ]
+          }
+        ],
+        "selected": "box:demo-shop-1",
+        "note": "Boxes not read · EC2 not answering",
+        "foot": [
+          {
+            "keys": "⏎",
+            "label": "attach"
+          },
+          {
+            "keys": "⌘⏎",
+            "label": "actions"
+          }
+        ]
+      }
+    }
+  ]
+}

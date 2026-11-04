@@ -1,0 +1,278 @@
+{
+  "kind": "ReviewPane",
+  "id": "review",
+  "props": {
+    "root": "/work/shop-pr-7",
+    "number": 7,
+    "title": "PR #7 · review",
+    "said": "3 files · /work/shop-pr-7 · ✎ 1 draft",
+    "tone": "info",
+    "heat": false,
+    "since": false,
+    "lines": [
+      {
+        "kind": "node",
+        "key": "d:src",
+        "node": "dir",
+        "label": "src/",
+        "depth": 0,
+        "open": true,
+        "count": "2 files",
+        "reviewed": false
+      },
+      {
+        "kind": "file",
+        "path": "src/cart.ts",
+        "label": "cart.ts",
+        "depth": 1,
+        "status": "M",
+        "heat": "·",
+        "flat": false,
+        "reviewed": false,
+        "additions": 6,
+        "deletions": 6,
+        "changes": 1,
+        "hunk": null,
+        "threads": 1,
+        "drafts": 0,
+        "outdated": false
+      },
+      {
+        "kind": "file",
+        "path": "src/total.ts",
+        "label": "total.ts",
+        "depth": 1,
+        "status": "M",
+        "heat": "·",
+        "flat": false,
+        "reviewed": false,
+        "additions": 2,
+        "deletions": 2,
+        "changes": 1,
+        "hunk": null,
+        "threads": 0,
+        "drafts": 1,
+        "outdated": false
+      },
+      {
+        "kind": "file",
+        "path": "package-lock.json",
+        "label": "package-lock.json",
+        "depth": 0,
+        "status": "M",
+        "heat": "1",
+        "flat": false,
+        "reviewed": false,
+        "additions": 1,
+        "deletions": 1,
+        "changes": 1,
+        "hunk": null,
+        "threads": 0,
+        "drafts": 0,
+        "outdated": false
+      }
+    ],
+    "at": 2,
+    "drafted": [
+      {
+        "seq": 1,
+        "path": "src/total.ts",
+        "side": "RIGHT",
+        "line": 3,
+        "body": "Guard this?",
+        "head": "c0ffee1234",
+        "outdated": false
+      }
+    ],
+    "threads": [
+      {
+        "id": "T1",
+        "path": "src/cart.ts",
+        "side": "RIGHT",
+        "line": 4,
+        "start": null,
+        "head": "c0ffee1234",
+        "outdated": false,
+        "resolved": false,
+        "canReply": true,
+        "canResolve": true,
+        "comments": [
+          {
+            "id": 90,
+            "author": "bob",
+            "body": "Why this?",
+            "url": "https://github.com/acme/shop/pull/7#discussion_r90"
+          }
+        ],
+        "reply": null
+      }
+    ],
+    "threadsNote": null,
+    "saved": {
+      "head": "c0ffee1234",
+      "verdict": "COMMENT",
+      "body": "A few notes"
+    },
+    "strip": {
+      "number": 7,
+      "title": "Cart totals",
+      "url": "https://github.com/acme/shop/pull/7",
+      "author": "bob",
+      "branch": "feature/cart",
+      "base": "main",
+      "body": "What it does",
+      "badge": "open",
+      "checks": {
+        "label": "● 1/2 checks",
+        "hue": "warn"
+      },
+      "threads": {
+        "label": "1 thread · 1 open",
+        "open": true
+      },
+      "outdated": 0,
+      "own": false,
+      "drafts": 1,
+      "scope": {
+        "kind": "all"
+      },
+      "scopeLabel": "All changes",
+      "scopeSub": "1 commit",
+      "switchLabel": "All changes",
+      "commits": [
+        {
+          "sha": "aaaa1111",
+          "subject": "Add the client",
+          "author": "Ada",
+          "date": "2026-10-20",
+          "files": [
+            {
+              "path": "src/cart.ts",
+              "additions": 6,
+              "deletions": 6
+            }
+          ]
+        }
+      ],
+      "baseSha": "base000",
+      "headSha": "c0ffee1234",
+      "newRevision": null,
+      "reviews": null,
+      "fresh": null,
+      "files": 3,
+      "reviewed": 0,
+      "additions": 9,
+      "deletions": 9,
+      "filesLabel": "3 files · 0 reviewed · 1 draft",
+      "canSubmit": true
+    },
+    "conversation": [],
+    "menu": [
+      {
+        "run": "⏎",
+        "key": "⏎",
+        "label": "Next Change",
+        "enabled": true
+      },
+      {
+        "run": "step-back",
+        "key": "",
+        "label": "Previous Change",
+        "enabled": true
+      },
+      {
+        "run": "next",
+        "key": "",
+        "label": "Next File by Heat",
+        "enabled": true
+      },
+      {
+        "run": "previous",
+        "key": "",
+        "label": "Previous File by Heat",
+        "enabled": true
+      },
+      {
+        "run": "select",
+        "key": "",
+        "label": "Mark Reviewed",
+        "enabled": true
+      },
+      {
+        "run": "with-copies",
+        "key": "",
+        "label": "Mark Reviewed with Copies",
+        "enabled": true
+      },
+      {
+        "run": "drop",
+        "key": "",
+        "label": "Drop Draft",
+        "enabled": true
+      },
+      {
+        "run": "toggle",
+        "key": "",
+        "label": "Tree / Areas / Heat",
+        "enabled": true
+      },
+      {
+        "run": "whole",
+        "key": "",
+        "label": "Show the Whole PR",
+        "enabled": false
+      },
+      {
+        "run": "earlier",
+        "key": "",
+        "label": "Previous Commit",
+        "enabled": true
+      },
+      {
+        "run": "later",
+        "key": "",
+        "label": "Next Commit",
+        "enabled": true
+      },
+      {
+        "run": "browser",
+        "key": "",
+        "label": "Open on GitHub",
+        "enabled": true
+      },
+      {
+        "run": "refresh",
+        "key": "",
+        "label": "Read Again",
+        "enabled": true
+      }
+    ],
+    "lifecycle": [
+      {
+        "id": "review-ready",
+        "title": "Mark ready for review",
+        "reason": "already ready for review"
+      },
+      {
+        "id": "merge-squash",
+        "title": "Merge into main (squash)",
+        "reason": "needs approval"
+      },
+      {
+        "id": "merge-commit",
+        "title": "Merge into main (merge commit)",
+        "reason": "needs approval"
+      },
+      {
+        "id": "merge-rebase",
+        "title": "Merge into main (rebase)",
+        "reason": "needs approval"
+      },
+      {
+        "id": "pr-close",
+        "title": "Close without merging",
+        "reason": null
+      }
+    ]
+  }
+}

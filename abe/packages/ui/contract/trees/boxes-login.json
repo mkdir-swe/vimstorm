@@ -1,0 +1,88 @@
+{
+  "kind": "Island",
+  "id": "boxes",
+  "props": {},
+  "children": [
+    {
+      "kind": "Table",
+      "id": "boxes-table",
+      "props": {
+        "columns": [
+          {
+            "label": "Box",
+            "width": {
+              "fixed": 100
+            }
+          },
+          {
+            "label": "Story",
+            "width": {
+              "flex": 1
+            }
+          },
+          {
+            "label": "State",
+            "width": {
+              "fixed": 180
+            }
+          },
+          {
+            "label": "Size",
+            "width": {
+              "fixed": 72
+            }
+          },
+          {
+            "label": "Disk",
+            "width": {
+              "fixed": 76
+            }
+          },
+          {
+            "label": "Release",
+            "width": {
+              "fixed": 52
+            }
+          },
+          {
+            "label": "Up",
+            "width": {
+              "fixed": 70
+            }
+          },
+          {
+            "label": "Cost",
+            "width": {
+              "fixed": 80
+            }
+          },
+          {
+            "label": "Until",
+            "width": {
+              "fixed": 92
+            }
+          }
+        ],
+        "rows": [
+          {
+            "id": "boxes:aws-login",
+            "cells": [
+              {
+                "mark": "●",
+                "text": "AWS login expired · aws sso login --profile abe-tooling",
+                "hue": "bad"
+              }
+            ]
+          }
+        ],
+        "selected": "boxes:aws-login",
+        "foot": [
+          {
+            "keys": "⏎",
+            "label": "log in to AWS"
+          }
+        ]
+      }
+    }
+  ]
+}

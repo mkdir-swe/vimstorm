@@ -1,0 +1,447 @@
+{
+  "kind": "Stack",
+  "id": "welcome",
+  "props": {
+    "direction": "row",
+    "sizes": [
+      {
+        "flex": 1
+      }
+    ],
+    "align": "stretch",
+    "pad": [
+      8,
+      8,
+      8,
+      8
+    ]
+  },
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "gap": 8,
+        "sizes": [
+          {
+            "flex": 1
+          },
+          {
+            "fixed": 128
+          }
+        ]
+      },
+      "children": [
+        {
+          "kind": "Island",
+          "id": "welcome-board",
+          "props": {},
+          "children": [
+            {
+              "kind": "Stack",
+              "props": {
+                "direction": "column",
+                "sizes": [
+                  "auto",
+                  {
+                    "flex": 1
+                  }
+                ]
+              },
+              "children": [
+                {
+                  "kind": "ToolWindowHeader",
+                  "props": {
+                    "title": "Board",
+                    "tabs": [
+                      {
+                        "id": "tab:mine",
+                        "label": "Mine"
+                      },
+                      {
+                        "id": "tab:team",
+                        "label": "Team"
+                      }
+                    ],
+                    "selected": "tab:team",
+                    "note": "Sandbox · Sprint 14"
+                  }
+                },
+                {
+                  "kind": "Table",
+                  "id": "welcome-cards",
+                  "props": {
+                    "columns": [
+                      {
+                        "label": "Card",
+                        "width": {
+                          "fixed": 64
+                        }
+                      },
+                      {
+                        "label": "Title",
+                        "width": {
+                          "flex": 1
+                        }
+                      },
+                      {
+                        "label": "Who",
+                        "width": {
+                          "fixed": 40
+                        }
+                      },
+                      {
+                        "label": "Stage",
+                        "width": {
+                          "fixed": 70
+                        }
+                      },
+                      {
+                        "label": "State",
+                        "width": {
+                          "fixed": 150
+                        }
+                      },
+                      {
+                        "label": "Time",
+                        "width": {
+                          "fixed": 72
+                        },
+                        "align": "end"
+                      }
+                    ],
+                    "rows": [
+                      {
+                        "cells": [
+                          {
+                            "text": "NEEDS YOU · 1",
+                            "hue": "needs-you"
+                          }
+                        ]
+                      },
+                      {
+                        "id": "card:101",
+                        "cells": [
+                          {
+                            "accent": "#101"
+                          },
+                          {
+                            "text": "Cart total rounds wrong",
+                            "tooltip": "Cart total rounds wrong"
+                          },
+                          {
+                            "text": "AE",
+                            "hue": "dim"
+                          },
+                          {
+                            "rail": [
+                              "done",
+                              "need",
+                              "todo",
+                              "todo",
+                              "todo"
+                            ]
+                          },
+                          {
+                            "mark": "◆",
+                            "text": "Needs you",
+                            "hue": "needs-you"
+                          },
+                          {
+                            "text": "19 min",
+                            "hue": "dim"
+                          }
+                        ]
+                      },
+                      {
+                        "cells": [
+                          {
+                            "text": "NEEDS SOMEONE · 1",
+                            "hue": "dim"
+                          }
+                        ]
+                      },
+                      {
+                        "id": "card:201",
+                        "cells": [
+                          {
+                            "accent": "#201"
+                          },
+                          {
+                            "text": "Their question",
+                            "tooltip": "Their question"
+                          },
+                          {
+                            "text": "BT",
+                            "hue": "dim"
+                          },
+                          {
+                            "rail": [
+                              "need",
+                              "todo",
+                              "todo",
+                              "todo",
+                              "todo"
+                            ]
+                          },
+                          {
+                            "mark": "◇",
+                            "text": "Needs someone",
+                            "hue": "dim"
+                          },
+                          {
+                            "text": "19 min",
+                            "hue": "dim"
+                          }
+                        ]
+                      },
+                      {
+                        "cells": [
+                          {
+                            "text": "RUNNING · 1",
+                            "hue": "dim"
+                          }
+                        ]
+                      },
+                      {
+                        "id": "card:103",
+                        "cells": [
+                          {
+                            "accent": "#103"
+                          },
+                          {
+                            "text": "Show stock on a product page",
+                            "tooltip": "Show stock on a product page"
+                          },
+                          {
+                            "text": "AE",
+                            "hue": "dim"
+                          },
+                          {
+                            "rail": [
+                              "done",
+                              "now",
+                              "todo",
+                              "todo",
+                              "todo"
+                            ]
+                          },
+                          {
+                            "mark": "●",
+                            "text": "Running",
+                            "hue": "warn"
+                          },
+                          {
+                            "text": "20 min",
+                            "hue": "dim"
+                          }
+                        ]
+                      },
+                      {
+                        "cells": [
+                          {
+                            "text": "NOT STARTED · 2",
+                            "hue": "dim"
+                          }
+                        ]
+                      },
+                      {
+                        "id": "card:102",
+                        "cells": [
+                          {
+                            "accent": "#102"
+                          },
+                          {
+                            "text": "Count each line’s qty",
+                            "tooltip": "Count each line’s qty"
+                          },
+                          {
+                            "text": "AE",
+                            "hue": "dim"
+                          },
+                          {
+                            "rail": [
+                              "todo",
+                              "todo",
+                              "todo",
+                              "todo",
+                              "todo"
+                            ]
+                          },
+                          {
+                            "mark": "○",
+                            "text": "Not started",
+                            "hue": "dim"
+                          },
+                          {
+                            "text": "",
+                            "hue": "dim"
+                          }
+                        ]
+                      },
+                      {
+                        "id": "card:104",
+                        "cells": [
+                          {
+                            "accent": "#104"
+                          },
+                          {
+                            "text": "Saved carts survive sign-out",
+                            "tooltip": "Saved carts survive sign-out"
+                          },
+                          {
+                            "text": "AE",
+                            "hue": "dim"
+                          },
+                          {
+                            "rail": [
+                              "todo",
+                              "todo",
+                              "todo",
+                              "todo",
+                              "todo"
+                            ]
+                          },
+                          {
+                            "mark": "○",
+                            "text": "Not started",
+                            "hue": "dim"
+                          },
+                          {
+                            "text": "",
+                            "hue": "dim"
+                          }
+                        ]
+                      }
+                    ],
+                    "selected": "card:101",
+                    "foot": [
+                      {
+                        "keys": "⏎",
+                        "label": "open demo-shop on this card"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "Island",
+          "id": "welcome-projects",
+          "props": {},
+          "children": [
+            {
+              "kind": "Stack",
+              "props": {
+                "direction": "column",
+                "sizes": [
+                  "auto",
+                  {
+                    "flex": 1
+                  }
+                ]
+              },
+              "children": [
+                {
+                  "kind": "ToolWindowHeader",
+                  "props": {
+                    "title": "Projects",
+                    "tabs": [
+                      {
+                        "id": "new-project",
+                        "label": "New Project…"
+                      },
+                      {
+                        "id": "open",
+                        "label": "Open… ⌘O"
+                      },
+                      {
+                        "id": "clone",
+                        "label": "Clone…"
+                      }
+                    ],
+                    "note": "All projects · 2 ⌘⇧O"
+                  }
+                },
+                {
+                  "kind": "Table",
+                  "id": "welcome-projects",
+                  "props": {
+                    "columns": [
+                      {
+                        "label": "",
+                        "width": {
+                          "fixed": 36
+                        }
+                      },
+                      {
+                        "label": "Project",
+                        "width": {
+                          "fixed": 180
+                        }
+                      },
+                      {
+                        "label": "Folder",
+                        "width": {
+                          "flex": 1
+                        }
+                      },
+                      {
+                        "label": "Branch",
+                        "width": {
+                          "fixed": 140
+                        }
+                      }
+                    ],
+                    "rows": [
+                      {
+                        "id": "project:/home/me/projects/demo-shop",
+                        "cells": [
+                          {
+                            "accent": "DS"
+                          },
+                          {
+                            "text": "demo-shop"
+                          },
+                          {
+                            "text": "~/projects/demo-shop",
+                            "hue": "dim"
+                          },
+                          {
+                            "text": "main",
+                            "hue": "dim"
+                          }
+                        ]
+                      },
+                      {
+                        "id": "project:/home/me/projects/vimstorm",
+                        "cells": [
+                          {
+                            "accent": "V"
+                          },
+                          {
+                            "text": "vimstorm"
+                          },
+                          {
+                            "text": "~/projects/vimstorm",
+                            "hue": "dim"
+                          },
+                          {
+                            "text": "abe",
+                            "hue": "dim"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

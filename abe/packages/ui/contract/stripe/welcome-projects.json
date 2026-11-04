@@ -1,0 +1,34 @@
+{
+  "top": [
+    {
+      "id": "project",
+      "icon": "project",
+      "picked": true,
+      "tooltip": "Project · ⌘⇧O · your recent projects"
+    },
+    {
+      "id": "board",
+      "icon": "board",
+      "dot": "needs-you",
+      "tooltip": "Board · ⌘⌥A · #101 Cart total rounds wrong needs you"
+    },
+    {
+      "id": "more",
+      "icon": "more",
+      "tooltip": "More tool windows"
+    }
+  ],
+  "bottom": [
+    {
+      "id": "sessions",
+      "icon": "history",
+      "dot": "needs-you",
+      "tooltip": "Sessions · ⌘5 · 2 need you · 1 running"
+    },
+    {
+      "id": "boxes",
+      "icon": "archive",
+      "tooltip": "Boxes · ⌘6"
+    }
+  ]
+}

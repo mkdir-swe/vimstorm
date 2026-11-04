@@ -1,0 +1,56 @@
+{
+  "kind": "PickLayer",
+  "id": "command-mode",
+  "props": {
+    "title": "Command mode",
+    "filter": "card",
+    "placeholder": "Ask anything, or a command",
+    "rows": [
+      {
+        "id": "command:card list",
+        "text": "card list",
+        "dim": "the Board's cards"
+      },
+      {
+        "id": "here:ask",
+        "text": "Ask",
+        "dim": "the Abe chat"
+      },
+      {
+        "id": "command:card show",
+        "text": "card show",
+        "dim": "one card in full",
+        "note": "<card>",
+        "section": "More"
+      },
+      {
+        "id": "command:card move",
+        "text": "card move",
+        "dim": "move a card to a column",
+        "note": "<card> --column Doing|Done"
+      },
+      {
+        "id": "word:discard-local",
+        "text": "discard-local",
+        "dim": "Discard local changes: the board changes held on this machine dropped (asked first); nothing is sent"
+      },
+      {
+        "id": "word:show",
+        "text": "show",
+        "dim": "open a Sheet as a tab: the current card's and session's first",
+        "note": "<name>"
+      },
+      {
+        "id": "word:chat",
+        "text": "chat",
+        "dim": "the repo's Abe chat in the Chat column: ask about cards, make cards, start runs, /abe:<skill>"
+      },
+      {
+        "id": "personal:mine",
+        "text": "mine",
+        "dim": "my cards"
+      }
+    ],
+    "selected": "here:ask"
+  }
+}

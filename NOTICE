@@ -1,0 +1,14 @@
+VimStorm
+Copyright 2026 mkdir
+
+Licensed under the Apache License, Version 2.0 (LICENSE).
+
+Third-party content and its notices:
+- app/NOTICE: the app's fonts (JetBrains Mono, Inter: SIL OFL 1.1), the WebStorm Icons font and
+  the code ported from Ghostty (MIT) and IntelliJ IDEA Community Edition (Apache License 2.0).
+- app/assets/icons/NOTICE: each bundled icon's source (IntelliJ IDEA Community Edition, Apache
+  License 2.0, or VimStorm's own).
+- abe/packages/core/skills/THIRD-PARTY-NOTICES.md: the bundled third-party skills.
+
+JetBrains, IntelliJ IDEA and WebStorm are trademarks of JetBrains s.r.o.; VimStorm is not made or
+endorsed by JetBrains.

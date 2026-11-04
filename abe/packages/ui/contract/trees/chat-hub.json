@@ -1,0 +1,89 @@
+{
+  "kind": "Island",
+  "id": "chat",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "sizes": [
+          "auto",
+          {
+            "flex": 1
+          },
+          "auto"
+        ]
+      },
+      "children": [
+        {
+          "kind": "ChatHeader",
+          "id": "chat-header",
+          "props": {
+            "title": "Chat",
+            "env": "Local · no sandbox",
+            "note": "/home/me/projects/demo-shop",
+            "story": {
+              "id": "Abe",
+              "title": "· demo-shop"
+            },
+            "hint": "⌘⏎",
+            "face": true,
+            "tabs": [
+              {
+                "id": "chat:tab:abe-a1b2",
+                "label": "Abe",
+                "selected": true,
+                "mark": "needs-you",
+                "close": "chat:tab-close:abe-a1b2"
+              }
+            ],
+            "add": "chat:tab-new"
+          }
+        },
+        {
+          "kind": "Transcript",
+          "id": "chat:transcript",
+          "props": {
+            "session": "abe-a1b2",
+            "mark": "abe"
+          },
+          "children": []
+        },
+        {
+          "kind": "Stack",
+          "id": "composer:dock",
+          "props": {
+            "direction": "column",
+            "gap": 4,
+            "pad": [
+              4,
+              12,
+              12,
+              12
+            ]
+          },
+          "children": [
+            {
+              "kind": "ChatStatus",
+              "id": "chat:status",
+              "props": {
+                "tone": "idle",
+                "words": "Idle · your turn"
+              }
+            },
+            {
+              "kind": "Composer",
+              "id": "composer:composer",
+              "props": {
+                "text": "",
+                "placeholder": "Ask Abe · make a card · /abe:…"
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

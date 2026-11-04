@@ -1,0 +1,8 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "drop-terminal",
+    "key": "retro:s1240:0"
+  }
+}

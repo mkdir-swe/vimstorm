@@ -1,0 +1,16 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "terminal-tab",
+    "argv": [
+      "abe",
+      "box",
+      "attach",
+      "demo-shop",
+      "--card",
+      "101"
+    ],
+    "title": "demo-shop #101"
+  }
+}

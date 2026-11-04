@@ -1,0 +1,134 @@
+{
+  "kind": "Island",
+  "id": "pipelines",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "sizes": [
+          {
+            "fixed": 30
+          },
+          {
+            "flex": 1
+          }
+        ],
+        "align": "stretch"
+      },
+      "children": [
+        {
+          "kind": "PipelinesBar",
+          "id": "pipelines-bar",
+          "props": {
+            "scopes": [
+              {
+                "id": "scope:workspace",
+                "label": "This workspace",
+                "tooltip": "Runs on this workspace's branch"
+              },
+              {
+                "id": "scope:all",
+                "label": "All",
+                "tooltip": "The repository's runs"
+              },
+              {
+                "id": "scope:mine",
+                "label": "Mine",
+                "tooltip": "Runs I started"
+              }
+            ],
+            "selected": "scope:workspace",
+            "workflow": {
+              "label": "Workflow ▾",
+              "on": false
+            },
+            "count": "card/12-saved-carts · 0 runs · All shows 7",
+            "source": "o/r · GitHub Actions"
+          }
+        },
+        {
+          "kind": "Table",
+          "id": "pipelines-table",
+          "props": {
+            "columns": [
+              {
+                "label": "State",
+                "width": {
+                  "fixed": 128
+                }
+              },
+              {
+                "label": "Workflow",
+                "width": {
+                  "fixed": 112
+                }
+              },
+              {
+                "label": "Run",
+                "width": {
+                  "flex": 3
+                }
+              },
+              {
+                "label": "Branch · trigger",
+                "width": {
+                  "flex": 2
+                }
+              },
+              {
+                "label": "Agent",
+                "width": {
+                  "fixed": 200
+                }
+              },
+              {
+                "label": "Started",
+                "width": {
+                  "fixed": 72
+                },
+                "align": "end"
+              },
+              {
+                "label": "Duration",
+                "width": {
+                  "fixed": 72
+                },
+                "align": "end"
+              }
+            ],
+            "rows": [],
+            "note": "Read 09:00",
+            "empty": {
+              "title": "No runs for this workspace yet · All shows 7",
+              "line": "A run appears here once card/12-saved-carts is pushed · ⏎ Show All"
+            },
+            "foot": [
+              {
+                "keys": "⏎",
+                "label": "inspect"
+              },
+              {
+                "keys": "⌘⏎",
+                "label": "actions"
+              },
+              {
+                "keys": "Tab",
+                "label": "scope"
+              },
+              {
+                "keys": "w",
+                "label": "workflow"
+              },
+              {
+                "keys": "r",
+                "label": "read again"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

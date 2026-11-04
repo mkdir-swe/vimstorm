@@ -1,0 +1,8 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "open-project",
+    "path": "/home/me/projects/demo-shop"
+  }
+}

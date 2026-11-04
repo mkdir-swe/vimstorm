@@ -1,0 +1,29 @@
+{
+  "kind": "Island",
+  "id": "sheet",
+  "props": {},
+  "children": [
+    {
+      "kind": "BrowserView",
+      "id": "sheet-view",
+      "props": {
+        "key": "sheet:cart-totals-by-market-a1b2c3:yours:v1",
+        "url": "http://127.0.0.1:50123/s/9f2c4e1a",
+        "title": "Sheet",
+        "sub": "Cart totals by market",
+        "address": "sheet://cart-totals-by-market-a1b2c3",
+        "version": 1,
+        "badges": [
+          "yours",
+          "sandboxed",
+          "no network"
+        ],
+        "action": {
+          "keys": "⌘⏎",
+          "label": "Attach to card"
+        },
+        "focused": true
+      }
+    }
+  ]
+}

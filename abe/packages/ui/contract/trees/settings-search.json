@@ -1,0 +1,480 @@
+{
+  "kind": "SettingsDialog",
+  "id": "settings",
+  "props": {
+    "title": "Settings",
+    "search": {
+      "text": "box"
+    },
+    "note": "Each change saves as you make it; ⌘⏎ proposes one for the repo",
+    "focus": "page"
+  },
+  "children": [
+    {
+      "kind": "SettingsTree",
+      "id": "settings:tree",
+      "props": {
+        "nodes": [
+          {
+            "id": "settings:tree:appearance-behavior",
+            "label": "Appearance & Behavior",
+            "depth": 0,
+            "fold": "open",
+            "dim": true
+          },
+          {
+            "id": "settings:tree:appearance",
+            "label": "Appearance",
+            "depth": 1,
+            "dim": true
+          },
+          {
+            "id": "settings:tree:import-config",
+            "label": "Import config",
+            "depth": 1,
+            "dim": true
+          },
+          {
+            "id": "settings:tree:editor",
+            "label": "Editor",
+            "depth": 0,
+            "fold": "open",
+            "dim": true
+          },
+          {
+            "id": "settings:tree:editor-general",
+            "label": "General",
+            "depth": 1,
+            "dim": true
+          },
+          {
+            "id": "settings:tree:editor-font",
+            "label": "Font",
+            "depth": 1,
+            "dim": true
+          },
+          {
+            "id": "settings:tree:color-scheme",
+            "label": "Color scheme",
+            "depth": 1,
+            "dim": true
+          },
+          {
+            "id": "settings:tree:vim",
+            "label": "Vim",
+            "depth": 1,
+            "dim": true
+          },
+          {
+            "id": "settings:tree:abe",
+            "label": "Abe",
+            "depth": 0,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:agents",
+            "label": "Agents & models",
+            "depth": 1,
+            "count": {
+              "text": "3",
+              "tone": "dim"
+            }
+          },
+          {
+            "id": "settings:tree:board-team",
+            "label": "Board & you",
+            "depth": 1,
+            "dim": true
+          },
+          {
+            "id": "settings:tree:boxes-cloud",
+            "label": "Boxes & cloud",
+            "depth": 1,
+            "fold": "open",
+            "count": {
+              "text": "12",
+              "tone": "dim"
+            }
+          },
+          {
+            "id": "settings:tree:browser-profiles",
+            "label": "Browser profiles",
+            "depth": 2,
+            "dim": true
+          },
+          {
+            "id": "settings:tree:factory-policy",
+            "label": "Factory policy",
+            "depth": 1,
+            "dim": true
+          },
+          {
+            "id": "settings:tree:local-mode",
+            "label": "Local mode",
+            "depth": 1,
+            "count": {
+              "text": "1",
+              "tone": "dim"
+            }
+          },
+          {
+            "id": "settings:tree:reach",
+            "label": "Reach",
+            "depth": 1,
+            "dim": true
+          },
+          {
+            "id": "settings:tree:logins-tools",
+            "label": "Logins & tools",
+            "depth": 0,
+            "dim": true
+          },
+          {
+            "id": "settings:tree:tools",
+            "label": "Tools check",
+            "depth": 0,
+            "count": {
+              "text": "1",
+              "tone": "dim"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "kind": "SettingsPage",
+      "id": "settings:page",
+      "props": {
+        "crumbs": [
+          "Search"
+        ],
+        "scope": "17 results on 4 pages",
+        "reveal": "settings:results:0"
+      },
+      "children": [
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:results:0",
+          "props": {
+            "caption": "Boxes & cloud"
+          },
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:0",
+              "props": {
+                "label": "Boxes & cloud",
+                "control": {
+                  "kind": "value",
+                  "text": "page"
+                },
+                "source": {
+                  "text": "Abe › Boxes & cloud"
+                }
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:1",
+              "props": {
+                "label": "Max boxes per person",
+                "control": {
+                  "kind": "field",
+                  "text": "3",
+                  "size": "number"
+                },
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:2",
+              "props": {
+                "label": "Start size",
+                "control": {
+                  "kind": "combo",
+                  "value": "4 CPUs, 16 GB (m8g.xlarge)"
+                },
+                "help": "a repo's new box · within the largest",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:3",
+              "props": {
+                "label": "Box size",
+                "control": {
+                  "kind": "combo",
+                  "value": "4 CPUs, 16 GB (m8g.xlarge)"
+                },
+                "help": "the largest size one box may have",
+                "source": {
+                  "text": "Repo · 5 choices greyed, larger than the repo's largest box, m8g.xlarge"
+                },
+                "scope": "local",
+                "default": "8 CPUs, 32 GB (m8g.2xlarge)"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:4",
+              "props": {
+                "label": "Largest disk",
+                "control": {
+                  "kind": "field",
+                  "text": "300",
+                  "size": "number",
+                  "unit": "GB"
+                },
+                "help": "a box disk grows by itself up to this",
+                "source": {
+                  "text": "Repo"
+                },
+                "scope": "local",
+                "default": "200"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:5",
+              "props": {
+                "label": "Idle stop",
+                "control": {
+                  "kind": "field",
+                  "text": "30",
+                  "size": "number",
+                  "unit": "min"
+                },
+                "help": "with nothing running",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "yours",
+                "hint": "⏎ change for me · yours alone: not for the repo",
+                "focused": true
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:6",
+              "props": {
+                "label": "Waiting on you",
+                "control": {
+                  "kind": "field",
+                  "text": "120",
+                  "size": "number",
+                  "unit": "min"
+                },
+                "help": "a box stays up for a session waiting on you",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "yours"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:7",
+              "props": {
+                "label": "AWS profile",
+                "control": {
+                  "kind": "combo",
+                  "value": "none · the default profile"
+                },
+                "help": "$ABE_BOX_PROFILE wins · $AWS_PROFILE, else the default profile, when empty",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:8",
+              "props": {
+                "label": "AWS region",
+                "control": {
+                  "kind": "combo",
+                  "value": "none · the profile's own"
+                },
+                "help": "$AWS_REGION or $AWS_DEFAULT_REGION wins · the profile's own when empty",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "yours"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:9",
+              "props": {
+                "label": "Box owner",
+                "control": {
+                  "kind": "combo",
+                  "value": "none · gh's login"
+                },
+                "help": "your GitHub login on your boxes · $ABE_OWNER wins · gh's when empty",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "yours"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:10",
+              "props": {
+                "label": "Session logs",
+                "control": {
+                  "kind": "field",
+                  "text": "",
+                  "size": "free"
+                },
+                "help": "file://<dir> or s3://<bucket> · $ABE_LOG_STORE wins",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "yours"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:11",
+              "props": {
+                "label": "Prototypes and Sheets",
+                "control": {
+                  "kind": "field",
+                  "text": "",
+                  "size": "free"
+                },
+                "help": "the store they are kept in · file://<dir> or s3://<bucket> · $ABE_ORG_STORE wins",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "yours"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:results:1",
+          "props": {
+            "caption": "Agents & models"
+          },
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:12",
+              "props": {
+                "label": "My skills on top",
+                "control": {
+                  "kind": "checkbox",
+                  "on": false
+                },
+                "help": "yours load after repo's, locally and on boxes",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:13",
+              "props": {
+                "label": "Local sessions",
+                "control": {
+                  "kind": "value",
+                  "text": "Local sandbox · auto mode · always"
+                },
+                "source": {
+                  "text": "fixed · no setting"
+                }
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:14",
+              "props": {
+                "label": "Your MCP servers, never a repo's",
+                "control": {
+                  "kind": "segmented",
+                  "choices": [
+                    "Yours too",
+                    "Abe's only"
+                  ],
+                  "on": "Yours too"
+                },
+                "help": "a repo's own never load, in any session · MCP tools run outside the sandbox and aren't checked by Abe's fence",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:results:2",
+          "props": {
+            "caption": "Local mode"
+          },
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:15",
+              "props": {
+                "label": "Agents",
+                "control": {
+                  "kind": "value",
+                  "text": "run on this machine (Local sandbox); no boxes, no cloud runs. Your logins are only read"
+                },
+                "source": {
+                  "text": "fixed · what local mode is"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:results:3",
+          "props": {
+            "caption": "Tools check"
+          },
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:16",
+              "props": {
+                "label": "Commands run",
+                "control": {
+                  "kind": "segmented",
+                  "choices": [
+                    "A cloud box",
+                    "This machine"
+                  ],
+                  "on": "This machine"
+                },
+                "help": "this machine until you set up boxes; a cloud box: one of your own per card",
+                "source": {
+                  "text": ""
+                },
+                "scope": "local"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

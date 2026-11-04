@@ -1,0 +1,9 @@
+{
+  "kind": "PromptLayer",
+  "id": "command-arg",
+  "props": {
+    "title": "abe card show <card>",
+    "text": "12",
+    "hint": "the card"
+  }
+}

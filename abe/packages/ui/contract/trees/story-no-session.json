@@ -1,0 +1,82 @@
+{
+  "kind": "CardDialog",
+  "id": "dialog:1262",
+  "props": {
+    "kicker": "User Story",
+    "card": 1262,
+    "state": "New",
+    "title": "Greeted by time of day",
+    "meta": [
+      "US",
+      "New",
+      "AE",
+      "Sprint 14",
+      "tags greet"
+    ],
+    "facts": [
+      {
+        "text": "US",
+        "tone": "story"
+      },
+      {
+        "text": "New"
+      },
+      {
+        "text": "AE"
+      },
+      {
+        "text": "Sprint 14"
+      },
+      {
+        "text": "greet",
+        "tone": "tags",
+        "label": "tags"
+      }
+    ],
+    "sections": [
+      {
+        "title": "Description",
+        "markdown": ""
+      },
+      {
+        "title": "Acceptance criteria",
+        "markdown": ""
+      }
+    ],
+    "scroll": 0,
+    "buttons": [
+      {
+        "id": "dialog:primary",
+        "label": "Launch agent",
+        "keys": "⏎",
+        "primary": true
+      }
+    ],
+    "heading": "Story · demo-shop",
+    "linked": [
+      {
+        "id": "dialog:linked:session",
+        "label": "Session",
+        "words": "none yet",
+        "dim": true
+      },
+      {
+        "id": "dialog:linked:pr",
+        "label": "PR",
+        "words": "none yet",
+        "dim": true
+      },
+      {
+        "id": "dialog:linked:box",
+        "label": "Box",
+        "words": "none yet",
+        "dim": true
+      }
+    ],
+    "hint": "⌘⏎ more",
+    "comments": {
+      "state": "loading",
+      "comments": []
+    }
+  }
+}

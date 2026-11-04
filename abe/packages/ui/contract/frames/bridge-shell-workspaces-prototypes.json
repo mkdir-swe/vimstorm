@@ -1,0 +1,45 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "workspaces",
+    "workspaces": [],
+    "factory": {
+      "line": [
+        {
+          "text": "demo-shop",
+          "hue": "accent"
+        }
+      ],
+      "label": "Abe, demo-shop",
+      "crumb": "demo-shop"
+    },
+    "answering": true,
+    "prototypes": [
+      {
+        "id": "proto-1a2b3c",
+        "title": "cart badge shows item count",
+        "card": null,
+        "state": "running",
+        "session": "prototype-a1b2",
+        "branch": "proto/p7-cart-badge",
+        "where": "Local · on :41207",
+        "since": "2026-10-01T09:00:00.000Z",
+        "url": "http://127.0.0.1:41207",
+        "needsYou": false
+      },
+      {
+        "id": "proto-9f2c00",
+        "title": "Cart total includes shipping",
+        "card": 1234,
+        "state": "starting",
+        "session": "prototype-c3d4",
+        "branch": "proto/1234-cart-total",
+        "where": "Local",
+        "since": "2026-10-01T09:00:00.000Z",
+        "url": null,
+        "needsYou": false
+      }
+    ]
+  }
+}

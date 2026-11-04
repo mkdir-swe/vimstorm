@@ -1,0 +1,235 @@
+{
+  "kind": "Stack",
+  "id": "welcome",
+  "props": {
+    "direction": "row",
+    "sizes": [
+      {
+        "flex": 1
+      }
+    ],
+    "align": "stretch",
+    "pad": [
+      8,
+      8,
+      8,
+      8
+    ]
+  },
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "gap": 8,
+        "sizes": [
+          {
+            "flex": 1
+          },
+          {
+            "fixed": 128
+          }
+        ]
+      },
+      "children": [
+        {
+          "kind": "Island",
+          "id": "welcome-board",
+          "props": {},
+          "children": [
+            {
+              "kind": "Stack",
+              "props": {
+                "direction": "column",
+                "sizes": [
+                  "auto",
+                  {
+                    "flex": 1
+                  }
+                ]
+              },
+              "children": [
+                {
+                  "kind": "ToolWindowHeader",
+                  "props": {
+                    "title": "Board",
+                    "tabs": [
+                      {
+                        "id": "tab:mine",
+                        "label": "Mine"
+                      },
+                      {
+                        "id": "tab:team",
+                        "label": "Team"
+                      }
+                    ],
+                    "selected": "tab:mine"
+                  }
+                },
+                {
+                  "kind": "Table",
+                  "id": "welcome-cards",
+                  "props": {
+                    "columns": [
+                      {
+                        "label": "Card",
+                        "width": {
+                          "fixed": 64
+                        }
+                      },
+                      {
+                        "label": "Title",
+                        "width": {
+                          "flex": 1
+                        }
+                      },
+                      {
+                        "label": "Stage",
+                        "width": {
+                          "fixed": 70
+                        }
+                      },
+                      {
+                        "label": "State",
+                        "width": {
+                          "fixed": 150
+                        }
+                      },
+                      {
+                        "label": "Time",
+                        "width": {
+                          "fixed": 72
+                        },
+                        "align": "end"
+                      }
+                    ],
+                    "rows": [],
+                    "empty": {
+                      "title": "No board yet",
+                      "line": "Set up Abe ⏎ · your team and its board"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "Island",
+          "id": "welcome-projects",
+          "props": {},
+          "children": [
+            {
+              "kind": "Stack",
+              "props": {
+                "direction": "column",
+                "sizes": [
+                  "auto",
+                  {
+                    "flex": 1
+                  }
+                ]
+              },
+              "children": [
+                {
+                  "kind": "ToolWindowHeader",
+                  "props": {
+                    "title": "Projects",
+                    "tabs": [
+                      {
+                        "id": "new-project",
+                        "label": "New Project…"
+                      },
+                      {
+                        "id": "open",
+                        "label": "Open… ⌘O"
+                      },
+                      {
+                        "id": "clone",
+                        "label": "Clone…"
+                      }
+                    ],
+                    "note": "All projects · 2 ⌘⇧O"
+                  }
+                },
+                {
+                  "kind": "Table",
+                  "id": "welcome-projects",
+                  "props": {
+                    "columns": [
+                      {
+                        "label": "",
+                        "width": {
+                          "fixed": 36
+                        }
+                      },
+                      {
+                        "label": "Project",
+                        "width": {
+                          "fixed": 180
+                        }
+                      },
+                      {
+                        "label": "Folder",
+                        "width": {
+                          "flex": 1
+                        }
+                      },
+                      {
+                        "label": "Branch",
+                        "width": {
+                          "fixed": 140
+                        }
+                      }
+                    ],
+                    "rows": [
+                      {
+                        "id": "project:/home/me/projects/demo-shop",
+                        "cells": [
+                          {
+                            "accent": "DS"
+                          },
+                          {
+                            "text": "demo-shop"
+                          },
+                          {
+                            "text": "~/projects/demo-shop",
+                            "hue": "dim"
+                          },
+                          {
+                            "text": "main",
+                            "hue": "dim"
+                          }
+                        ]
+                      },
+                      {
+                        "id": "project:/home/me/projects/vimstorm",
+                        "cells": [
+                          {
+                            "accent": "V"
+                          },
+                          {
+                            "text": "vimstorm"
+                          },
+                          {
+                            "text": "~/projects/vimstorm",
+                            "hue": "dim"
+                          },
+                          {
+                            "text": "abe",
+                            "hue": "dim"
+                          }
+                        ]
+                      }
+                    ],
+                    "selected": "project:/home/me/projects/demo-shop"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

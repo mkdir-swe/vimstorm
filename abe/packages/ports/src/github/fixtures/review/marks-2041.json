@@ -1,0 +1,18 @@
+{
+  "at": 1790845200000,
+  "head": "abc123",
+  "paths": [
+    "src/b.ts",
+    "src/a.ts"
+  ],
+  "marks": {
+    "10": {
+      "hash": "h2",
+      "head": "abc000"
+    },
+    "src/b.ts": {
+      "hash": "h1",
+      "head": "abc123"
+    }
+  }
+}

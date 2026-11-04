@@ -1,0 +1,680 @@
+{
+  "kind": "SettingsDialog",
+  "id": "settings",
+  "props": {
+    "title": "Settings",
+    "search": {
+      "text": ""
+    },
+    "note": "Each change saves as you make it; ⌘⏎ proposes one for the repo",
+    "focus": "page"
+  },
+  "children": [
+    {
+      "kind": "SettingsTree",
+      "id": "settings:tree",
+      "props": {
+        "nodes": [
+          {
+            "id": "settings:tree:problems",
+            "label": "Problems",
+            "depth": 0,
+            "count": {
+              "text": "· 3",
+              "tone": "warn"
+            },
+            "separator": true
+          },
+          {
+            "id": "settings:tree:appearance-behavior",
+            "label": "Appearance & Behavior",
+            "depth": 0,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:appearance",
+            "label": "Appearance",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:import-config",
+            "label": "Import config",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:editor",
+            "label": "Editor",
+            "depth": 0,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:editor-general",
+            "label": "General",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:editor-font",
+            "label": "Font",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:color-scheme",
+            "label": "Color scheme",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:vim",
+            "label": "Vim",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:abe",
+            "label": "Abe",
+            "depth": 0,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:agents",
+            "label": "Agents & models",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:board-team",
+            "label": "Board & you",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:boxes-cloud",
+            "label": "Boxes & cloud",
+            "depth": 1,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:browser-profiles",
+            "label": "Browser profiles",
+            "depth": 2
+          },
+          {
+            "id": "settings:tree:factory-policy",
+            "label": "Factory policy",
+            "depth": 1,
+            "count": {
+              "text": "1",
+              "tone": "dim"
+            },
+            "selected": true
+          },
+          {
+            "id": "settings:tree:local-mode",
+            "label": "Local mode",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:reach",
+            "label": "Reach",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:logins-tools",
+            "label": "Logins & tools",
+            "depth": 0,
+            "count": {
+              "text": "2",
+              "tone": "dim"
+            }
+          },
+          {
+            "id": "settings:tree:tools",
+            "label": "Tools check",
+            "depth": 0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "SettingsPage",
+      "id": "settings:page",
+      "props": {
+        "crumbs": [
+          "Abe",
+          "Factory policy"
+        ],
+        "scope": "demo-shop",
+        "reveal": "settings:group:1"
+      },
+      "children": [
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:group:0",
+          "props": {
+            "caption": "Merge"
+          },
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:0",
+              "props": {
+                "label": "Auto merge",
+                "control": {
+                  "kind": "checkbox",
+                  "on": false
+                },
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:1",
+              "props": {
+                "label": "Done when",
+                "control": {
+                  "kind": "combo",
+                  "value": "test"
+                },
+                "help": "deployed to this environment, or merged",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:group:1",
+          "props": {
+            "caption": "Checks"
+          },
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:2",
+              "props": {
+                "label": "Checks",
+                "control": {
+                  "kind": "list",
+                  "items": [
+                    {
+                      "text": "tests"
+                    },
+                    {
+                      "text": "types"
+                    },
+                    {
+                      "text": "lint"
+                    },
+                    {
+                      "text": "no-deleted-tests"
+                    },
+                    {
+                      "text": "no-new-suppressions"
+                    }
+                  ]
+                },
+                "help": "each one's command is its run: in the repo's abe.yaml",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:3",
+              "props": {
+                "label": "Test files",
+                "control": {
+                  "kind": "list",
+                  "items": [
+                    {
+                      "text": "*.test.*"
+                    },
+                    {
+                      "text": "*.spec.*"
+                    },
+                    {
+                      "text": "test/"
+                    },
+                    {
+                      "text": "tests/"
+                    }
+                  ],
+                  "open": {
+                    "cursor": 4,
+                    "field": {
+                      "at": null,
+                      "text": "spec/"
+                    }
+                  }
+                },
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local",
+                "hint": "⏎ edit the list · ⌘⏎ propose for the repo",
+                "focused": true
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:4",
+              "props": {
+                "label": "Checks environment",
+                "control": {
+                  "kind": "combo",
+                  "value": "none · dev"
+                },
+                "help": "its Abe env file and aws keys: off for agents, the checks are refused",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:5",
+              "props": {
+                "label": "Worktree setup",
+                "control": {
+                  "kind": "field",
+                  "text": "",
+                  "size": "free"
+                },
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:6",
+              "props": {
+                "label": "Worktree recipe",
+                "control": {
+                  "kind": "records",
+                  "columns": [
+                    {
+                      "label": "Path",
+                      "size": 4
+                    },
+                    {
+                      "label": "How",
+                      "size": 1,
+                      "pick": true
+                    },
+                    {
+                      "label": "Group",
+                      "size": 1,
+                      "pick": true
+                    }
+                  ],
+                  "rows": []
+                },
+                "help": "what a new worktree gets from the main checkout; a group's only while its environment is on",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "repo"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:7",
+              "props": {
+                "label": "Push timeout",
+                "control": {
+                  "kind": "field",
+                  "text": "15",
+                  "size": "number",
+                  "unit": "min"
+                },
+                "help": "the repo's pre-push hook runs inside the push",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:group:2",
+          "props": {
+            "caption": "Hook points"
+          },
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:8",
+              "props": {
+                "label": "Start script",
+                "control": {
+                  "kind": "field",
+                  "text": "",
+                  "size": "path"
+                },
+                "help": "each role Abe calls, in the repo's abe.yaml: unset, today's place",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "repo"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:9",
+              "props": {
+                "label": "Stop script",
+                "control": {
+                  "kind": "field",
+                  "text": "",
+                  "size": "path"
+                },
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "repo"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:10",
+              "props": {
+                "label": "Seed script",
+                "control": {
+                  "kind": "field",
+                  "text": "",
+                  "size": "path"
+                },
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "repo"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:11",
+              "props": {
+                "label": "Database script",
+                "control": {
+                  "kind": "field",
+                  "text": "",
+                  "size": "path"
+                },
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "repo"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:12",
+              "props": {
+                "label": "Query script",
+                "control": {
+                  "kind": "field",
+                  "text": "",
+                  "size": "path"
+                },
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "repo"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:13",
+              "props": {
+                "label": "Prototype start",
+                "control": {
+                  "kind": "field",
+                  "text": "",
+                  "size": "path"
+                },
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "repo"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:14",
+              "props": {
+                "label": "Prototype stop",
+                "control": {
+                  "kind": "field",
+                  "text": "",
+                  "size": "path"
+                },
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "repo"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:15",
+              "props": {
+                "label": "Worktree script",
+                "control": {
+                  "kind": "field",
+                  "text": "",
+                  "size": "path"
+                },
+                "help": "serve runs it last in each new worktree",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "repo"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:16",
+              "props": {
+                "label": "Run-app skill",
+                "control": {
+                  "kind": "field",
+                  "text": "",
+                  "size": "short"
+                },
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "repo"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:17",
+              "props": {
+                "label": "Testing skill",
+                "control": {
+                  "kind": "field",
+                  "text": "",
+                  "size": "short"
+                },
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "repo"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:18",
+              "props": {
+                "label": "Verification skill",
+                "control": {
+                  "kind": "field",
+                  "text": "",
+                  "size": "short"
+                },
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "repo"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:19",
+              "props": {
+                "label": "Find-out heading",
+                "control": {
+                  "kind": "field",
+                  "text": "",
+                  "size": "free"
+                },
+                "help": "in CLAUDE.md",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "repo"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:20",
+              "props": {
+                "label": "Read-data heading",
+                "control": {
+                  "kind": "field",
+                  "text": "",
+                  "size": "free"
+                },
+                "help": "in run-app's SKILL.md",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "repo"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:group:3",
+          "props": {
+            "caption": "The app"
+          },
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:21",
+              "props": {
+                "label": "Repo kind",
+                "control": {
+                  "kind": "records",
+                  "columns": [
+                    {
+                      "label": "Part",
+                      "size": 3
+                    },
+                    {
+                      "label": "Kind",
+                      "size": 2,
+                      "pick": true
+                    }
+                  ],
+                  "rows": []
+                },
+                "help": "unset: Read's; a monorepo's per part (its folder)",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "repo"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:22",
+              "props": {
+                "label": "Fixed ports",
+                "control": {
+                  "kind": "list",
+                  "items": []
+                },
+                "help": "one session's app at a time",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:23",
+              "props": {
+                "label": "Test hosts",
+                "control": {
+                  "kind": "list",
+                  "items": []
+                },
+                "help": "the gate lets them through",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:24",
+              "props": {
+                "label": "Read-only prod hosts",
+                "control": {
+                  "kind": "list",
+                  "items": []
+                },
+                "help": "prod the app only reads from",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:25",
+              "props": {
+                "label": "Not used by the app",
+                "control": {
+                  "kind": "records",
+                  "columns": [
+                    {
+                      "label": "Key or env file",
+                      "size": 2
+                    },
+                    {
+                      "label": "How you know",
+                      "size": 4
+                    }
+                  ],
+                  "rows": []
+                },
+                "help": "keys and env files the gate does not judge",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

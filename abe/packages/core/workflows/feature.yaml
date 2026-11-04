@@ -1,0 +1,34 @@
+# Feature: any card no other workflow takes. Specified first, sliced into tickets, then built
+# (the tickets in parallel), checked, reviewed, verified and opened as a pull request. A copy in
+# your Layer (or the repo's) may add, drop or move steps.
+name: Feature
+description: 'Made sure of first: specified, sliced into tickets, built, checked, reviewed, verified.'
+on: default
+branch: card/<card>
+steps:
+  - create-specification: { skill: create-specification }
+  - to-tickets: { skill: to-tickets } # sliced for writers in parallel, milestones for the heavy tests
+  - build: { skill: implement, fresh: loop }
+  - checks # serve runs them
+  - review: { skill: code-review, fresh: true }
+  - verify: { skill: verify, fresh: true } # picks its own level from the spec and the diff
+  - playbook:
+      skill: playbook
+      when: { judge: 'Does the diff need manual steps after merge?', sees: [diff] }
+  - pr: { skill: pr, fresh: true } # serve opens it; the run ends at the team's factory.done
+loops:
+  - from: checks
+    to: build
+    when: { check: checks.failed > 0 }
+    carries: [checks.output]
+    max: 10
+  - from: review
+    to: build
+    when: { check: review.findings > 0 }
+    carries: [review.findings]
+    max: 2
+  - from: verify
+    to: build
+    when: { check: criteria.failed > 0 }
+    carries: [criterion, evidence]
+    max: 10

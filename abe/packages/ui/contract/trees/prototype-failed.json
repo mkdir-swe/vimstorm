@@ -1,0 +1,64 @@
+{
+  "kind": "PrototypePage",
+  "id": "prototype-page",
+  "props": {
+    "page": "preview",
+    "bar": {
+      "host": "",
+      "path": "/",
+      "viewports": [
+        {
+          "id": "proto:viewport:fit",
+          "label": "Fit",
+          "on": true
+        },
+        {
+          "id": "proto:viewport:1280",
+          "label": "1280",
+          "on": false
+        },
+        {
+          "id": "proto:viewport:768",
+          "label": "768",
+          "on": false
+        },
+        {
+          "id": "proto:viewport:390",
+          "label": "390",
+          "on": false
+        }
+      ],
+      "reload": "proto:reload",
+      "open": "proto:open",
+      "actions": [
+        {
+          "id": "proto:make-card",
+          "label": "Make card",
+          "keys": "m"
+        }
+      ]
+    },
+    "body": {
+      "kind": "failed",
+      "title": "The app did not start",
+      "lines": [
+        "  vite v5.4.2  dev server",
+        "Error: listen EADDRINUSE: address already in use :::3000"
+      ],
+      "hint": "abe/scripts/prototype-start exited 1",
+      "actions": [
+        {
+          "id": "proto:fix",
+          "label": "Ask the prototype to fix",
+          "keys": "⏎",
+          "primary": true
+        },
+        {
+          "id": "proto:restart",
+          "label": "Restart",
+          "keys": "R"
+        }
+      ]
+    }
+  }
+}

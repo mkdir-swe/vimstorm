@@ -1,0 +1,395 @@
+{
+  "kind": "Island",
+  "id": "chat-turn-gallery",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "row",
+        "gap": 12,
+        "sizes": [
+          {
+            "fixed": 420
+          },
+          {
+            "fixed": 320
+          }
+        ],
+        "align": "stretch"
+      },
+      "children": [
+        {
+          "kind": "Stack",
+          "props": {
+            "direction": "column",
+            "gap": 8,
+            "align": "stretch"
+          },
+          "children": [
+            {
+              "kind": "ChatHeader",
+              "id": "gallery:header:box",
+              "props": {
+                "title": "Chat",
+                "story": {
+                  "id": "#2",
+                  "title": "The cart total ignores quantity"
+                },
+                "modes": [
+                  {
+                    "id": "chat:mode:chat",
+                    "label": "Chat",
+                    "tooltip": "Chat  ⌃⌘←"
+                  },
+                  {
+                    "id": "chat:mode:terminal",
+                    "label": "Claude Code",
+                    "tooltip": "Claude Code: the session's own terminal  ⌃⌘→"
+                  }
+                ],
+                "mode": "chat:mode:chat",
+                "menu": "chat:menu",
+                "hide": "chat:hide",
+                "env": "Local sandbox",
+                "hint": "⌘⏎",
+                "rail": {
+                  "segments": [
+                    "done",
+                    "now",
+                    "todo",
+                    "todo",
+                    "todo"
+                  ],
+                  "stage": "Build",
+                  "state": "running",
+                  "glyph": "●",
+                  "word": "Running",
+                  "elapsed": "21 min"
+                },
+                "subagents": 2,
+                "box": {
+                  "name": "demo-shop-102",
+                  "state": "running"
+                },
+                "override": "Test DB write · overridden by you: Seed the shop for the Before check"
+              }
+            },
+            {
+              "kind": "ChatHeader",
+              "id": "gallery:header:need",
+              "props": {
+                "title": "Chat",
+                "modes": [
+                  {
+                    "id": "chat:mode:chat",
+                    "label": "Chat",
+                    "needsYou": true
+                  },
+                  {
+                    "id": "chat:mode:terminal",
+                    "label": "Claude Code"
+                  }
+                ],
+                "mode": "chat:mode:terminal",
+                "story": {
+                  "id": "#2",
+                  "title": "The cart total ignores quantity"
+                },
+                "box": {
+                  "name": "demo-shop-3",
+                  "state": "asleep"
+                },
+                "rail": {
+                  "segments": [
+                    "done",
+                    "need",
+                    "todo",
+                    "todo",
+                    "todo"
+                  ],
+                  "stage": "Build",
+                  "state": "needs-you",
+                  "glyph": "◆",
+                  "word": "Needs you",
+                  "elapsed": "21 min"
+                },
+                "subagents": 2
+              }
+            },
+            {
+              "kind": "ChatHeader",
+              "id": "gallery:header:starting",
+              "props": {
+                "title": "Chat",
+                "story": {
+                  "id": "#1",
+                  "title": "Show stock on a product card"
+                },
+                "box": {
+                  "name": "demo-shop-1",
+                  "state": "starting"
+                },
+                "rail": {
+                  "segments": [
+                    "wait",
+                    "todo",
+                    "todo",
+                    "todo",
+                    "todo"
+                  ],
+                  "stage": "Spec",
+                  "state": "starting",
+                  "glyph": "●",
+                  "word": "Starting"
+                }
+              }
+            },
+            {
+              "kind": "QueuedMessage",
+              "id": "queued:1",
+              "props": {
+                "text": "also handle a zero quantity",
+                "remove": "queued:1:remove"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "Transcript",
+          "id": "gallery:transcript",
+          "props": {},
+          "children": [
+            {
+              "kind": "ChatMessage",
+              "props": {
+                "text": "A message without a chip"
+              }
+            },
+            {
+              "kind": "StageDivider",
+              "props": {
+                "from": "Build",
+                "to": "Review",
+                "at": "12:41"
+              }
+            },
+            {
+              "kind": "StageDivider",
+              "props": {
+                "from": "Reopened",
+                "to": "",
+                "at": "09:14"
+              }
+            },
+            {
+              "kind": "Turn",
+              "props": {},
+              "children": [
+                {
+                  "kind": "ChangesBar",
+                  "id": "gallery:changes",
+                  "props": {
+                    "kept": true,
+                    "files": 1,
+                    "added": 1,
+                    "removed": 0,
+                    "where": "~/.config/abe/user.json",
+                    "actions": [
+                      {
+                        "id": "undo",
+                        "label": "Undo"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "DiffCard",
+                  "id": "gallery:diff",
+                  "props": {
+                    "path": "web/src/total.js",
+                    "added": 30,
+                    "removed": 0,
+                    "lines": [
+                      {
+                        "kind": "context",
+                        "number": 1,
+                        "text": "const line1 = 1;"
+                      },
+                      {
+                        "kind": "context",
+                        "number": 2,
+                        "text": "const line2 = 2;"
+                      },
+                      {
+                        "kind": "context",
+                        "number": 3,
+                        "text": "const line3 = 3;"
+                      },
+                      {
+                        "kind": "context",
+                        "number": 4,
+                        "text": "const line4 = 4;"
+                      },
+                      {
+                        "kind": "context",
+                        "number": 5,
+                        "text": "const line5 = 5;"
+                      },
+                      {
+                        "kind": "context",
+                        "number": 6,
+                        "text": "const line6 = 6;"
+                      },
+                      {
+                        "kind": "context",
+                        "number": 7,
+                        "text": "const line7 = 7;"
+                      },
+                      {
+                        "kind": "context",
+                        "number": 8,
+                        "text": "const line8 = 8;"
+                      },
+                      {
+                        "kind": "context",
+                        "number": 9,
+                        "text": "const line9 = 9;"
+                      },
+                      {
+                        "kind": "context",
+                        "number": 10,
+                        "text": "const line10 = 10;"
+                      },
+                      {
+                        "kind": "context",
+                        "number": 11,
+                        "text": "const line11 = 11;"
+                      },
+                      {
+                        "kind": "context",
+                        "number": 12,
+                        "text": "const line12 = 12;"
+                      }
+                    ],
+                    "note": "⏎ open · u revert",
+                    "more": {
+                      "count": 18,
+                      "id": "gallery:diff:more"
+                    },
+                    "selected": true
+                  }
+                },
+                {
+                  "kind": "DiffCard",
+                  "props": {
+                    "path": "README",
+                    "added": 1,
+                    "removed": 0,
+                    "lines": [
+                      {
+                        "kind": "inserted",
+                        "number": 1,
+                        "text": "// a plain file, no colours"
+                      }
+                    ],
+                    "lang": "text"
+                  }
+                },
+                {
+                  "kind": "StepsFold",
+                  "id": "gallery:steps",
+                  "props": {
+                    "count": 12
+                  }
+                },
+                {
+                  "kind": "StepRow",
+                  "id": "gallery:step:search",
+                  "props": {
+                    "mark": "good",
+                    "verb": "Searched",
+                    "object": "\"quantity\"",
+                    "objectKind": "text",
+                    "result": "4 files"
+                  }
+                },
+                {
+                  "kind": "StepRow",
+                  "id": "gallery:step:failed",
+                  "props": {
+                    "mark": "bad",
+                    "verb": "Ran",
+                    "object": "npm test",
+                    "objectKind": "command",
+                    "result": "1 failed · cart total ignores quantity",
+                    "selected": true,
+                    "unfolded": true,
+                    "output": [
+                      "FAIL  cart total ignores quantity",
+                      "AssertionError: expected 375 to be 1125",
+                      " ❯ test/cart.test.ts:21:30",
+                      "Tests  1 failed | 10 passed | 2 skipped (13)"
+                    ]
+                  }
+                },
+                {
+                  "kind": "StepRow",
+                  "id": "gallery:step:live",
+                  "props": {
+                    "mark": "live",
+                    "verb": "Running",
+                    "object": "npm test",
+                    "objectKind": "command",
+                    "time": "4 s"
+                  }
+                },
+                {
+                  "kind": "StepRow",
+                  "id": "gallery:step:long",
+                  "props": {
+                    "mark": "good",
+                    "verb": "Ran",
+                    "object": "npm run build",
+                    "objectKind": "command",
+                    "unfolded": true,
+                    "output": [
+                      "built chunk 1",
+                      "built chunk 2",
+                      "built chunk 3",
+                      "built chunk 4",
+                      "built chunk 5",
+                      "built chunk 6",
+                      "built chunk 7",
+                      "built chunk 8",
+                      "built chunk 9",
+                      "built chunk 10"
+                    ],
+                    "more": {
+                      "count": 2,
+                      "id": "gallery:step:long:more"
+                    }
+                  }
+                },
+                {
+                  "kind": "Prose",
+                  "id": "gallery:prose",
+                  "props": {
+                    "markdown": "One line with `code`, then a list that wraps in a narrow column:\n\n- Each line now counts its price times its quantity, before VAT.\n- The skipped test for every unit of a line runs again and passes."
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "NewBelow",
+              "id": "gallery:new",
+              "props": {
+                "count": 3
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

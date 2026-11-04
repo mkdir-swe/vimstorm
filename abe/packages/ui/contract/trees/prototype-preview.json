@@ -1,0 +1,63 @@
+{
+  "kind": "PrototypePage",
+  "id": "prototype-page",
+  "props": {
+    "page": "preview",
+    "bar": {
+      "host": "127.0.0.1:41207",
+      "path": "/products",
+      "viewports": [
+        {
+          "id": "proto:viewport:fit",
+          "label": "Fit",
+          "on": false
+        },
+        {
+          "id": "proto:viewport:1280",
+          "label": "1280",
+          "on": false
+        },
+        {
+          "id": "proto:viewport:768",
+          "label": "768",
+          "on": false
+        },
+        {
+          "id": "proto:viewport:390",
+          "label": "390",
+          "on": true
+        }
+      ],
+      "reload": "proto:reload",
+      "open": "proto:open",
+      "actions": [
+        {
+          "id": "proto:make-card",
+          "label": "Make card",
+          "keys": "m"
+        }
+      ]
+    },
+    "body": {
+      "kind": "live",
+      "width": 390,
+      "phone": true,
+      "keys": false
+    }
+  },
+  "children": [
+    {
+      "kind": "BrowserView",
+      "id": "prototype-preview",
+      "props": {
+        "key": "prototype:proto-1a2b3c",
+        "url": "http://127.0.0.1:41207",
+        "mode": "app",
+        "bare": true,
+        "reload": 0,
+        "title": "Preview",
+        "focused": false
+      }
+    }
+  ]
+}

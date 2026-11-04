@@ -1,0 +1,8 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "open-file",
+    "path": "/home/me/projects/demo-shop-wt/2-cart/.abe/spec.md"
+  }
+}

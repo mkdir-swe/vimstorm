@@ -1,0 +1,16 @@
+{
+  "kind": "PickLayer",
+  "id": "action-menu",
+  "props": {
+    "title": "#1262 Greeted by time of day",
+    "filter": "mov",
+    "rows": [
+      {
+        "id": "move",
+        "text": "Move…",
+        "dim": "now New"
+      }
+    ],
+    "selected": "move"
+  }
+}

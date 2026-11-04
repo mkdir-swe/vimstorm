@@ -1,0 +1,189 @@
+{
+  "project": "Sandbox",
+  "team": { "id": "team", "name": "Sandbox" },
+  "me": "alex@example.test",
+  "members": [
+    { "id": "u-alex", "displayName": "Alex Example", "uniqueName": "alex@example.test" },
+    { "id": "u-sam", "displayName": "Sam Sample", "uniqueName": "sam@example.test" },
+    { "id": "u-robin", "displayName": "Robin Placeholder", "uniqueName": "robin@example.test" }
+  ],
+  "areas": ["Sandbox", "Sandbox\\Web", "Sandbox\\API"],
+  "sprints": [{ "name": "Sprint 1", "current": true }, { "name": "Sprint 2" }],
+  "attachments": [
+    {
+      "id": "5e0c7a3b-6d1f-4b8e-9a2c-0f4d3b2a1c90",
+      "contentType": "application/octet-stream",
+      "base64": "iVBORw0KGgoAAAANSUhEUgAAABgAAAAQCAIAAACDRijCAAAAJUlEQVR42mN4hgRsKk7AEaniDMPYIEo0I4sPZ4NG09FoOqKCQQC6yiKu+R4hlQAAAABJRU5ErkJggg=="
+    },
+    {
+      "id": "0b1d2e3f-4a5b-4c6d-8e7f-001122334455",
+      "contentType": "application/octet-stream",
+      "base64": "U2VlbiBvbiBhIG5hcnJvdyB3aW5kb3cuCg=="
+    }
+  ],
+  "lanes": ["", "Expedite", "External dependencies"],
+  "items": [
+    {
+      "id": 1,
+      "type": "Epic",
+      "title": "Self-service demo shop",
+      "state": "Active",
+      "area": "Sandbox",
+      "description": "<div>The <b>demo</b> shop customers use to try things.</div>"
+    },
+    {
+      "id": 2,
+      "type": "Feature",
+      "title": "Sign-in",
+      "state": "Active",
+      "parent": 1,
+      "area": "Sandbox\\Web",
+      "assignedTo": "sam@example.test",
+      "startDate": "@sprint:0:start",
+      "targetDate": "@sprint:1:finish"
+    },
+    {
+      "id": 3,
+      "type": "Feature",
+      "title": "Order history",
+      "state": "New",
+      "parent": 1,
+      "area": "Sandbox\\API"
+    },
+    {
+      "id": 4,
+      "type": "User Story",
+      "title": "As a visitor I can sign in with email",
+      "state": "Active",
+      "parent": 2,
+      "area": "Sandbox\\Web",
+      "sprint": 0,
+      "assignedTo": "alex@example.test",
+      "points": 5,
+      "priority": 1,
+      "tags": "auth; web",
+      "description": "<div><h3>Why</h3><p>Visitors need an account to see their <i>orders</i>.</p><ul><li>email + password</li><li>remember me</li></ul></div>",
+      "acceptanceCriteria": "<ul><li>A wrong password says so</li><li>Signed in, the header shows the name</li></ul>",
+      "comments": [
+        {
+          "by": "sam@example.test",
+          "text": "<div>Should we support <b>magic links</b> too?</div>",
+          "daysAgo": 3
+        },
+        { "by": "alex@example.test", "text": "<div>Later, as its own story.</div>", "daysAgo": 2 }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "User Story",
+      "title": "As a visitor I can reset my password",
+      "state": "New",
+      "parent": 2,
+      "area": "Sandbox\\Web",
+      "sprint": 0,
+      "points": 3,
+      "priority": 2
+    },
+    {
+      "id": 6,
+      "type": "User Story",
+      "title": "As a customer I see my last ten orders",
+      "state": "Resolved",
+      "parent": 3,
+      "area": "Sandbox\\API",
+      "sprint": 0,
+      "assignedTo": "robin@example.test",
+      "points": 8,
+      "priority": 2,
+      "description": "<p>List with date, total and status. <a href=\"https://example.test/spec\">Spec</a>.</p>"
+    },
+    {
+      "id": 7,
+      "type": "User Story",
+      "title": "As a customer I can filter orders by date",
+      "state": "New",
+      "parent": 3,
+      "area": "Sandbox\\API",
+      "sprint": 1,
+      "lane": "External dependencies",
+      "points": 5,
+      "priority": 3
+    },
+    {
+      "id": 8,
+      "type": "Bug",
+      "title": "Sign-in button overlaps the logo on narrow screens",
+      "state": "Active",
+      "area": "Sandbox\\Web",
+      "sprint": 0,
+      "assignedTo": "sam@example.test",
+      "priority": 1,
+      "lane": "Expedite",
+      "tags": "web",
+      "reproSteps": "<ol><li>Open the start page at 360 px</li><li>Look at the header</li></ol><p>The <code>Sign in</code> button covers the logo.</p>",
+      "attachments": [{ "name": "notes.txt", "text": "Seen on a narrow window.\n" }],
+      "comments": [
+        {
+          "by": "robin@example.test",
+          "text": "<div>Also on tablets in portrait.</div>",
+          "daysAgo": 1
+        },
+        {
+          "by": "sam@example.test",
+          "text": "<div>How it looks at 360 px:</div><div><img src=\"https://dev.azure.com/demo-org/Sandbox/_apis/wit/attachments/5e0c7a3b-6d1f-4b8e-9a2c-0f4d3b2a1c90?fileName=narrow.png\" alt=\"narrow.png\"></div>",
+          "daysAgo": 1
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "type": "Bug",
+      "title": "Order totals round to whole numbers",
+      "state": "Closed",
+      "area": "Sandbox\\API",
+      "sprint": 0,
+      "assignedTo": "robin@example.test",
+      "priority": 2
+    },
+    {
+      "id": 10,
+      "type": "Task",
+      "title": "Add the sign-in form",
+      "state": "Active",
+      "parent": 4,
+      "area": "Sandbox\\Web",
+      "sprint": 0,
+      "assignedTo": "alex@example.test"
+    },
+    {
+      "id": 11,
+      "type": "Task",
+      "title": "Write the sign-in tests",
+      "state": "New",
+      "parent": 4,
+      "area": "Sandbox\\Web",
+      "sprint": 0
+    },
+    {
+      "id": 12,
+      "type": "Task",
+      "title": "Order list endpoint",
+      "state": "Closed",
+      "parent": 6,
+      "area": "Sandbox\\API",
+      "sprint": 0,
+      "assignedTo": "robin@example.test"
+    },
+    {
+      "id": 13,
+      "type": "User Story",
+      "title": "As a customer I can pay by card",
+      "state": "New",
+      "area": "Sandbox\\Web",
+      "sprint": 1,
+      "tags": "checkout",
+      "markdown": ["System.Description"],
+      "description": "## Why\n\nPaying takes &lt;1 minute &amp; no account."
+    }
+  ]
+}

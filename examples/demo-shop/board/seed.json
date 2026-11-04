@@ -1,0 +1,19 @@
+{
+  "cards": [
+    {
+      "title": "Show stock on a product card",
+      "labels": ["enhancement"],
+      "body": "## Why\n\nShoppers add teas we have run out of and only find out at checkout.\n\n## What\n\nEach product card shows how many are in stock. The API already keeps `stock` per product but does not return it.\n\n- Return `stock` from `GET /api/products`.\n- Show it on the product card in the front end.\n\n## Acceptance criteria\n\n- [ ] A product with more than 3 in stock shows **In stock**.\n- [ ] A product with 1 to 3 in stock shows **Only N left**.\n- [ ] A product with none shows **Out of stock** and its Add to cart button is disabled.\n- [ ] `GET /api/products` includes `stock` for each product.\n"
+    },
+    {
+      "title": "The cart total ignores quantity",
+      "labels": ["bug"],
+      "body": "## Steps\n\n1. Seed and start the shop (`npm run seed`, then `npm run dev -w api` and `npm run dev -w web`).\n2. Add Assam Breakfast to the cart and press + twice, so the quantity is 3.\n3. Look at the cart.\n\nThe line says €29.70 but the Total says €9.90: the total counts each product once, whatever its quantity.\n\n## Acceptance criteria\n\n- [ ] The cart total is the sum of each line's unit price times its quantity.\n- [ ] The skipped test pinning this in `api/test/cart.test.ts` runs and passes.\n"
+    },
+    {
+      "title": "Pin the Node version",
+      "labels": ["enhancement"],
+      "body": "CI says Node 22 in the workflow and the repo says nothing. Pin it in one place.\n\n- Add `.nvmrc` with `22`.\n- Add `\"engines\": { \"node\": \">=22 <23\" }` to the root `package.json`.\n- Let CI read the version with `node-version-file: .nvmrc`.\n\nNo behaviour changes.\n\n## Acceptance criteria\n\n- [ ] `.nvmrc` says `22`.\n- [ ] The root `package.json` has `engines.node` set to Node 22.\n- [ ] CI reads the version from `.nvmrc` (`node-version-file`) and stays green.\n- [ ] No change to the app's behaviour.\n"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "demo-shop",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "api",
+    "web"
+  ],
+  "scripts": {
+    "build": "npm run build -w api && npm run build -w web",
+    "test": "npm test -w api && npm test -w web",
+    "typecheck": "npm run typecheck -w api && npm run typecheck -w web",
+    "lint": "eslint .",
+    "migrate": "npm run migrate -w api",
+    "seed": "npm run seed -w api"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.13.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.13.0",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.72.0"
+  }
+}

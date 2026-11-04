@@ -1,0 +1,132 @@
+{
+  "kind": "Island",
+  "id": "pipelines",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "sizes": [
+          {
+            "fixed": 30
+          },
+          {
+            "flex": 1
+          }
+        ],
+        "align": "stretch"
+      },
+      "children": [
+        {
+          "kind": "PipelinesBar",
+          "id": "pipelines-bar",
+          "props": {
+            "scopes": [
+              {
+                "id": "scope:workspace",
+                "label": "This workspace",
+                "tooltip": "Runs on this workspace's branch"
+              },
+              {
+                "id": "scope:all",
+                "label": "All",
+                "tooltip": "The repository's runs"
+              },
+              {
+                "id": "scope:mine",
+                "label": "Mine",
+                "tooltip": "Runs I started"
+              }
+            ],
+            "selected": "scope:all",
+            "workflow": {
+              "label": "Workflow ▾",
+              "on": false
+            },
+            "count": "0 runs"
+          }
+        },
+        {
+          "kind": "Table",
+          "id": "pipelines-table",
+          "props": {
+            "columns": [
+              {
+                "label": "State",
+                "width": {
+                  "fixed": 128
+                }
+              },
+              {
+                "label": "Workflow",
+                "width": {
+                  "fixed": 112
+                }
+              },
+              {
+                "label": "Run",
+                "width": {
+                  "flex": 3
+                }
+              },
+              {
+                "label": "Branch · trigger",
+                "width": {
+                  "flex": 2
+                }
+              },
+              {
+                "label": "Agent",
+                "width": {
+                  "fixed": 200
+                }
+              },
+              {
+                "label": "Started",
+                "width": {
+                  "fixed": 72
+                },
+                "align": "end"
+              },
+              {
+                "label": "Duration",
+                "width": {
+                  "fixed": 72
+                },
+                "align": "end"
+              }
+            ],
+            "rows": [],
+            "empty": {
+              "title": "Reading runs…",
+              "line": "The repository’s pipelines, a moment"
+            },
+            "foot": [
+              {
+                "keys": "⏎",
+                "label": "inspect"
+              },
+              {
+                "keys": "⌘⏎",
+                "label": "actions"
+              },
+              {
+                "keys": "Tab",
+                "label": "scope"
+              },
+              {
+                "keys": "w",
+                "label": "workflow"
+              },
+              {
+                "keys": "r",
+                "label": "read again"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

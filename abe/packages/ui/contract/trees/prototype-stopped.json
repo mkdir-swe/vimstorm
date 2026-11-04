@@ -1,0 +1,61 @@
+{
+  "kind": "PrototypePage",
+  "id": "prototype-page",
+  "props": {
+    "page": "preview",
+    "bar": {
+      "host": "",
+      "path": "/",
+      "viewports": [
+        {
+          "id": "proto:viewport:fit",
+          "label": "Fit",
+          "on": true
+        },
+        {
+          "id": "proto:viewport:1280",
+          "label": "1280",
+          "on": false
+        },
+        {
+          "id": "proto:viewport:768",
+          "label": "768",
+          "on": false
+        },
+        {
+          "id": "proto:viewport:390",
+          "label": "390",
+          "on": false
+        }
+      ],
+      "reload": "proto:reload",
+      "open": "proto:open",
+      "actions": [
+        {
+          "id": "proto:make-card",
+          "label": "Make card",
+          "keys": "m"
+        }
+      ]
+    },
+    "body": {
+      "kind": "stopped",
+      "title": "Stopped 2 days ago",
+      "shot": "/home/me/.local/state/abe/prototypes/proto-1a2b3c/screenshots/1.png",
+      "line": "last screenshot · database abe_proto_5a1e kept",
+      "actions": [
+        {
+          "id": "proto:start",
+          "label": "Start",
+          "keys": "⏎",
+          "primary": true
+        },
+        {
+          "id": "proto:discard",
+          "label": "Discard…",
+          "keys": "d"
+        }
+      ]
+    }
+  }
+}

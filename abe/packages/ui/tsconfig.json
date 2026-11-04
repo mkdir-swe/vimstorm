@@ -1,0 +1,8 @@
+{
+  // Screens are pure trees: no Bun or Node types. Its tests are checked by the root tsconfig.
+  // Core's markdown imports (its skills) are typed by core's own declaration.
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": { "lib": ["ES2023"], "types": [] },
+  "include": ["src", "../core/src/markdown.d.ts"],
+  "exclude": ["src/**/*.test.ts"]
+}

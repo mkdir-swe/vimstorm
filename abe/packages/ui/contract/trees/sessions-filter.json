@@ -1,0 +1,101 @@
+{
+  "kind": "Island",
+  "id": "sessions",
+  "props": {},
+  "children": [
+    {
+      "kind": "Table",
+      "id": "sessions-table",
+      "props": {
+        "columns": [
+          {
+            "label": "Story",
+            "width": {
+              "flex": 1
+            }
+          },
+          {
+            "label": "Stage",
+            "width": {
+              "fixed": 230
+            }
+          },
+          {
+            "label": "State",
+            "width": {
+              "fixed": 160
+            }
+          },
+          {
+            "label": "Where",
+            "width": {
+              "fixed": 90
+            }
+          },
+          {
+            "label": "Time",
+            "width": {
+              "fixed": 100
+            }
+          },
+          {
+            "label": "Subagents",
+            "width": {
+              "fixed": 100
+            }
+          }
+        ],
+        "rows": [
+          {
+            "id": "session:s3",
+            "cells": [
+              {
+                "accent": "#3",
+                "text": "Pin the Node version"
+              },
+              {
+                "rail": [
+                  "done",
+                  "done",
+                  "done",
+                  "done",
+                  "done"
+                ],
+                "text": "Done"
+              },
+              {
+                "mark": "✓",
+                "text": "On test",
+                "hue": "good"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "31 min"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              }
+            ]
+          }
+        ],
+        "selected": "session:s3",
+        "note": "/pin▏ · 1 of 3",
+        "filter": "pin",
+        "foot": [
+          {
+            "keys": "⏎",
+            "label": "chat"
+          },
+          {
+            "keys": "⌘⏎",
+            "label": "actions"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+// Place your key bindings in this file to override the defaults
+[
+  { "key": "cmd+k cmd+t", "command": "workbench.action.selectTheme" },
+  {
+    "key": "ctrl+shift+`",
+    "command": "workbench.action.terminal.new",
+    "when": "terminalProcessSupported"
+  },
+  { "key": "cmd+p", "command": "-workbench.action.quickOpen" },
+  { "key": "cmd+y", "command": "workbench.action.quickOpen" },
+  { "key": "cmd+q", "command": "workbench.action.files.saveAll" }
+]

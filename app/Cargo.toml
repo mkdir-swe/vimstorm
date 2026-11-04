@@ -1,0 +1,111 @@
+[package]
+name = "vimstorm"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+default-run = "vimstorm"
+# tests/*.rs are modules of two test binaries (tests/app.rs, tests/perf.rs), not a binary each: one
+# link per edit, not one per file.
+autotests = false
+
+[lib]
+name = "vimstorm"
+path = "src/lib.rs"
+
+[[bin]]
+name = "vimstorm"
+path = "src/main.rs"
+
+[[test]]
+name = "app"
+path = "tests/app.rs"
+
+[[test]]
+name = "perf"
+path = "tests/perf.rs"
+
+# the look (#108 S4): its own process, since the palette, density and fonts are process-global
+[[test]]
+name = "theme"
+path = "tests/theme.rs"
+
+[workspace]
+resolver = "3"
+
+[workspace.dependencies]
+serde = { version = "1", features = ["derive"] }
+
+[dependencies]
+gpui-kit = "=0.7.3"
+# runtime shader compilation: only Xcode CommandLineTools here (no `xcrun metal`)
+gpui-pre-platform = { version = "=0.3.9", features = ["runtime_shaders"] }
+rmpv = { version = "1", features = ["with-serde"] }
+# typed Lua <-> Rust bridge payloads (rmpv::ext::from_value)
+serde.workspace = true
+# fuzzy matching for pickers (MPL-2.0: file-level copyleft, used unmodified as a dependency)
+nucleo-matcher = "0.3"
+# markdown in hover / signature / peek popups (MIT)
+pulldown-cmark = { version = "0.13", default-features = false }
+# project file walking with .gitignore rules (tree, Search Everywhere; MIT / Unlicense)
+ignore = "0.4"
+anyhow = "1"
+futures = "0.3"
+parking_lot = "0.12"
+# SIGTERM / SIGINT / SIGHUP -> save all and quit nvim before exiting
+signal-hook = "0.3"
+# native terminal (M4): PTY (`tty`), VT parser + grid (`Term`), I/O thread (`event_loop`); Apache-2.0
+alacritty_terminal = "0.26"
+# terminal: SIGHUP / SIGKILL to a closing shell's process group, close-on-exec on the app's fds before a
+# shell starts (MIT / Apache-2.0; already a transitive dependency)
+libc = "0.2"
+# single-instance socket protocol: one JSON line each way (MIT / Apache-2.0; already a transitive dependency)
+serde_json = "1"
+# the Terminal's links (a row's text against a screen's pattern); already a transitive dependency
+regex = "1"
+# local echo (#95): how many cells a typed char takes, as nvim counts them; already a transitive dependency
+unicode-width = "0.2"
+# GPUI's own image crate (already a transitive dependency): the minimap's picture (`RenderImage`
+# frames, #122); shots: a BrowserView's page (WebKit's snapshot) drawn into the offscreen PNG
+image = { version = "0.25", default-features = false, features = ["png"] }
+
+# BrowserView (#79, `src/factory/pages`): a native WKWebView over its slot, on GPUI's own NSView (its raw
+# window handle); the rule list, navigation delegate and Esc monitor through objc2 (MIT)
+[target.'cfg(target_os = "macos")'.dependencies]
+objc2 = "0.6"
+objc2-foundation = "0.3"
+objc2-app-kit = "0.3"
+objc2-web-kit = { version = "0.3", default-features = false, features = [
+  "std",
+  "block2",
+  "objc2-app-kit",
+  "objc2-core-foundation",
+  "WKContentRuleList",
+  "WKContentRuleListStore",
+  "WKFrameInfo",
+  "WKNavigation",
+  "WKNavigationAction",
+  "WKNavigationDelegate",
+  "WKScriptMessage",
+  "WKScriptMessageHandler",
+  "WKSnapshotConfiguration",
+  "WKUIDelegate",
+  "WKUserContentController",
+  "WKUserScript",
+  "WKWebView",
+  "WKWebViewConfiguration",
+  "WKWebsiteDataStore",
+  "WKWindowFeatures",
+] }
+block2 = "0.6"
+raw-window-handle = "0.6"
+
+[features]
+# `VIMSTORM_SHOT=<png>`: render the window offscreen to a PNG and quit (screenshots without Screen
+# Recording permission). Needs GPUI's test-support for `Window::render_to_image`.
+shots = ["gpui-pre-platform/test-support"]
+
+[dev-dependencies]
+tempfile = "3"
+# GPUI test context (TestAppContext / VisualTestContext): view tests drive a real EditorView with
+# real key / mouse / IME events
+gpui-pre-platform = { version = "=0.3.9", features = ["runtime_shaders", "test-support"] }

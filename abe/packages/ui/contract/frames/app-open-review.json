@@ -1,0 +1,11 @@
+{
+  "v": 2,
+  "type": "open",
+  "screen": "review",
+  "params": {
+    "pr": "7",
+    "path": "/home/me/projects/demo-shop-pr-7",
+    "list": "heat"
+  },
+  "slot": "review"
+}

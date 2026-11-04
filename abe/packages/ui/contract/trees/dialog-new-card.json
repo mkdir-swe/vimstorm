@@ -1,0 +1,40 @@
+{
+  "kind": "CardDialog",
+  "id": "newcard:dialog",
+  "props": {
+    "kicker": "New card",
+    "card": 0,
+    "state": "Azure · draft",
+    "title": "Customers can save a wishlist▏",
+    "meta": [],
+    "sections": [
+      {
+        "title": "Type · Column · Assignee · Sprint",
+        "markdown": "Type User Story ▾ · Column New ▾ · Assignee Me ▾ · Sprint Sprint 14 ▾"
+      },
+      {
+        "title": "Description",
+        "note": "Why and What",
+        "markdown": "## Why\n\nShoppers lose the products they liked between visits.\n\n## What\n\nA heart on each product saves it; the wishlist page lists what was saved."
+      },
+      {
+        "title": "Acceptance criteria",
+        "markdown": "- [ ] A heart on a product saves it\n- [ ] The wishlist lists every saved product"
+      }
+    ],
+    "scroll": 0,
+    "buttons": [
+      {
+        "id": "dialog:menu",
+        "label": "Draft with the agent",
+        "keys": "⌘⏎"
+      },
+      {
+        "id": "dialog:primary",
+        "label": "Create",
+        "keys": "⏎",
+        "primary": true
+      }
+    ]
+  }
+}

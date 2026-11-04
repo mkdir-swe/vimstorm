@@ -1,0 +1,7 @@
+{
+  "kind": "Empty",
+  "props": {
+    "title": "PR review",
+    "line": "No pull request under review"
+  }
+}

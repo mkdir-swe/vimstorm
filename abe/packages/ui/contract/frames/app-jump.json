@@ -1,0 +1,9 @@
+{
+  "v": 2,
+  "type": "jump",
+  "to": "linked",
+  "from": {
+    "place": "editor",
+    "view": "editor"
+  }
+}

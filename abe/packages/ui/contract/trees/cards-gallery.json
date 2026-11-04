@@ -1,0 +1,120 @@
+{
+  "kind": "Island",
+  "id": "cards:gallery",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "gap": 8,
+        "pad": [
+          12,
+          12,
+          8,
+          12
+        ],
+        "sizes": [
+          "auto",
+          "auto",
+          "auto",
+          "auto",
+          {
+            "flex": 1
+          },
+          "auto"
+        ]
+      },
+      "children": [
+        {
+          "kind": "Prose",
+          "id": "cards:prose",
+          "props": {
+            "markdown": "VAT can come from two places: the markets table in `markets.ts`, or a per-market value the story's comments ask for. That decides what the fix multiplies, so I'll wait for you before the pull request."
+          }
+        },
+        {
+          "kind": "QuestionCard",
+          "id": "gallery:card",
+          "props": {
+            "ask": "question",
+            "title": "Allow Bash: npm run seed -- --target test?",
+            "mono": "npm run seed -- --target test",
+            "why": "Reach: Test DB read, overridden for this session: Seed the shop",
+            "where": "This machine · the command runs outside the sandbox",
+            "more": "The seed script writes the shop’s products and markets.\nIt runs against the Test DB the Override lowered.",
+            "moreOpen": true,
+            "options": [
+              {
+                "n": 1,
+                "label": "Allow once",
+                "recommended": true
+              },
+              {
+                "n": 2,
+                "label": "Open card",
+                "reason": "no story to open"
+              }
+            ],
+            "own": "Tell it what to do instead…",
+            "typing": "",
+            "selected": "own",
+            "stack": {
+              "n": 1,
+              "of": 2
+            },
+            "under": 1,
+            "foot": "⏎ answer · Esc back to the options"
+          }
+        },
+        {
+          "kind": "CardLine",
+          "id": "gallery:waiting",
+          "props": {
+            "head": "Waiting",
+            "text": "No stock source",
+            "note": "⌘4 shows it",
+            "waiting": true
+          }
+        },
+        {
+          "kind": "OverrideCard",
+          "id": "gallery:override",
+          "props": {
+            "title": "Override · Test DB write",
+            "line": "Reach lowered for this session only · tracked on #2 and the PR",
+            "reason": "",
+            "missing": true,
+            "error": "Test DB write is a write, and write names exist only on a box (ADR 0016): Move to cloud, then override it there",
+            "facts": [
+              {
+                "label": "Reach",
+                "text": "Test DB · read → write"
+              },
+              {
+                "label": "Until",
+                "text": "this session ends"
+              }
+            ],
+            "foot": "⏎ override · Esc cancel",
+            "sending": true
+          }
+        },
+        {
+          "kind": "Stack",
+          "props": {
+            "direction": "column"
+          },
+          "children": []
+        },
+        {
+          "kind": "Stack",
+          "props": {
+            "direction": "column"
+          },
+          "children": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  // what a VS Code user changed from its defaults
+  "editor.fontFamily": "JetBrains Mono, Menlo, 'Courier New', monospace",
+  "editor.fontSize": 13.5,
+  "editor.fontLigatures": "'calt', 'ss01'",
+  "editor.tabSize": 2,
+  "editor.minimap.enabled": false,
+  "workbench.colorTheme": "Default Dark Modern",
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.limit.enabled": true,
+  "workbench.editor.limit.value": 8,
+  "files.autoSave": "onWindowChange",
+  "explorer.compactFolders": false,
+  "explorer.autoReveal": "focusNoScroll",
+  "workbench.list.openMode": "doubleClick",
+  /* the Vim extension */
+  "vim.leader": "<space>",
+  "vim.useSystemClipboard": true,
+  "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "url": "http://example.com/a//b"
+}

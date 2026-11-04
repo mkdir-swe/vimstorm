@@ -1,0 +1,30 @@
+# Quick fix: a small, clear change built straight away. Tasks take it.
+name: Quick fix
+description: 'Built straight away: checked, reviewed, verified.'
+on: { type: Task }
+branch: card/<card>
+steps:
+  - build: { skill: implement, fresh: loop }
+  - checks # serve runs them
+  - review: { skill: code-review, fresh: true }
+  - verify: { skill: verify, fresh: true } # picks its own level from the card and the diff
+  - playbook:
+      skill: playbook
+      when: { judge: 'Does the diff need manual steps after merge?', sees: [diff] }
+  - pr: { skill: pr, fresh: true }
+loops:
+  - from: checks
+    to: build
+    when: { check: checks.failed > 0 }
+    carries: [checks.output]
+    max: 10
+  - from: review
+    to: build
+    when: { check: review.findings > 0 }
+    carries: [review.findings]
+    max: 2
+  - from: verify
+    to: build
+    when: { check: criteria.failed > 0 }
+    carries: [criterion, evidence]
+    max: 10

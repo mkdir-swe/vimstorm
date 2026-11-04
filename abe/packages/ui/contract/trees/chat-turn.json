@@ -1,0 +1,220 @@
+{
+  "kind": "Island",
+  "id": "chat",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "sizes": [
+          "auto",
+          {
+            "flex": 1
+          }
+        ]
+      },
+      "children": [
+        {
+          "kind": "ChatHeader",
+          "id": "chat:header",
+          "props": {
+            "title": "Chat",
+            "story": {
+              "id": "#2",
+              "title": "The cart total ignores quantity"
+            },
+            "modes": [
+              {
+                "id": "chat:mode:chat",
+                "label": "Chat",
+                "tooltip": "Chat  ⌃⌘←"
+              },
+              {
+                "id": "chat:mode:terminal",
+                "label": "Claude Code",
+                "tooltip": "Claude Code: the session's own terminal  ⌃⌘→"
+              }
+            ],
+            "mode": "chat:mode:chat",
+            "menu": "chat:menu",
+            "hide": "chat:hide",
+            "env": "Local sandbox",
+            "hint": "⌘⏎",
+            "rail": {
+              "segments": [
+                "done",
+                "now",
+                "todo",
+                "todo",
+                "todo"
+              ],
+              "stage": "Build",
+              "state": "running",
+              "glyph": "●",
+              "word": "Running",
+              "elapsed": "21 min"
+            },
+            "subagents": 2
+          }
+        },
+        {
+          "kind": "Transcript",
+          "id": "chat:transcript",
+          "props": {},
+          "children": [
+            {
+              "kind": "ChatMessage",
+              "id": "msg:1",
+              "props": {
+                "text": "Fix the cart total: it ignores each line's quantity",
+                "context": "#2 The cart total ignores quantity · story"
+              }
+            },
+            {
+              "kind": "Turn",
+              "id": "turn:1",
+              "props": {},
+              "children": [
+                {
+                  "kind": "ChangesBar",
+                  "id": "changes:1",
+                  "props": {
+                    "files": 2,
+                    "added": 4,
+                    "removed": 2,
+                    "actions": [
+                      {
+                        "id": "changes:1:open-all",
+                        "label": "Open all",
+                        "tooltip": "Open the diffs"
+                      },
+                      {
+                        "id": "changes:1:keep",
+                        "label": "Keep",
+                        "tooltip": "Keep these changes"
+                      },
+                      {
+                        "id": "changes:1:revert",
+                        "label": "Revert",
+                        "tooltip": "Revert the files"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "DiffCard",
+                  "id": "diff:1:api/src/cart.ts",
+                  "props": {
+                    "path": "api/src/cart.ts",
+                    "added": 3,
+                    "removed": 1,
+                    "lines": [
+                      {
+                        "kind": "context",
+                        "number": 14,
+                        "text": "export function cartTotal(cart: Cart): number {"
+                      },
+                      {
+                        "kind": "context",
+                        "number": 15,
+                        "text": "  const vat = marketFor(cart.market).vat;"
+                      },
+                      {
+                        "kind": "context",
+                        "number": 16,
+                        "text": "  const subtotal = cart.lines.reduce("
+                      },
+                      {
+                        "kind": "deleted",
+                        "number": 17,
+                        "text": "    (sum, line) => sum + line.price,"
+                      },
+                      {
+                        "kind": "inserted",
+                        "number": 17,
+                        "text": "    (sum, line) => {"
+                      },
+                      {
+                        "kind": "inserted",
+                        "number": 18,
+                        "text": "      return sum + line.price * line.quantity;"
+                      },
+                      {
+                        "kind": "inserted",
+                        "number": 19,
+                        "text": "    },"
+                      },
+                      {
+                        "kind": "context",
+                        "number": 20,
+                        "text": "    0,"
+                      },
+                      {
+                        "kind": "context",
+                        "number": 21,
+                        "text": "  );"
+                      }
+                    ],
+                    "note": "⏎ open · u revert"
+                  }
+                },
+                {
+                  "kind": "DiffCard",
+                  "id": "diff:1:api/test/cart.test.ts",
+                  "props": {
+                    "path": "api/test/cart.test.ts",
+                    "added": 1,
+                    "removed": 1,
+                    "lines": [],
+                    "note": "show 4 lines",
+                    "folded": true
+                  }
+                },
+                {
+                  "kind": "StepRow",
+                  "id": "step:1:1",
+                  "props": {
+                    "mark": "good",
+                    "verb": "Read",
+                    "object": "api/src/cart.ts",
+                    "objectKind": "path"
+                  }
+                },
+                {
+                  "kind": "StepRow",
+                  "id": "step:1:2",
+                  "props": {
+                    "mark": "bad",
+                    "verb": "Ran",
+                    "object": "npm test",
+                    "objectKind": "command",
+                    "result": "1 failed · cart total ignores quantity"
+                  }
+                },
+                {
+                  "kind": "StepRow",
+                  "id": "step:1:3",
+                  "props": {
+                    "mark": "good",
+                    "verb": "Ran",
+                    "object": "npm test",
+                    "objectKind": "command",
+                    "result": "12 passed · 1 skipped"
+                  }
+                },
+                {
+                  "kind": "Prose",
+                  "id": "prose:1",
+                  "props": {
+                    "markdown": "`cartTotal` added each line's price once, so a line with 3 of one item was charged as 1.\n\n- Each line now counts its price times its quantity, before VAT.\n- The skipped test for every unit of a line runs again and passes.\n\n12 tests pass. The one still skipped covers currency rounding, which this story doesn't touch.\n\nKeep the changes, or tell me what to adjust."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

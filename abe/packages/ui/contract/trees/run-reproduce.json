@@ -1,0 +1,205 @@
+{
+  "kind": "Stack",
+  "props": {
+    "direction": "column",
+    "sizes": [
+      {
+        "fixed": 34
+      },
+      {
+        "flex": 1
+      }
+    ]
+  },
+  "children": [
+    {
+      "kind": "RunBar",
+      "id": "run-bar",
+      "props": {
+        "card": "#8",
+        "title": "Password reset link opens a blank page",
+        "on": false,
+        "context": "demo-shop · Bug run · 6 min",
+        "linked": false
+      }
+    },
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "row",
+        "gap": 0,
+        "sizes": [
+          {
+            "fixed": 240
+          },
+          {
+            "flex": 1
+          }
+        ],
+        "align": "stretch"
+      },
+      "children": [
+        {
+          "kind": "RunSteps",
+          "id": "run-steps",
+          "props": {
+            "rows": [
+              {
+                "id": "reproduce:1",
+                "mark": {
+                  "glyph": "●",
+                  "hue": "warn"
+                },
+                "name": "reproduce",
+                "outcome": "not reproduced",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "reported",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "report",
+                "outcome": "reported",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              }
+            ],
+            "selected": "reproduce:1"
+          }
+        },
+        {
+          "kind": "RunFocus",
+          "id": "run-focus",
+          "props": {
+            "step": "reproduce:1",
+            "name": "reproduce",
+            "skill": "reproduce",
+            "meta": "09:00 · 6 min",
+            "state": {
+              "text": "● not reproduced",
+              "hue": "warn"
+            },
+            "fresh": false,
+            "round": "",
+            "back": "",
+            "chat": false,
+            "did": "Did not reproduce on the merge base: the reset page rendered the form in every try. Wrote the report for the card; the run ends here.",
+            "pending": false,
+            "actions": [],
+            "read": {
+              "note": "the card’s repro steps",
+              "blocks": [
+                {
+                  "title": "",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "card",
+                      "ref": "AB#8 · bug · Active",
+                      "title": "Password reset link opens a blank page",
+                      "text": "1. Ask for a password reset on /sign-in/forgot.\n2. Open the link from the email.\nExpected: the reset form. Actual: a blank page."
+                    }
+                  ]
+                }
+              ]
+            },
+            "made": {
+              "note": "Before · not reproduced · 3 steps · 3 shots · 0:21",
+              "blocks": [
+                {
+                  "title": "What was tried",
+                  "verdict": {
+                    "text": "✗ not reproduced",
+                    "hue": "warn"
+                  },
+                  "boxed": true,
+                  "parts": [
+                    {
+                      "kind": "proof",
+                      "rows": [
+                        {
+                          "n": 1,
+                          "mark": {
+                            "glyph": "✓",
+                            "hue": "good"
+                          },
+                          "text": "Browser: ask for a reset, open the link from the stub outbox",
+                          "how": "the reset form renders",
+                          "evidence": [
+                            {
+                              "kind": "screenshot",
+                              "text": "/home/me/projects/demo-shop-wt/8-password-reset-blank/.scratch/8/verify/evidence/password-reset/before-1.png"
+                            }
+                          ],
+                          "chapter": "▶ 0:03"
+                        },
+                        {
+                          "n": 2,
+                          "mark": {
+                            "glyph": "✓",
+                            "hue": "good"
+                          },
+                          "text": "Browser: the same with a Safari user agent",
+                          "how": "the form renders",
+                          "evidence": [
+                            {
+                              "kind": "screenshot",
+                              "text": "/home/me/projects/demo-shop-wt/8-password-reset-blank/.scratch/8/verify/evidence/password-reset/before-2.png"
+                            }
+                          ],
+                          "chapter": ""
+                        },
+                        {
+                          "n": 3,
+                          "mark": {
+                            "glyph": "✓",
+                            "hue": "good"
+                          },
+                          "text": "Browser: a link older than an hour",
+                          "how": "the expired page, not blank",
+                          "evidence": [
+                            {
+                              "kind": "screenshot",
+                              "text": "/home/me/projects/demo-shop-wt/8-password-reset-blank/.scratch/8/verify/evidence/password-reset/before-3.png"
+                            }
+                          ],
+                          "chapter": ""
+                        }
+                      ],
+                      "recording": {
+                        "length": "▶ 0:21",
+                        "path": "verify/evidence/password-reset/before.webm",
+                        "chapters": [
+                          "1"
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "title": "Recorded",
+                  "boxed": true,
+                  "parts": [
+                    {
+                      "kind": "text",
+                      "text": "abe factory verify --phase before --result not-reproduced · the workflow’s ends: ends the run with the report",
+                      "tone": "dim"
+                    }
+                  ]
+                }
+              ]
+            },
+            "details": []
+          }
+        }
+      ]
+    }
+  ]
+}

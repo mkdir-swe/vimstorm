@@ -1,0 +1,9 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "balloon",
+    "tone": "warning",
+    "text": "abe serve restarted"
+  }
+}

@@ -1,0 +1,448 @@
+{
+  "kind": "Stack",
+  "props": {
+    "direction": "column",
+    "sizes": [
+      {
+        "fixed": 34
+      },
+      {
+        "flex": 1
+      }
+    ]
+  },
+  "children": [
+    {
+      "kind": "RunBar",
+      "id": "run-bar",
+      "props": {
+        "card": "#2",
+        "title": "The cart total ignores quantity",
+        "on": false,
+        "context": "demo-shop · Feature run · 39 min",
+        "linked": false
+      }
+    },
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "row",
+        "gap": 0,
+        "sizes": [
+          {
+            "fixed": 240
+          },
+          {
+            "flex": 1
+          }
+        ],
+        "align": "stretch"
+      },
+      "children": [
+        {
+          "kind": "RunSteps",
+          "id": "run-steps",
+          "props": {
+            "rows": [
+              {
+                "id": "spec:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "create-specification",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "build:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "build",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "checks:1",
+                "mark": {
+                  "glyph": "●",
+                  "hue": "warn"
+                },
+                "name": "checks",
+                "outcome": "failed",
+                "back": true,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "build:2",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "build",
+                "outcome": "round 2",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "checks:2",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "checks",
+                "outcome": "round 2",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "review:1",
+                "mark": {
+                  "glyph": "●",
+                  "hue": "warn"
+                },
+                "name": "review",
+                "outcome": "1 finding",
+                "back": true,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "build:3",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "build",
+                "outcome": "round 3",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "checks:3",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "checks",
+                "outcome": "round 3",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "review:2",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "review",
+                "outcome": "no findings",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "verify:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "verify",
+                "outcome": "3 of 3",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "pr:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "pr",
+                "outcome": "#57 merged",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "merge",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "merge",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              }
+            ],
+            "selected": "build:1"
+          }
+        },
+        {
+          "kind": "RunFocus",
+          "id": "run-focus",
+          "props": {
+            "step": "build:1",
+            "name": "build",
+            "skill": "implement",
+            "meta": "09:11 · 6 min · subagent",
+            "state": {
+              "text": "✓ done",
+              "hue": "good"
+            },
+            "fresh": false,
+            "round": "round 1 of 3",
+            "back": "",
+            "chat": true,
+            "did": "cartTotal() multiplies price by quantity; the repro test went red, then green.",
+            "pending": false,
+            "actions": [],
+            "read": {
+              "note": "the card, the spec",
+              "blocks": [
+                {
+                  "title": "",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "card",
+                      "ref": "AB#2 · bug · Active",
+                      "title": "The cart total ignores quantity",
+                      "text": ""
+                    }
+                  ]
+                },
+                {
+                  "title": "Spec #41",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "list",
+                      "numbered": false,
+                      "rows": [
+                        {
+                          "text": "Cart total counts each line's quantity",
+                          "note": "Why · What · Acceptance criteria · Out of scope"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Decisions it took",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "decisions",
+                      "rows": [
+                        {
+                          "chose": "Fix cartTotal()",
+                          "over": "summing on the cart page",
+                          "why": "The API, the cart page and the order email all read it."
+                        },
+                        {
+                          "chose": "Round each line, then sum",
+                          "over": "rounding only the total",
+                          "why": "The spec says two decimals per line."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "made": {
+              "note": "2 writers · 2 commits · 2 files · +30 −2",
+              "blocks": [
+                {
+                  "title": "",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "lanes",
+                      "lanes": [
+                        {
+                          "label": "Wave 1",
+                          "note": "2 writers at once",
+                          "cards": [
+                            {
+                              "ref": "slice 1",
+                              "title": "Line total is price × quantity",
+                              "time": "4 min",
+                              "summary": "",
+                              "tags": [],
+                              "rows": [
+                                {
+                                  "label": "writer",
+                                  "value": "abe:writer · worktree 2-s1"
+                                },
+                                {
+                                  "label": "commits",
+                                  "value": "7b1c0de Cart: a line’s total is price × quantity"
+                                },
+                                {
+                                  "label": "files",
+                                  "value": "2 · +30 −2 · api/src/cart"
+                                },
+                                {
+                                  "label": "tests",
+                                  "value": "✓ typecheck · ✓ api/test/cart.test.ts · 4"
+                                },
+                                {
+                                  "label": "merged",
+                                  "value": "into the card branch",
+                                  "mark": {
+                                    "glyph": "✓",
+                                    "hue": "good"
+                                  }
+                                }
+                              ],
+                              "chips": [],
+                              "open": true
+                            },
+                            {
+                              "ref": "slice 2",
+                              "title": "A line at 0 leaves the cart",
+                              "time": "3 min",
+                              "summary": "",
+                              "tags": [],
+                              "rows": [
+                                {
+                                  "label": "writer",
+                                  "value": "abe:writer · worktree 2-s2"
+                                },
+                                {
+                                  "label": "commits",
+                                  "value": "8c2d1ef Cart: drop a line set to 0"
+                                },
+                                {
+                                  "label": "files",
+                                  "value": "1 · +9 −4 · web/src/Cart"
+                                },
+                                {
+                                  "label": "tests",
+                                  "value": "✓ typecheck · ✓ web/test/cart.test.tsx · 2"
+                                },
+                                {
+                                  "label": "merged",
+                                  "value": "into the card branch",
+                                  "mark": {
+                                    "glyph": "✓",
+                                    "hue": "good"
+                                  }
+                                }
+                              ],
+                              "chips": [],
+                              "open": true
+                            }
+                          ],
+                          "milestone": {
+                            "label": "◆ Milestone 1",
+                            "text": "A cart totals each line’s quantity · ✓ full suite · 18 · app looked at: cart of 3 mugs reads 74.97"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Checks run itself",
+                  "verdict": {
+                    "text": "✗ red",
+                    "hue": "warn"
+                  },
+                  "boxed": true,
+                  "parts": [
+                    {
+                      "kind": "text",
+                      "text": "abe factory checks 2: types ✓ · lint ✗ · tests ✓ · no-deleted-tests ✓ · no-new-suppressions ✓ · .scratch/2/checks.md",
+                      "tone": "dim"
+                    }
+                  ]
+                },
+                {
+                  "title": "Files changed · 2",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "files",
+                      "rows": [
+                        {
+                          "id": "run:file:build:1:0",
+                          "path": "api/src/cart.ts",
+                          "added": 6,
+                          "removed": 2
+                        },
+                        {
+                          "id": "run:file:build:1:1",
+                          "path": "api/test/cart.test.ts",
+                          "added": 24,
+                          "removed": 0
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "details": [
+              {
+                "kind": "commands",
+                "id": "run:detail:build:1:commands",
+                "label": "Commands run",
+                "note": "1",
+                "open": false,
+                "rows": [
+                  {
+                    "mark": {
+                      "glyph": "✓",
+                      "hue": "good"
+                    },
+                    "command": "npm test",
+                    "result": "18 passed"
+                  }
+                ]
+              },
+              {
+                "kind": "skills",
+                "id": "run:detail:build:1:skills",
+                "label": "Skills it pulled in",
+                "note": "1",
+                "open": false,
+                "names": [
+                  "tdd"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

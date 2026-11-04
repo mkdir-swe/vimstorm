@@ -1,0 +1,12 @@
+{
+  "v": 2,
+  "type": "answer",
+  "id": "draft-pr:1",
+  "reply": {
+    "ok": false,
+    "error": {
+      "code": "invalid",
+      "message": "This checkout has no GitHub repository"
+    }
+  }
+}

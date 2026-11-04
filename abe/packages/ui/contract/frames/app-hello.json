@@ -1,0 +1,10 @@
+{
+  "v": 2,
+  "type": "hello",
+  "size": {
+    "width": 1200,
+    "height": 800
+  },
+  "version": "2.0.0",
+  "root": "/home/me/projects/demo-shop"
+}

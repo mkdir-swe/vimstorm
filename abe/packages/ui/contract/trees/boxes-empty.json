@@ -1,0 +1,89 @@
+{
+  "kind": "Island",
+  "id": "boxes",
+  "props": {},
+  "children": [
+    {
+      "kind": "Table",
+      "id": "boxes-table",
+      "props": {
+        "columns": [
+          {
+            "label": "Box",
+            "width": {
+              "fixed": 100
+            }
+          },
+          {
+            "label": "Story",
+            "width": {
+              "flex": 1
+            }
+          },
+          {
+            "label": "State",
+            "width": {
+              "fixed": 180
+            }
+          },
+          {
+            "label": "Size",
+            "width": {
+              "fixed": 72
+            }
+          },
+          {
+            "label": "Disk",
+            "width": {
+              "fixed": 76
+            }
+          },
+          {
+            "label": "Release",
+            "width": {
+              "fixed": 52
+            }
+          },
+          {
+            "label": "Up",
+            "width": {
+              "fixed": 70
+            }
+          },
+          {
+            "label": "Cost",
+            "width": {
+              "fixed": 80
+            }
+          },
+          {
+            "label": "Until",
+            "width": {
+              "fixed": 92
+            }
+          }
+        ],
+        "rows": [],
+        "note": "Read 10:00",
+        "empty": {
+          "title": "No boxes",
+          "line": "a story launched on a box makes one"
+        },
+        "foot": [
+          {
+            "keys": "⏎",
+            "label": "box shell"
+          },
+          {
+            "keys": "⌘⏎",
+            "label": "actions"
+          },
+          {
+            "keys": "r",
+            "label": "read again"
+          }
+        ]
+      }
+    }
+  ]
+}

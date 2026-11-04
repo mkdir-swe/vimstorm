@@ -1,0 +1,44 @@
+name: Bug
+description: Something in VimStorm or Abe does not work as the docs say.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. abe demo new
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: versions
+    attributes:
+      label: Versions
+      description: The output of `abe --version`, `abe status` and `sw_vers`.
+      render: text
+    validations:
+      required: true
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where sessions run
+      options:
+        - On this Mac (serve.target local)
+        - On my box (serve.target cloud)
+        - Not about sessions
+    validations:
+      required: true
+  - type: textarea
+    id: problems
+    attributes:
+      label: abe tools check and abe settings problems
+      description: Their output, if it says anything is missing. Check it holds no token, account id or private name first.
+      render: text

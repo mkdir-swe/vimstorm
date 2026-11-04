@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+# vimstorm [path]: opens path (a project dir or a file; default: the current dir) in VimStorm. A running
+# app takes it over its socket (switches to / opens the project, opens the file, comes to the front);
+# otherwise the app starts, detached from the terminal, with this shell's env (PATH, XDG_CONFIG_HOME).
+# Installed to ~/.local/bin by install.sh. VIMSTORM_APP: another VimStorm.app.
+set -euo pipefail
+# an exported CDPATH makes `cd x` print the dir (twice in $(...))
+unset CDPATH
+
+# install.sh writes where it put the bundle here
+installed_app="/Applications/VimStorm.app"
+app="${VIMSTORM_APP:-$installed_app}"
+[ -n "${VIMSTORM_APP:-}" ] || [ -d "$app" ] || app="$HOME/Applications/VimStorm.app"
+bin="$app/Contents/MacOS/vimstorm"
+
+case "${1:-}" in
+  -h | --help) sed -n '2,6p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+esac
+[ -x "$bin" ] || { echo "vimstorm: $bin not found (run install.sh, or set VIMSTORM_APP)" >&2; exit 1; }
+[ $# -le 1 ] || { echo "usage: vimstorm [path]" >&2; exit 2; }
+target="${1:-.}"
+# a relative path starting with "-" ("-" itself: `cd -` would be the previous dir)
+case "$target" in -*) target="./$target" ;; esac
+[ -e "$target" ] || { echo "vimstorm: no such file or directory: $target" >&2; exit 1; }
+if [ -d "$target" ]; then
+  path="$(cd -- "$target" && pwd -P)"
+else
+  path="$(cd -- "$(dirname -- "$target")" && pwd -P)/$(basename -- "$target")"
+fi
+
+# the running app takes it: 0 = taken, 3 = no app running, else refused (the binary said why)
+status=0
+"$bin" --remote "$path" || status=$?
+if [ "$status" = 0 ]; then
+  # macOS 14+ can ignore the app's own request to come to the front while this terminal is
+  # frontmost; a LaunchServices open is honoured. Only when the running app is this bundle (else
+  # `open` would start the bundle next to it).
+  if [ -z "${VIMSTORM_BACKGROUND:-}" ] && pgrep -f "^$bin" >/dev/null 2>&1; then
+    open -a "$app" >/dev/null 2>&1 || true
+  fi
+  exit 0
+fi
+[ "$status" = 3 ] || exit "$status"
+
+logs="$HOME/Library/Logs/VimStorm"
+mkdir -p "$logs"
+nohup "$bin" "$path" >>"$logs/vimstorm.log" 2>&1 </dev/null &
+pid=$!
+# an app that dies right away (no nvim on PATH, a broken config) says why in the log; exit 0 = it
+# handed the path to an app that started meanwhile. (A non-interactive shell leaves the job running.)
+sleep 0.3
+if ! kill -0 "$pid" 2>/dev/null; then
+  status=0
+  wait "$pid" || status=$?
+  [ "$status" = 0 ] || { echo "vimstorm: the app exited right away; see $logs/vimstorm.log" >&2; exit 1; }
+fi

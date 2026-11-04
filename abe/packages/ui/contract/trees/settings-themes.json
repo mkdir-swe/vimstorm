@@ -1,0 +1,406 @@
+{
+  "kind": "SettingsDialog",
+  "id": "settings",
+  "props": {
+    "title": "Settings",
+    "search": {
+      "text": ""
+    },
+    "note": "Each change saves as you make it; ⌘⏎ proposes one for the repo",
+    "focus": "page"
+  },
+  "children": [
+    {
+      "kind": "SettingsTree",
+      "id": "settings:tree",
+      "props": {
+        "nodes": [
+          {
+            "id": "settings:tree:appearance-behavior",
+            "label": "Appearance & Behavior",
+            "depth": 0,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:appearance",
+            "label": "Appearance",
+            "depth": 1,
+            "selected": true
+          },
+          {
+            "id": "settings:tree:import-config",
+            "label": "Import config",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:editor",
+            "label": "Editor",
+            "depth": 0,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:editor-general",
+            "label": "General",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:editor-font",
+            "label": "Font",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:color-scheme",
+            "label": "Color scheme",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:vim",
+            "label": "Vim",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:abe",
+            "label": "Abe",
+            "depth": 0,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:agents",
+            "label": "Agents & models",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:board-team",
+            "label": "Board & you",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:boxes-cloud",
+            "label": "Boxes & cloud",
+            "depth": 1,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:browser-profiles",
+            "label": "Browser profiles",
+            "depth": 2
+          },
+          {
+            "id": "settings:tree:factory-policy",
+            "label": "Factory policy",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:local-mode",
+            "label": "Local mode",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:reach",
+            "label": "Reach",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:logins-tools",
+            "label": "Logins & tools",
+            "depth": 0
+          },
+          {
+            "id": "settings:tree:tools",
+            "label": "Tools check",
+            "depth": 0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "SettingsPage",
+      "id": "settings:page",
+      "props": {
+        "crumbs": [
+          "Appearance & Behavior",
+          "Appearance"
+        ],
+        "scope": "demo-shop",
+        "reveal": "settings:group:1"
+      },
+      "children": [
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:group:0",
+          "props": {},
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:0",
+              "props": {
+                "label": "Feel",
+                "control": {
+                  "kind": "segmented",
+                  "choices": [
+                    "VimStorm",
+                    "WebStorm",
+                    "VS Code",
+                    "Vim"
+                  ],
+                  "on": "VimStorm"
+                },
+                "help": "sets Vim mode, the tree, tabs and save · never the theme (VS Code’s: Dark Modern)",
+                "source": {
+                  "text": ""
+                },
+                "scope": "yours"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:group:1",
+          "props": {
+            "caption": "Theme"
+          },
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:1",
+              "props": {
+                "label": "Theme",
+                "control": {
+                  "kind": "themes",
+                  "themes": [
+                    {
+                      "slug": "islands-dark",
+                      "name": "Islands Dark",
+                      "source": "current",
+                      "colors": {
+                        "frame": "#26282b",
+                        "panel": "#191a1c",
+                        "editor": "#1e1f22",
+                        "text": "#d1d3d9",
+                        "dim": "#6f737a",
+                        "accent": "#6b9bfa",
+                        "selection": "#25324d",
+                        "needsYou": "#5ec8c0",
+                        "good": "#73bd79",
+                        "border": "#191a1c"
+                      }
+                    },
+                    {
+                      "slug": "islands-light",
+                      "name": "Islands Light",
+                      "source": "",
+                      "colors": {
+                        "frame": "#ebecf0",
+                        "panel": "#ffffff",
+                        "editor": "#ffffff",
+                        "text": "#000000",
+                        "dim": "#818594",
+                        "accent": "#315fbd",
+                        "selection": "#e1ebff",
+                        "needsYou": "#0e7c76",
+                        "good": "#067d17",
+                        "border": "#ffffff"
+                      }
+                    },
+                    {
+                      "slug": "dark-modern",
+                      "name": "Dark Modern",
+                      "source": "",
+                      "colors": {
+                        "frame": "#181818",
+                        "panel": "#181818",
+                        "editor": "#1f1f1f",
+                        "text": "#cccccc",
+                        "dim": "#9d9d9d",
+                        "accent": "#6b9bfa",
+                        "selection": "#1f1f1f",
+                        "needsYou": "#5ec8c0",
+                        "good": "#73bd79",
+                        "border": "#2b2b2b"
+                      }
+                    }
+                  ],
+                  "on": "islands-dark",
+                  "cursor": 1
+                },
+                "source": {
+                  "text": ""
+                },
+                "scope": "yours",
+                "focused": true
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:2",
+              "props": {
+                "label": "Editor scheme",
+                "control": {
+                  "kind": "value",
+                  "text": "Same as theme (Islands Dark)"
+                },
+                "help": "Editor › Color scheme",
+                "source": {
+                  "text": ""
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:group:2",
+          "props": {},
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:3",
+              "props": {
+                "label": "Density",
+                "control": {
+                  "kind": "segmented",
+                  "choices": [
+                    "Compact",
+                    "Default"
+                  ],
+                  "on": "Compact"
+                },
+                "help": "Compact tightens rows, tabs and the toolbar",
+                "source": {
+                  "text": ""
+                },
+                "scope": "yours"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:group:3",
+          "props": {
+            "caption": "Font"
+          },
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:4",
+              "props": {
+                "label": "UI font",
+                "control": {
+                  "kind": "combo",
+                  "value": "Inter"
+                },
+                "source": {
+                  "text": ""
+                },
+                "scope": "yours"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:5",
+              "props": {
+                "label": "UI font size",
+                "control": {
+                  "kind": "field",
+                  "text": "13",
+                  "size": "number",
+                  "unit": "px"
+                },
+                "source": {
+                  "text": ""
+                },
+                "scope": "yours"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:6",
+              "props": {
+                "label": "Editor font",
+                "control": {
+                  "kind": "value",
+                  "text": "JetBrains Mono 13"
+                },
+                "help": "Editor › Font",
+                "source": {
+                  "text": ""
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:group:4",
+          "props": {},
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:7",
+              "props": {
+                "label": "Chat column open by default",
+                "control": {
+                  "kind": "checkbox",
+                  "on": false
+                },
+                "source": {
+                  "text": "yours · the default is on"
+                },
+                "scope": "yours",
+                "reset": {
+                  "id": "settings:reset:7",
+                  "label": "Reset"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:group:5",
+          "props": {},
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:8",
+              "props": {
+                "label": "View tweaks",
+                "control": {
+                  "kind": "records",
+                  "columns": [
+                    {
+                      "label": "Screen",
+                      "size": 2,
+                      "pick": true
+                    },
+                    {
+                      "label": "Part",
+                      "size": 3
+                    },
+                    {
+                      "label": "Does",
+                      "size": 2,
+                      "pick": true
+                    },
+                    {
+                      "label": "Value",
+                      "size": 3
+                    }
+                  ],
+                  "rows": []
+                },
+                "help": "parts of a screen hidden, reordered or relabelled by node id",
+                "source": {
+                  "text": ""
+                },
+                "scope": "yours"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

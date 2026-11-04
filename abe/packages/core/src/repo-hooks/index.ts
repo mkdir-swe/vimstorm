@@ -1,0 +1,35 @@
+/**
+ * Repo hook points: the scripts, skills and headings Abe calls by role, declared in `abe.yaml`'s
+ * `hooks:`, today's places for what a repo leaves out, and what an agent's `abe run` may run.
+ */
+export {
+  DEFAULT_HOOKS,
+  DeclaredHooks,
+  HEADING_ROLES,
+  type HeadingRole,
+  HOOK_ROLES,
+  type HookRole,
+  hasHeading,
+  hookScriptDirs,
+  hookScripts,
+  REPO_SKILLS_DIR,
+  RepoHooks,
+  repoHooks,
+  repoHooksIn,
+  repoHooksOfDoc,
+  RUN_ROLES,
+  type RunRole,
+  type RunScript,
+  type RunTrees,
+  runAppSkill,
+  runScriptIn,
+  runScriptsWords,
+  SCRIPT_ROLES,
+  type ScriptRole,
+  SKILL_ROLES,
+  type SkillRole,
+  testingSkills,
+  testingSkillWanted,
+  verifySkill,
+  verifySkillName,
+} from './repo-hooks';

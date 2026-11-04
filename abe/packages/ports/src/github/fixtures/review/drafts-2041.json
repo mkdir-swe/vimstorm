@@ -1,0 +1,28 @@
+{
+  "at": 1790845200000,
+  "drafts": [
+    {
+      "seq": 2,
+      "path": "src/a.ts",
+      "line": {
+        "side": "RIGHT",
+        "line": 12
+      },
+      "body": "Tab\there, \"quoted\" \\ back, åäö, ☃ 🙂, ctrl \u0001, line sep\nnext"
+    },
+    {
+      "seq": 1,
+      "path": "src/b.ts",
+      "line": {
+        "side": "LEFT",
+        "line": 5
+      },
+      "start": {
+        "side": "LEFT",
+        "line": 3
+      },
+      "body": "Sent one",
+      "sent": "2026-10-01T09:30:00.000Z"
+    }
+  ]
+}

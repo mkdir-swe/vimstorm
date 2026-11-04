@@ -1,0 +1,8 @@
+{
+  "v": 2,
+  "type": "input",
+  "input": {
+    "kind": "click",
+    "id": "reload"
+  }
+}

@@ -1,0 +1,392 @@
+{
+  "kind": "Stack",
+  "props": {
+    "direction": "column",
+    "sizes": [
+      {
+        "fixed": 34
+      },
+      {
+        "flex": 1
+      }
+    ]
+  },
+  "children": [
+    {
+      "kind": "RunBar",
+      "id": "run-bar",
+      "props": {
+        "card": "#2",
+        "title": "The cart total ignores quantity",
+        "on": false,
+        "context": "demo-shop · Feature run · 39 min",
+        "linked": false
+      }
+    },
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "row",
+        "gap": 0,
+        "sizes": [
+          {
+            "fixed": 240
+          },
+          {
+            "flex": 1
+          }
+        ],
+        "align": "stretch"
+      },
+      "children": [
+        {
+          "kind": "RunSteps",
+          "id": "run-steps",
+          "props": {
+            "rows": [
+              {
+                "id": "spec:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "create-specification",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "build:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "build",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "checks:1",
+                "mark": {
+                  "glyph": "●",
+                  "hue": "warn"
+                },
+                "name": "checks",
+                "outcome": "failed",
+                "back": true,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "build:2",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "build",
+                "outcome": "round 2",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "checks:2",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "checks",
+                "outcome": "round 2",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "review:1",
+                "mark": {
+                  "glyph": "●",
+                  "hue": "warn"
+                },
+                "name": "review",
+                "outcome": "1 finding",
+                "back": true,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "build:3",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "build",
+                "outcome": "round 3",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "checks:3",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "checks",
+                "outcome": "round 3",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "review:2",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "review",
+                "outcome": "no findings",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "verify:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "verify",
+                "outcome": "3 of 3",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "pr:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "pr",
+                "outcome": "#57 merged",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "merge",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "merge",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              }
+            ],
+            "selected": "review:1"
+          }
+        },
+        {
+          "kind": "RunFocus",
+          "id": "run-focus",
+          "props": {
+            "step": "review:1",
+            "name": "review",
+            "skill": "code-review",
+            "meta": "09:21 · 2 min · subagent",
+            "state": {
+              "text": "● sent back",
+              "hue": "warn"
+            },
+            "fresh": true,
+            "round": "round 1 of 2",
+            "back": "",
+            "chat": true,
+            "loop": {
+              "head": "↩ back to build",
+              "words": [
+                "loop review → build",
+                "review.findings > 0",
+                "round 1 of max 2",
+                "carries review.findings"
+              ]
+            },
+            "did": "One finding: 3 × 24.99 sums to 74.97000000000001 in floats.",
+            "pending": false,
+            "actions": [],
+            "read": {
+              "note": "the diff, the spec, the standards · gets card · spec · diff",
+              "blocks": [
+                {
+                  "title": "Diff since the merge base",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "commits",
+                      "rows": [
+                        {
+                          "sha": "7b1c0de",
+                          "subject": "Cart: a line’s total is price × quantity",
+                          "note": "build #1"
+                        },
+                        {
+                          "sha": "8c2d1ef",
+                          "subject": "Cart: drop a line set to 0",
+                          "note": "build #1"
+                        },
+                        {
+                          "sha": "9c4d1e2",
+                          "subject": "Cart page: drop the unused formatPrice",
+                          "note": "build #2"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Spec",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "list",
+                      "numbered": false,
+                      "rows": [
+                        {
+                          "text": "AB#2 · the card",
+                          "note": ""
+                        },
+                        {
+                          "text": "Spec #41 · Cart total counts each line's quantity",
+                          "note": "Why · What · Acceptance criteria · Out of scope"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Round",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "text",
+                      "text": "Round 1. No earlier report.",
+                      "tone": "dim"
+                    }
+                  ]
+                }
+              ]
+            },
+            "made": {
+              "note": "1 finding · 1 noted · .scratch/2/review/1.md",
+              "blocks": [
+                {
+                  "title": "Findings · 1",
+                  "verdict": {
+                    "text": "● sent back",
+                    "hue": "warn"
+                  },
+                  "boxed": true,
+                  "parts": [
+                    {
+                      "kind": "findings",
+                      "rows": [
+                        {
+                          "axis": {
+                            "text": "Standards",
+                            "hue": "accent"
+                          },
+                          "loc": "api/src/cart.ts:14",
+                          "what": "The total sums floats: 3 × 24.99 gives 74.97000000000001",
+                          "fix": "sum in cents, then divide once",
+                          "state": {
+                            "text": "✓ fixed in build #3 · f6b2d09",
+                            "hue": "good"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Noted · 1",
+                  "boxed": true,
+                  "parts": [
+                    {
+                      "kind": "findings",
+                      "rows": [
+                        {
+                          "axis": {
+                            "text": "Noted",
+                            "hue": "dim"
+                          },
+                          "loc": "web/src/Cart.tsx:40",
+                          "what": "Possible Mysterious Name: `s` for the shipping line",
+                          "fix": "rename to `shipping` when next touched"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Risk",
+                  "boxed": true,
+                  "parts": [
+                    {
+                      "kind": "text",
+                      "text": "risky · money: the cart total",
+                      "tone": "plain"
+                    }
+                  ]
+                },
+                {
+                  "title": "Recorded",
+                  "boxed": true,
+                  "parts": [
+                    {
+                      "kind": "text",
+                      "text": "abe factory review --findings 1 · .scratch/2/review/1.md · next step: build",
+                      "tone": "dim"
+                    }
+                  ]
+                }
+              ]
+            },
+            "details": [
+              {
+                "kind": "paths",
+                "id": "run:detail:review:1:scratch",
+                "label": "Scratch files",
+                "note": "1",
+                "open": false,
+                "rows": [
+                  {
+                    "id": "run:scratch:review:1:0",
+                    "path": ".scratch/2/review/1.md"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

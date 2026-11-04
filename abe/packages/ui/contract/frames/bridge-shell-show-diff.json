@@ -1,0 +1,27 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "show-diff",
+    "root": "/home/me/projects/demo-shop-pr-7",
+    "files": [
+      {
+        "path": "src/cart.ts",
+        "status": "M"
+      },
+      {
+        "path": "src/total.ts",
+        "oldPath": "src/sum.ts",
+        "status": "R"
+      }
+    ],
+    "index": 1,
+    "base": "base000",
+    "head": "c0ffee1234",
+    "line": 3,
+    "pr": {
+      "number": 7,
+      "head": "c0ffee1234"
+    }
+  }
+}

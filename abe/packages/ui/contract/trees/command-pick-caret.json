@@ -1,0 +1,24 @@
+{
+  "kind": "PickLayer",
+  "id": "command-mode",
+  "props": {
+    "title": "Command mode",
+    "filter": "card show",
+    "placeholder": "Ask anything, or a command",
+    "caret": 7,
+    "rows": [
+      {
+        "id": "command:card show",
+        "text": "card show",
+        "dim": "one card in full",
+        "note": "<card>"
+      },
+      {
+        "id": "here:ask",
+        "text": "Ask",
+        "dim": "the Abe chat"
+      }
+    ],
+    "selected": "command:card show"
+  }
+}

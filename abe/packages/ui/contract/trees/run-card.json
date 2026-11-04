@@ -1,0 +1,294 @@
+{
+  "kind": "Stack",
+  "props": {
+    "direction": "column",
+    "sizes": [
+      {
+        "fixed": 34
+      },
+      {
+        "flex": 1
+      }
+    ]
+  },
+  "children": [
+    {
+      "kind": "RunBar",
+      "id": "run-bar",
+      "props": {
+        "card": "#2",
+        "title": "The cart total ignores quantity",
+        "on": true,
+        "context": "demo-shop · Feature run · Local sandbox · 19 min so far",
+        "linked": false
+      }
+    },
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "row",
+        "gap": 0,
+        "sizes": [
+          {
+            "fixed": 240
+          },
+          {
+            "flex": 1
+          }
+        ],
+        "align": "stretch"
+      },
+      "children": [
+        {
+          "kind": "RunSteps",
+          "id": "run-steps",
+          "props": {
+            "rows": [
+              {
+                "id": "spec:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "create-specification",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "build:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "build",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "checks:1",
+                "mark": {
+                  "glyph": "●",
+                  "hue": "warn"
+                },
+                "name": "checks",
+                "outcome": "failed",
+                "back": true,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "build:2",
+                "mark": {
+                  "glyph": "●",
+                  "hue": "warn"
+                },
+                "name": "build",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "todo:checks",
+                "mark": {
+                  "glyph": "",
+                  "hue": "dim"
+                },
+                "name": "checks",
+                "outcome": "",
+                "back": false,
+                "dim": true,
+                "todo": true,
+                "needsYou": false
+              },
+              {
+                "id": "todo:review",
+                "mark": {
+                  "glyph": "",
+                  "hue": "dim"
+                },
+                "name": "review",
+                "outcome": "",
+                "back": false,
+                "dim": true,
+                "todo": true,
+                "needsYou": false
+              },
+              {
+                "id": "todo:verify",
+                "mark": {
+                  "glyph": "",
+                  "hue": "dim"
+                },
+                "name": "verify",
+                "outcome": "",
+                "back": false,
+                "dim": true,
+                "todo": true,
+                "needsYou": false
+              },
+              {
+                "id": "todo:playbook",
+                "mark": {
+                  "glyph": "",
+                  "hue": "dim"
+                },
+                "name": "playbook",
+                "outcome": "",
+                "back": false,
+                "dim": true,
+                "todo": true,
+                "needsYou": false
+              },
+              {
+                "id": "todo:pr",
+                "mark": {
+                  "glyph": "",
+                  "hue": "dim"
+                },
+                "name": "pr",
+                "outcome": "",
+                "back": false,
+                "dim": true,
+                "todo": true,
+                "needsYou": false
+              }
+            ]
+          }
+        },
+        {
+          "kind": "RunFocus",
+          "id": "run-focus",
+          "props": {
+            "step": "spec:1",
+            "name": "create-specification",
+            "skill": "create-specification",
+            "meta": "09:02 · 9 min · subagent",
+            "state": {
+              "text": "✓ done",
+              "hue": "good"
+            },
+            "fresh": false,
+            "round": "",
+            "back": "",
+            "chat": true,
+            "did": "Each line rounds to two decimals, then the lines sum; a line at 0 leaves the cart. Spec #41: three criteria and the repro as a test; shipping and discounts out.",
+            "pending": false,
+            "actions": [
+              {
+                "id": "run:spec",
+                "label": "Spec  ⌃S",
+                "primary": false
+              }
+            ],
+            "read": {
+              "note": "the card, the sources, the answers",
+              "blocks": [
+                {
+                  "title": "",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "card",
+                      "ref": "AB#2 · bug · Active",
+                      "title": "The cart total ignores quantity",
+                      "text": "A cart with 3 mugs charges for one. Add 3 mugs, open the cart: the total is 24.99, expected 74.97."
+                    }
+                  ]
+                },
+                {
+                  "title": "Acceptance criteria on the card",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "list",
+                      "numbered": true,
+                      "rows": [
+                        {
+                          "text": "A line's total is its price × quantity",
+                          "note": ""
+                        },
+                        {
+                          "text": "Changing a quantity updates the total at once",
+                          "note": ""
+                        },
+                        {
+                          "text": "A line set to quantity 0 leaves the cart",
+                          "note": ""
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Asked · 2",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "qa",
+                      "rows": [
+                        {
+                          "q": "Round each line, or only the total?",
+                          "a": "Each line, two decimals, then sum.",
+                          "by": "· 09:08"
+                        },
+                        {
+                          "q": "A line set to 0: keep it at 0 or drop it?",
+                          "a": "Drop it.",
+                          "by": "· 09:08"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Decision it took",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "decisions",
+                      "rows": [
+                        {
+                          "chose": "Asked how lines round",
+                          "over": "guessing from the code",
+                          "why": "The card does not say how lines round or what a line at 0 does."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "made": {
+              "note": "issue #41, linked from the card",
+              "blocks": [
+                {
+                  "title": "",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "doc",
+                      "eyebrow": "Spec #41 · from AB#2",
+                      "title": "Cart total counts each line's quantity",
+                      "meta": "https://github.com/mkdir-swe/demo-shop/issues/41 · by create-specification",
+                      "markdown": "## Why\n\nA cart with 3 mugs charges for one. The total sums prices and ignores quantity.\n\n## What\n\n- a line's total is price × quantity, rounded to two decimals per line\n- the cart total is the sum of the lines, in cents\n- a line at quantity 0 is removed\n\n## Acceptance criteria\n\n- A line's total is its price × quantity\n- Changing a quantity updates the total at once\n- A line set to quantity 0 leaves the cart\n\n## Out of scope\n\nShipping and discounts (AB#7)."
+                    }
+                  ]
+                }
+              ]
+            },
+            "details": []
+          }
+        }
+      ]
+    }
+  ]
+}

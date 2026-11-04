@@ -1,0 +1,34 @@
+{
+  "kind": "Stack",
+  "props": {
+    "direction": "column",
+    "sizes": [
+      {
+        "fixed": 34
+      },
+      {
+        "flex": 1
+      }
+    ]
+  },
+  "children": [
+    {
+      "kind": "RunBar",
+      "id": "run-bar",
+      "props": {
+        "card": "#2",
+        "title": "",
+        "on": false,
+        "context": "demo-shop",
+        "linked": false
+      }
+    },
+    {
+      "kind": "Empty",
+      "props": {
+        "title": "Reading the run…",
+        "line": "#2"
+      }
+    }
+  ]
+}

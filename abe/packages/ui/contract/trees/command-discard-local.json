@@ -1,0 +1,17 @@
+{
+  "kind": "ConfirmLayer",
+  "id": "command-confirm",
+  "props": {
+    "question": "Discard local changes to the board?",
+    "details": [
+      "3 changes dropped from this machine.",
+      "The board then shows as it is. Nothing is sent."
+    ],
+    "risky": {
+      "label": "Discard local changes",
+      "letter": "y"
+    },
+    "no": "Keep them",
+    "focus": "no"
+  }
+}

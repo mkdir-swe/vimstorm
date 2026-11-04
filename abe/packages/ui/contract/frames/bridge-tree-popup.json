@@ -1,0 +1,116 @@
+{
+  "v": 2,
+  "type": "tree",
+  "screen": "card",
+  "rev": 6,
+  "tree": {
+    "kind": "CardPage",
+    "id": "card-page:1234",
+    "props": {
+      "kicker": "User Story",
+      "card": 1234,
+      "state": "Active",
+      "title": "Cart total includes shipping",
+      "meta": [
+        "US",
+        "Active",
+        "AE",
+        "tags cart, pricing"
+      ],
+      "facts": [
+        {
+          "text": "US",
+          "tone": "story"
+        },
+        {
+          "text": "Active"
+        },
+        {
+          "text": "AE"
+        },
+        {
+          "text": "cart, pricing",
+          "tone": "tags",
+          "label": "tags"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Description",
+          "markdown": "## Why\n\nThe amount a shopper sees in the cart is not the amount they pay: shipping is added only at checkout.\n\n## What\n\nThe cart total includes shipping for the cart's country, from `/api/shipping/quote`.\n\n## How\n\nAdd the fee after the subtotal in `cartTotal()` (`src/api/cart.ts`).\n\n## Markets\n\n- SE: its own threshold and fee, from `src/config/markets.ts`\n- NO: its own threshold and fee, from `src/config/markets.ts`\n- DK: its own threshold and fee, from `src/config/markets.ts`\n- FI: its own threshold and fee, from `src/config/markets.ts`\n- DE: its own threshold and fee, from `src/config/markets.ts`\n- NL: its own threshold and fee, from `src/config/markets.ts`\n- BE: its own threshold and fee, from `src/config/markets.ts`\n- FR: its own threshold and fee, from `src/config/markets.ts`\n- ES: its own threshold and fee, from `src/config/markets.ts`\n- IT: its own threshold and fee, from `src/config/markets.ts`\n- PL: its own threshold and fee, from `src/config/markets.ts`\n- AT: its own threshold and fee, from `src/config/markets.ts`"
+        },
+        {
+          "title": "Acceptance criteria",
+          "markdown": "- Total = items + shipping, rounded per currency\n- Free shipping over the threshold shows 0"
+        }
+      ],
+      "scroll": 0,
+      "buttons": [
+        {
+          "id": "card:comment",
+          "label": "Comment",
+          "keys": "⏎",
+          "primary": true
+        },
+        {
+          "id": "card:move",
+          "label": "Move…"
+        },
+        {
+          "id": "card:assign",
+          "label": "Assign…"
+        },
+        {
+          "id": "card:launch",
+          "label": "Launch again…"
+        },
+        {
+          "id": "card:stop",
+          "label": "Stop the session"
+        }
+      ],
+      "heading": "Card · alex-1",
+      "linked": [
+        {
+          "id": "dialog:linked:session",
+          "label": "Session",
+          "words": "alex-1"
+        },
+        {
+          "id": "dialog:linked:pr",
+          "label": "PR",
+          "words": "none yet",
+          "dim": true
+        },
+        {
+          "id": "dialog:linked:box",
+          "label": "Box",
+          "words": "☁ alex-1 #1234 · running"
+        }
+      ],
+      "hint": "⌘⏎ actions · ? keys",
+      "comments": {
+        "state": "ready",
+        "comments": [
+          {
+            "by": "Sam Sample",
+            "when": "20 Oct 09:05",
+            "markdown": "Shipping is added **twice** at checkout."
+          },
+          {
+            "by": "Alex Example",
+            "when": "21 Oct 14:30",
+            "markdown": "How it looks:\n\n[cart.png](https://dev.azure.com/demo-org/demo-shop/_apis/wit/attachments/5e0c7a3b?fileName=cart.png)"
+          }
+        ]
+      },
+      "composer": {
+        "text": "Seen it",
+        "placeholder": "Comment on #1234… · ⏎ comment · ⌘⏎ actions",
+        "focused": true,
+        "state": "writing"
+      }
+    }
+  },
+  "slot": "popup"
+}

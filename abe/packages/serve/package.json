@@ -1,0 +1,19 @@
+{
+  "name": "@abe/serve",
+  "version": "3.6.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@abe/core": "workspace:*",
+    "@abe/hooks": "workspace:*",
+    "@abe/ports": "workspace:*",
+    "@abe/ui": "workspace:*"
+  },
+  "devDependencies": {
+    "@abe/testing": "workspace:*",
+    "zod": "4.4.3"
+  }
+}

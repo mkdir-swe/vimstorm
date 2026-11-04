@@ -1,0 +1,10 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "review-said",
+    "root": "/home/me/projects/demo-shop-pr-7",
+    "text": "✎ Draft on cart.ts:12 · ,is submits 1 draft in one review",
+    "tone": "ok"
+  }
+}

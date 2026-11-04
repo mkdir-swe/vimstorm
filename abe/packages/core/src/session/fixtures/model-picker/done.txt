@@ -1,0 +1,16 @@
+ ▐▛███▛█   Claude Code v2.1.310
+▝▜██████▀  Opus 5.5 with high effort · API Usage Billing
+ ▝▝   ▝▝   ~/projects/demo-shop-wt/101-cart
+
+
+❯ /model
+  ⎿  Set model to Haiku 5.5 for this session only with low effort
+
+❯ /model
+  ⎿  Set model to Opus 5.5 for this session only with high effort
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle)                                                      Not logged in · Run /login
+                                                                                                      ● high · /effort

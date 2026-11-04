@@ -1,0 +1,82 @@
+{
+  "kind": "Island",
+  "id": "cards:multi",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "gap": 8,
+        "pad": [
+          12,
+          12,
+          8,
+          12
+        ],
+        "sizes": [
+          "auto",
+          "auto",
+          {
+            "flex": 1
+          },
+          "auto"
+        ]
+      },
+      "children": [
+        {
+          "kind": "Prose",
+          "id": "cards:prose",
+          "props": {
+            "markdown": "VAT can come from two places: the markets table in `markets.ts`, or a per-market value the story's comments ask for. That decides what the fix multiplies, so I'll wait for you before the pull request."
+          }
+        },
+        {
+          "kind": "QuestionCard",
+          "id": "card:q-4",
+          "props": {
+            "ask": "question",
+            "title": "Which market table should the cart total read?",
+            "why": "The story's comments mention a per-market setting",
+            "options": [
+              {
+                "n": 1,
+                "label": "The existing market table",
+                "recommended": true,
+                "ticked": true
+              },
+              {
+                "n": 2,
+                "label": "A new setting per market",
+                "ticked": false
+              },
+              {
+                "n": 3,
+                "label": "Keep the current behaviour",
+                "ticked": true
+              }
+            ],
+            "multi": true,
+            "own": "Type your own answer…",
+            "selected": 1,
+            "foot": "Space or 1–3 tick · ⏎ send · o own words · Esc later"
+          }
+        },
+        {
+          "kind": "Stack",
+          "props": {
+            "direction": "column"
+          },
+          "children": []
+        },
+        {
+          "kind": "Stack",
+          "props": {
+            "direction": "column"
+          },
+          "children": []
+        }
+      ]
+    }
+  ]
+}

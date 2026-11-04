@@ -1,0 +1,19 @@
+{
+  "kind": "PickLayer",
+  "id": "command-value",
+  "props": {
+    "title": "abe card move --column Doing|Done",
+    "filter": "",
+    "rows": [
+      {
+        "id": "value:Doing",
+        "text": "Doing"
+      },
+      {
+        "id": "value:Done",
+        "text": "Done"
+      }
+    ],
+    "selected": "value:Doing"
+  }
+}

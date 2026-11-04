@@ -1,0 +1,574 @@
+{
+  "base": {
+    "kind": "Island",
+    "id": "chat",
+    "props": {},
+    "children": [
+      {
+        "kind": "Stack",
+        "props": {
+          "direction": "column",
+          "sizes": [
+            "auto",
+            {
+              "flex": 1
+            },
+            "auto"
+          ]
+        },
+        "children": [
+          {
+            "kind": "ChatHeader",
+            "id": "chat-header",
+            "props": {
+              "title": "Chat",
+              "env": "Local sandbox",
+              "story": {
+                "id": "#4",
+                "title": "Card 4"
+              },
+              "hint": "⌘⏎",
+              "rail": {
+                "segments": [
+                  "now",
+                  "todo",
+                  "todo",
+                  "todo",
+                  "todo"
+                ],
+                "stage": "",
+                "state": "running",
+                "glyph": "●",
+                "word": "Running"
+              }
+            }
+          },
+          {
+            "kind": "Transcript",
+            "id": "chat:transcript",
+            "props": {
+              "session": "s4"
+            },
+            "children": [
+              {
+                "kind": "ChatMessage",
+                "id": "msg:u0",
+                "props": {
+                  "text": "question 0"
+                }
+              },
+              {
+                "kind": "Turn",
+                "id": "turn:u0",
+                "props": {},
+                "children": [
+                  {
+                    "kind": "StepsFold",
+                    "id": "steps:u0",
+                    "props": {
+                      "count": 1
+                    }
+                  },
+                  {
+                    "kind": "Prose",
+                    "id": "prose:u0",
+                    "props": {
+                      "markdown": "Words for 3."
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "ChatMessage",
+                "id": "msg:u4",
+                "props": {
+                  "text": "question 4"
+                }
+              },
+              {
+                "kind": "Turn",
+                "id": "turn:u4",
+                "props": {},
+                "children": [
+                  {
+                    "kind": "StepsFold",
+                    "id": "steps:u4",
+                    "props": {
+                      "count": 1
+                    }
+                  },
+                  {
+                    "kind": "Prose",
+                    "id": "prose:u4",
+                    "props": {
+                      "markdown": "Words for 7."
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "ChatMessage",
+                "id": "msg:u8",
+                "props": {
+                  "text": "question 8"
+                }
+              },
+              {
+                "kind": "Turn",
+                "id": "turn:u8",
+                "props": {},
+                "children": [
+                  {
+                    "kind": "StepsFold",
+                    "id": "steps:u8",
+                    "props": {
+                      "count": 1
+                    }
+                  },
+                  {
+                    "kind": "Prose",
+                    "id": "prose:u8",
+                    "props": {
+                      "markdown": "Words for 11."
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "ChatMessage",
+                "id": "msg:u12",
+                "props": {
+                  "text": "question 12"
+                }
+              },
+              {
+                "kind": "Turn",
+                "id": "turn:u12",
+                "props": {},
+                "children": [
+                  {
+                    "kind": "StepsFold",
+                    "id": "steps:u12",
+                    "props": {
+                      "count": 1
+                    }
+                  },
+                  {
+                    "kind": "Prose",
+                    "id": "prose:u12",
+                    "props": {
+                      "markdown": "Words for 15."
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "ChatMessage",
+                "id": "msg:u16",
+                "props": {
+                  "text": "question 16"
+                }
+              },
+              {
+                "kind": "Turn",
+                "id": "turn:u16",
+                "props": {},
+                "children": [
+                  {
+                    "kind": "StepsFold",
+                    "id": "steps:u16",
+                    "props": {
+                      "count": 1
+                    }
+                  },
+                  {
+                    "kind": "Prose",
+                    "id": "prose:u16",
+                    "props": {
+                      "markdown": "Words for 19."
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "ChatMessage",
+                "id": "msg:u20",
+                "props": {
+                  "text": "question 20"
+                }
+              },
+              {
+                "kind": "Turn",
+                "id": "turn:u20",
+                "props": {},
+                "children": [
+                  {
+                    "kind": "StepRow",
+                    "id": "step:t21",
+                    "props": {
+                      "mark": "good",
+                      "verb": "Read",
+                      "object": "src/f21.ts",
+                      "objectKind": "path"
+                    }
+                  },
+                  {
+                    "kind": "Prose",
+                    "id": "prose:u20",
+                    "props": {
+                      "markdown": "Words for 23."
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Stack",
+            "id": "composer:dock",
+            "props": {
+              "direction": "column",
+              "gap": 4,
+              "pad": [
+                4,
+                12,
+                12,
+                12
+              ]
+            },
+            "children": [
+              {
+                "kind": "ChatStatus",
+                "id": "chat:status",
+                "props": {
+                  "tone": "working",
+                  "words": "Thinking",
+                  "since": 1790845260000
+                }
+              },
+              {
+                "kind": "Composer",
+                "id": "composer:composer",
+                "props": {
+                  "text": "",
+                  "placeholder": "Message #4 Card 4…"
+                },
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "frame": {
+    "v": 2,
+    "type": "patch",
+    "screen": "chat",
+    "rev": 2,
+    "base": 1,
+    "ops": [
+      {
+        "path": [
+          0,
+          1,
+          11,
+          0
+        ],
+        "node": {
+          "kind": "StepsFold",
+          "id": "steps:u20",
+          "props": {
+            "count": 1
+          }
+        }
+      },
+      {
+        "path": [
+          0,
+          1
+        ],
+        "splice": [
+          12,
+          0
+        ],
+        "add": [
+          {
+            "kind": "ChatMessage",
+            "id": "msg:u24",
+            "props": {
+              "text": "question 24"
+            }
+          }
+        ]
+      }
+    ],
+    "slot": "chat"
+  },
+  "want": {
+    "kind": "Island",
+    "id": "chat",
+    "props": {},
+    "children": [
+      {
+        "kind": "Stack",
+        "props": {
+          "direction": "column",
+          "sizes": [
+            "auto",
+            {
+              "flex": 1
+            },
+            "auto"
+          ]
+        },
+        "children": [
+          {
+            "kind": "ChatHeader",
+            "id": "chat-header",
+            "props": {
+              "title": "Chat",
+              "env": "Local sandbox",
+              "story": {
+                "id": "#4",
+                "title": "Card 4"
+              },
+              "hint": "⌘⏎",
+              "rail": {
+                "segments": [
+                  "now",
+                  "todo",
+                  "todo",
+                  "todo",
+                  "todo"
+                ],
+                "stage": "",
+                "state": "running",
+                "glyph": "●",
+                "word": "Running"
+              }
+            }
+          },
+          {
+            "kind": "Transcript",
+            "id": "chat:transcript",
+            "props": {
+              "session": "s4"
+            },
+            "children": [
+              {
+                "kind": "ChatMessage",
+                "id": "msg:u0",
+                "props": {
+                  "text": "question 0"
+                }
+              },
+              {
+                "kind": "Turn",
+                "id": "turn:u0",
+                "props": {},
+                "children": [
+                  {
+                    "kind": "StepsFold",
+                    "id": "steps:u0",
+                    "props": {
+                      "count": 1
+                    }
+                  },
+                  {
+                    "kind": "Prose",
+                    "id": "prose:u0",
+                    "props": {
+                      "markdown": "Words for 3."
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "ChatMessage",
+                "id": "msg:u4",
+                "props": {
+                  "text": "question 4"
+                }
+              },
+              {
+                "kind": "Turn",
+                "id": "turn:u4",
+                "props": {},
+                "children": [
+                  {
+                    "kind": "StepsFold",
+                    "id": "steps:u4",
+                    "props": {
+                      "count": 1
+                    }
+                  },
+                  {
+                    "kind": "Prose",
+                    "id": "prose:u4",
+                    "props": {
+                      "markdown": "Words for 7."
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "ChatMessage",
+                "id": "msg:u8",
+                "props": {
+                  "text": "question 8"
+                }
+              },
+              {
+                "kind": "Turn",
+                "id": "turn:u8",
+                "props": {},
+                "children": [
+                  {
+                    "kind": "StepsFold",
+                    "id": "steps:u8",
+                    "props": {
+                      "count": 1
+                    }
+                  },
+                  {
+                    "kind": "Prose",
+                    "id": "prose:u8",
+                    "props": {
+                      "markdown": "Words for 11."
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "ChatMessage",
+                "id": "msg:u12",
+                "props": {
+                  "text": "question 12"
+                }
+              },
+              {
+                "kind": "Turn",
+                "id": "turn:u12",
+                "props": {},
+                "children": [
+                  {
+                    "kind": "StepsFold",
+                    "id": "steps:u12",
+                    "props": {
+                      "count": 1
+                    }
+                  },
+                  {
+                    "kind": "Prose",
+                    "id": "prose:u12",
+                    "props": {
+                      "markdown": "Words for 15."
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "ChatMessage",
+                "id": "msg:u16",
+                "props": {
+                  "text": "question 16"
+                }
+              },
+              {
+                "kind": "Turn",
+                "id": "turn:u16",
+                "props": {},
+                "children": [
+                  {
+                    "kind": "StepsFold",
+                    "id": "steps:u16",
+                    "props": {
+                      "count": 1
+                    }
+                  },
+                  {
+                    "kind": "Prose",
+                    "id": "prose:u16",
+                    "props": {
+                      "markdown": "Words for 19."
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "ChatMessage",
+                "id": "msg:u20",
+                "props": {
+                  "text": "question 20"
+                }
+              },
+              {
+                "kind": "Turn",
+                "id": "turn:u20",
+                "props": {},
+                "children": [
+                  {
+                    "kind": "StepsFold",
+                    "id": "steps:u20",
+                    "props": {
+                      "count": 1
+                    }
+                  },
+                  {
+                    "kind": "Prose",
+                    "id": "prose:u20",
+                    "props": {
+                      "markdown": "Words for 23."
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "ChatMessage",
+                "id": "msg:u24",
+                "props": {
+                  "text": "question 24"
+                }
+              }
+            ]
+          },
+          {
+            "kind": "Stack",
+            "id": "composer:dock",
+            "props": {
+              "direction": "column",
+              "gap": 4,
+              "pad": [
+                4,
+                12,
+                12,
+                12
+              ]
+            },
+            "children": [
+              {
+                "kind": "ChatStatus",
+                "id": "chat:status",
+                "props": {
+                  "tone": "working",
+                  "words": "Thinking",
+                  "since": 1790845260000
+                }
+              },
+              {
+                "kind": "Composer",
+                "id": "composer:composer",
+                "props": {
+                  "text": "",
+                  "placeholder": "Message #4 Card 4…"
+                },
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

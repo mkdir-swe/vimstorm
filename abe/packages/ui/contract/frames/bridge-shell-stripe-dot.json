@@ -1,0 +1,10 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "stripe-dot",
+    "id": "pipelines",
+    "dot": "failed",
+    "words": "1 run failed on your branch"
+  }
+}

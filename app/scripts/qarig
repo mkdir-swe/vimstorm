@@ -1,0 +1,2305 @@
+#!/usr/bin/env python3
+"""qarig: the parallel QA rig. Many testers drive and film VimStorm + Abe at once, offscreen (the
+`shots` build: no window shown, no focus taken, no OS keystrokes), each on an isolated env.
+
+  qarig up <name> [--seed <json>] [--seed-offset n] [--path <folder>]
+                                                    an env under /tmp/qr/<name>: fake Azure DevOps on
+                                                    a free port, fake az / gh / claude, a Layer, abe serve;
+                                                    the demo repo's origin is github.com/qa-rig/demo-shop
+  qarig up <name> --real [--seed-offset n]          a release gate env: a private copy of the gate repo
+                                                    (<org>/gate-<name>-<4hex>), your gh / aws / claude logins where
+                                                    they live, an Override limits.maxBoxesPerPerson 6,
+                                                    the fake board on the repo's seed,
+                                                    stores.org its own prefix gate/<name>-<4hex>/ of the org store;
+                                                    boxes come from the app's Launch, down deletes them, the copy
+                                                    and the prefix; the org, repos and AWS profile come from
+                                                    qarig.local.toml beside this file (untracked; copy
+                                                    qarig.local.example.toml)
+  qarig shot <name> <label> '<keys>' [--frames n --every ms] [--size WxH] [--path <folder>]
+             [--delay ms] [--abe]                   one offscreen run of the shared binary; prints PNG paths
+                                                    (starts the env's serve first if it is not answering; exit 3 when
+                                                    a new serve under the real HOME, or the shot's under any other, appeared)
+  qarig scenario <name> <scenario> [args]           drive serve state (qarig scenario <name> list)
+  qarig env <name>                                  the env to source (also /tmp/qr/<name>/env.sh)
+  qarig down <name>                                 stop everything of <name> (--real: its boxes, repo copy and store prefix deleted)
+  qarig ls                                          the envs and what runs
+  qarig diff <name> <label> | <folder>              read a film cheaply: <label>-diff.tsv, <label>-sheet.png and the flagged frames
+  qarig rebuild [--ref <commit>]                    rebuild the shared shots binary + abe from this checkout's HEAD
+                                                    (or --ref) in .scratch/qa/build (locked; QARIG_HOME moves .scratch/qa)
+
+A live, driven app (the drive socket, #232: one app start, driven step by step, never shown):
+  qarig live <name> [--size WxH] [--abe] [--path <folder>] [--fps n] [--keep] [--no-path]
+                                                  start it (pid + socket in rig.json); --keep keeps the last
+                                                  run's state, --no-path launches as the Dock does (restart tests)
+  qarig do <name> '<keys>' | --type '<text>' | --click x,y            play keys / text / a click
+  qarig see <name> [part…] [--json]               the trees (main chat pane review layer), status, balloons, title, view, terminal
+  qarig wait <name> '<text>' [--in part] [--gone] [--timeout 10m]      exit 1 on timeout (evidence in logs/timeouts/)
+  qarig snap <name> <label>                       PNG of the live window: shots/<label>/<label>.png
+  qarig film <name> <label> '<keys>' --frames n --every ms             frames while the keys play, + flipbook
+  qarig teammate <name> azure move <card> <state> --as sam | azure comment <card> '<text>' --as sam
+                 | github push <branch> [--as sam]                     a teammate's change from outside the app
+  qarig quit <name>                               quit the live app (down does too)
+  qarig fleet <n> [--prefix t] [--abe] [--size WxH]                    N isolated envs, each up with a live app
+Every do / wait / teammate goes to <env>/logs/drive.log with its ms.
+
+A gate run (#352: a script of steps, each do → check → evidence; app/scripts/qarig_gate.py):
+  qarig gate <name> <script.md> [--from G2] [--only G1,G4] [--keep-going] [--dry-run] [--out dir]
+             runs it on the env's live app; RESULT.md + trees/ shots/ films/ runs/ in
+             .scratch/qa/gate/<commit>/<name>/ (exit 0 pass, 1 fail, 4 the tester agent's turn)
+  qarig judge <name> <row> PASS|FAIL '<what was seen>'   the tester agent's verdict on a judge row
+
+Keys (VIMSTORM_SHOT_KEYS, see app/src/devtools/shot.rs): plain text = nvim input; {@tab} {@k} {@super+alt+a}
+GPUI keys (the Factory view takes only these); {type:text}; {wait:ms}; {shot:label}; {@click x,y};
+{@move x,y}; {@scroll dy}; {lua:code:lua}. Coordinates are logical px from the window's top left.
+"""
+
+import argparse
+import json
+import fcntl
+import hashlib
+import os
+import pwd
+import re
+import shutil
+import signal
+import socket
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import qarig_diff  # noqa: E402  (the film frame-diff, beside this file)
+import qarig_drive  # noqa: E402  (the drive socket's client)
+import qarig_gate  # noqa: E402  (the gate runner: tests/gate/*.md)
+
+HERE = Path(__file__).resolve().parent
+REPO = HERE.parent.parent  # the checkout this qarig is in (rebuild builds its HEAD, or --ref)
+RIG = Path(os.environ.get("QARIG_HOME", REPO / ".scratch/qa"))  # the shared build's lock, BUILT, READY, gate runs
+BUILD = Path(os.environ.get("QARIG_BUILD", RIG / "build"))  # the checkout the shared build is from (a detached worktree of REPO)
+TARGET = Path(os.environ.get("QARIG_TARGET", RIG / "target"))
+BIN = Path(os.environ.get("QARIG_BIN", TARGET / "release/vimstorm"))  # QARIG_BIN: another shots build
+ABE_BIN = Path(os.environ.get("QARIG_ABE_BIN", TARGET / "abe/abe-darwin-arm64"))  # copied there by rebuild: the checkout's dist/ may move on
+ROOT = Path(os.environ.get("QARIG_ROOT", "/tmp/qr"))  # envs: short, a socket path is at most 104 bytes
+
+
+def die(msg, code=1):
+    print(f"qarig: {msg}", file=sys.stderr)
+    sys.exit(code)
+
+
+def env_dir(name):
+    if not name or "/" in name or name.startswith("."):
+        die(f"bad name {name!r}")
+    return ROOT / name
+
+
+def free_port():
+    with socket.socket() as s:
+        s.bind(("127.0.0.1", 0))
+        return s.getsockname()[1]
+
+
+def write(path, text, mode=None):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(text)
+    if mode:
+        path.chmod(mode)
+
+
+# Envs before 2 put volta's node shim on serve's PATH under the env's HOME: a fork bomb.
+RIG_VERSION = 2
+
+
+def load(d, fixed=True):
+    """The env's rig.json; with `fixed`, refused for an env made before the PATH fix."""
+    f = d / "rig.json"
+    if not f.exists():
+        die(f"no env {d.name}: qarig up {d.name}")
+    rig = json.loads(f.read_text())
+    pinned = sorted(k for k in rig.get("extra_env", {}) if is_pinned(k))
+    if fixed and pinned:
+        die(
+            f"env {d.name}'s rig.json extra_env sets {', '.join(pinned)}: an env's HOME, state, socket, "
+            f"config and abe are always its own (a serve started under another HOME reads and writes "
+            f"that HOME's Abe state). Take them out of {f}, or re-make it: qarig down {d.name} && qarig up {d.name}"
+        )
+    if fixed and rig.get("version", 1) < RIG_VERSION:
+        die(
+            f"env {d.name} was made before the 03:05 PATH fix (its serve can fork-bomb on node): "
+            f"re-make it: qarig down {d.name} && qarig up {d.name}"
+        )
+    if rig.get("path") and Path(rig["path"]).exists():
+        rig["path"] = real(rig["path"])  # envs made before the fix name /tmp/…, serve /private/tmp/…
+    return rig
+
+
+def save(d, rig):
+    write(d / "rig.json", json.dumps(rig, indent=2) + "\n")
+
+
+def alive(pgid):
+    if not pgid or pgid <= 1:
+        return False
+    try:
+        os.killpg(pgid, 0)
+        return True
+    except (ProcessLookupError, PermissionError):
+        return False
+
+
+def ours(pgid):
+    """The group still is one qarig started (a reused pid is left alone)."""
+    out = subprocess.run(["ps", "-o", "command=", "-p", str(pgid)], capture_output=True, text=True).stdout
+    return out.startswith("/bin/sh -c exec sleep 2147483647 | exec ")
+
+
+def group_runs_more_than_its_sleep(pgid):
+    """A daemon's group still runs its program (not only the `sleep` holding its stdin open)."""
+    out = subprocess.run(["ps", "-axo", "pgid=,command="], capture_output=True, text=True).stdout
+    for line in out.splitlines():
+        g, _, cmd = line.strip().partition(" ")
+        if g == str(pgid) and not cmd.startswith(("sleep ", "/bin/sh -c exec sleep ")):
+            return True
+    return False
+
+
+def daemon(argv, log, env, cwd=None):
+    """Starts argv in a session of its own (stdin a pipe that stays open: the fake ADO ends when
+    its stdin closes), its output to log; returns its process group id."""
+    log.parent.mkdir(parents=True, exist_ok=True)
+    cmd = "exec sleep 2147483647 | exec " + " ".join(sh_quote(a) for a in argv)
+    p = subprocess.Popen(
+        ["/bin/sh", "-c", cmd],
+        stdout=open(log, "ab"),
+        stderr=subprocess.STDOUT,
+        stdin=subprocess.DEVNULL,
+        env=env,
+        cwd=cwd,
+        start_new_session=True,
+    )
+    return p.pid
+
+
+def sh_quote(s):
+    s = str(s)
+    if s and all(c.isalnum() or c in "@%+=:,./-_" for c in s):
+        return s
+    return "'" + s.replace("'", "'\"'\"'") + "'"
+
+
+def wait_for(check, secs, what):
+    end = time.time() + secs
+    while time.time() < end:
+        if check():
+            return
+        time.sleep(0.2)
+    die(f"timed out waiting for {what}")
+
+
+# What makes an env an env: whatever abe or the app starts (a serve the bridge starts when none
+# answers too) inherits these, so they are set last and never taken from extra_env.
+PINNED = ("HOME", "ABE_BIN", "ABE_STATE_DIR", "ABE_SOCKET", "ABE_CONFIG_DIR", "QARIG_NAME", "VIMSTORM_NO_INSTANCE")
+
+
+def is_pinned(k):
+    return k in PINNED or k.startswith("XDG_")
+
+
+def pinned_env(d, rig):
+    return {
+        "ABE_BIN": str(rig["abe_bin"]),
+        "ABE_STATE_DIR": str(d / "s"),
+        "ABE_SOCKET": str(d / "s/s.sock"),
+        "ABE_CONFIG_DIR": str(d / "cfg"),
+        "HOME": str(d / "home"),
+        "VIMSTORM_NO_INSTANCE": "1",
+        "QARIG_NAME": d.name,
+    }
+
+
+def serve_home(d, rig):
+    """The HOME the env's serve runs under: the env's own; a --real env's the real one, where its
+    claude (yours, bin/claude) writes the transcripts serve reads (~/.claude/projects)."""
+    return REAL_HOME if rig.get("real") else str(d / "home")
+
+
+def serve_env(d, rig):
+    """The env's serve's env: abe_env, but under serve_home. Its state, config and socket stay the
+    env's (pinned), git's global config the env's (its identity and gh credential helper)."""
+    env = abe_env(d, rig)
+    if rig.get("real"):
+        env.update(HOME=REAL_HOME, GIT_CONFIG_GLOBAL=str(d / "home/.gitconfig"))
+    return env
+
+
+def abe_env(d, rig):
+    """The env every abe process of this rig gets (serve, the bridge, scenario commands)."""
+    env = dict(os.environ)
+    drop = ("ABE_", "AWS_", "CLAUDE", "ANTHROPIC_", "OPENAI_", "AZURE_", "GITHUB_", "GH_", "COPILOT_", "XDG_", "NVIM", "VIMSTORM_", "DATABASE_", "QARIG_", "VOLTA_", "SSH_AUTH")
+    for k in list(env):
+        if k.startswith(drop):
+            del env[k]
+    env.update(
+        {
+            "ABE_ADO_BASE_URL": f"http://127.0.0.1:{rig['ado_port']}",
+            "PATH": f"{d / 'bin'}:{env.get('PATH', '/usr/bin:/bin')}",
+            # serve keeps this PATH (on darwin it would take the login shell's: the real
+            # claude / gh / az before the fakes)
+            "ABE_LOGIN_PATH": "off",
+            "ABE_OWNER": "qa-rig",
+        }
+    )
+    if rig.get("real"):
+        del env["ABE_OWNER"]  # a real env is yours: your boxes are found by your gh login
+    # No version-manager shim on the env's PATH: under the env's own HOME volta's node shim
+    # re-runs itself forever (a fork bomb, VOLTA_HOME or not). The real node / npm / npx dirs
+    # come first instead, resolved once under the real HOME.
+    env["PATH"] = ":".join([str(d / "bin"), *real_tool_dirs(), *rig.get("real_dirs", []), *(p for p in env["PATH"].split(":") if not shim_dir(p))])
+    env.update({k: v for k, v in rig.get("extra_env", {}).items() if not is_pinned(k)})
+    env.update(pinned_env(d, rig))
+    return env
+
+
+SHIM_DIRS = (".volta/bin", ".asdf/shims", ".pyenv/shims", ".rbenv/shims", ".nodenv/shims", ".local/share/mise/shims", "Library/pnpm")
+
+
+def shim_dir(p):
+    home = str(Path(pwd.getpwuid(os.getuid()).pw_dir))
+    return any(p.rstrip("/") == f"{home}/{s}" for s in SHIM_DIRS) or p.startswith(str(ROOT))
+
+
+_TOOL_DIRS = None
+
+
+def real_tool_dirs():
+    """The dirs of the real node, npm and npx (what volta's shims would run), once."""
+    global _TOOL_DIRS
+    if _TOOL_DIRS is None:
+        dirs = []
+        real_home = pwd.getpwuid(os.getuid()).pw_dir
+        env = dict(os.environ, HOME=real_home)
+        for tool in ("node", "npm", "npx"):
+            path = None
+            if shutil.which("volta"):
+                try:
+                    out = subprocess.run(["volta", "which", tool], env=env, capture_output=True, text=True, timeout=10)
+                    path = out.stdout.strip() if out.returncode == 0 else None
+                except subprocess.TimeoutExpired:
+                    path = None
+            if path and Path(path).is_file() and str(Path(path).parent) not in dirs:
+                dirs.append(str(Path(path).parent))
+        if not dirs:
+            for c in ("/opt/homebrew/bin", "/usr/local/bin"):
+                if (Path(c) / "node").is_file():
+                    dirs.append(c)
+                    break
+        _TOOL_DIRS = dirs
+    return _TOOL_DIRS
+
+
+def abe(d, rig, *args, check=True, json_out=False, timeout=60):
+    argv = [rig["abe_bin"], *args] + (["--json"] if json_out else [])
+    p = subprocess.run(
+        argv,
+        env=abe_env(d, rig),
+        cwd=rig["path"],
+        capture_output=True,
+        text=True,
+        timeout=timeout,
+    )
+    if check and p.returncode != 0:
+        die(f"abe {' '.join(args)}: exit {p.returncode}\n{p.stdout}{p.stderr}")
+    if json_out:
+        try:
+            return json.loads(p.stdout)
+        except json.JSONDecodeError:
+            if not check:
+                return {}
+            die(f"abe {' '.join(args)}: not JSON\n{p.stdout}{p.stderr}")
+    return p
+
+
+# ---------------------------------------------------------------- up / down
+
+SEED = BUILD / "abe/packages/testing/src/servers/fake-ado/seed.json"
+FAKE_CLAUDE = BUILD / "abe/packages/testing/src/tools/fake-claude/claude.ts"
+FAKE_EC2 = BUILD / "abe/packages/testing/src/tools/fake-ec2/aws.ts"
+# fake-ec2/state.ts's Ec2State; template and sizes are @abe/core's BOX_LAUNCH_TEMPLATE / BOX_SIZES
+EC2_STATE = {
+    "owner": "qa-rig",
+    "sso": "qa-rig",
+    "template": "abe-box",
+    "templateVersion": 11,
+    "lead": False,
+    "sizes": ["m8g.large", "m8g.xlarge", "m8g.2xlarge", "m8g.4xlarge", "m8g.8xlarge", "m8g.12xlarge", "m8g.16xlarge"],
+    "bootMs": 20000,
+    "stopMs": 8000,
+    "expired": False,
+    "next": 1,
+    "instances": [],
+}
+FAKE_ADO = BUILD / "abe/packages/testing/src/servers/fake-ado/server.ts"
+
+AZ = """#!/bin/sh
+# qarig's az: a fixed fake token for the fake Azure DevOps (never a real login), answered in the
+# shape real az gives each ask: the account's name for `account show`, only the asked field for
+# `--query … -o tsv`, the token JSON for `get-access-token -o json`.
+case "$*" in
+  "version"*) echo '{"azure-cli":"2.67.0"}';;
+  "login"*) echo '[]';;
+  "account show"*) echo qa@example.test;;
+  "account get-access-token"*"--query expiresOn"*) echo "2099-01-01 00:00:00.000000";;
+  "account get-access-token"*) echo '{"accessToken":"fake-token","expiresOn":"2099-01-01 00:00:00.000000","expires_on":4070908800,"tokenType":"Bearer"}';;
+  *) echo "qarig: az $1 $2 is not faked" >&2; exit 2;;
+esac
+"""
+
+DEMO_REPO = "qa-rig/demo-shop"  # the demo repo's GitHub identity (its origin URL; the fake gh answers it)
+
+
+def install_gh(d):
+    """The env's fake gh (qarig_gh.py beside this file): never reaches GitHub, logged out; names the
+    cwd's GitHub origin; Actions from <env>/gh/runs.json (`qarig scenario <env> pipelines`)."""
+    (d / "bin").mkdir(parents=True, exist_ok=True)
+    tmp = d / "bin/gh.new"
+    shutil.copyfile(HERE / "qarig_gh.py", tmp)
+    tmp.chmod(0o755)
+    os.replace(tmp, d / "bin/gh")
+
+
+def real(path):
+    """A path with its symlinks resolved (/tmp is /private/tmp): git and serve name checkouts so."""
+    return str(Path(path).resolve())
+
+
+def make_repo(repo, remote):
+    """A small git project with a bare origin, so sessions get a worktree off origin/main. Its origin
+    URL is GitHub's (`DEMO_REPO`): the env's ~/.gitconfig sends that URL to the bare origin, and the
+    fake gh answers for it, so the shown repo has a GitHub identity."""
+    repo.mkdir(parents=True, exist_ok=True)
+    files = {
+        "README.md": "# Demo shop\n\nThe rig's project.\n",
+        "src/cart.ts": "export function total(prices: number[]): number {\n  return prices.reduce((a, b) => a + b, 0);\n}\n",
+        "src/signin.ts": "export function signIn(email: string): boolean {\n  return email.includes('@');\n}\n",
+        ".gitignore": ".scratch/\nnode_modules/\n.abe/*.local.yaml\n",
+    }
+    for rel, text in files.items():
+        write(repo / rel, text)
+    g = lambda *a, cwd=repo: subprocess.run(["git", *a], cwd=cwd, check=True, capture_output=True)
+    g("init", "-q", "-b", "main")
+    g("-c", "user.name=QA Rig", "-c", "user.email=qa@example.test", "add", "-A")
+    g("-c", "user.name=QA Rig", "-c", "user.email=qa@example.test", "commit", "-qm", "Demo shop")
+    subprocess.run(["git", "init", "-q", "--bare", "-b", "main", str(remote)], check=True, capture_output=True)
+    g("remote", "add", "origin", str(remote))
+    g("push", "-q", "origin", "main")  # under the real HOME: the bare path, not the URL
+    g("remote", "set-url", "origin", f"https://github.com/{DEMO_REPO}.git")
+
+
+def origin_rewrite(d):
+    """The env's ~/.gitconfig lines sending the demo repo's GitHub URL to its bare origin (git
+    reads them under the env's HOME; `git remote get-url` on no global config still says GitHub's)."""
+    o = d / "origin.git"
+    return f'[url "{o}"]\n\tinsteadOf = https://github.com/{DEMO_REPO}.git\n\tinsteadOf = https://github.com/{DEMO_REPO}\n'
+
+
+def cmd_up(a):
+    d = env_dir(a.name)
+    if (d / "rig.json").exists():
+        rig = load(d, fixed=False)
+        if rig.get("version", 1) < RIG_VERSION and (alive(rig.get("serve_pgid", 0)) or alive(rig.get("ado_pgid", 0))):
+            die(f"env {a.name} is from before the 03:05 PATH fix and still runs: qarig down {a.name} first")
+        if alive(rig.get("ado_pgid", 0)):
+            print_env(d, rig)
+            print(f"# {a.name} is up already (qarig down {a.name} first to start over)", file=sys.stderr)
+            return
+        cmd_down(a, quiet=True)
+    if not ABE_BIN.exists():
+        die(f"no shared abe at {ABE_BIN}: qarig rebuild")
+    if d.exists():  # a fresh env, but a tester's shots and logs stay
+        for child in d.iterdir():
+            if child.name not in ("shots", "logs"):
+                shutil.rmtree(child, ignore_errors=True) if child.is_dir() and not child.is_symlink() else child.unlink()
+    for sub in ("s", "cfg", "bin", "home", "logs", "shots", "state"):
+        (d / sub).mkdir(parents=True, exist_ok=True)
+    if a.real:
+        return up_real(a, d)
+    seed = Path(a.seed).resolve() if a.seed else SEED
+    if not seed.exists():
+        die(f"no seed {seed}")
+    seed = rig_seed(seed, a.seed_offset, d / "seed.json")
+    write(d / "bin/az", AZ, 0o755)
+    install_gh(d)
+    for tool in ("copilot", "codex", "npx"):
+        write(d / f"bin/{tool}", f"#!/bin/sh\necho \"qarig: no real {tool} in a rig env\" >&2\nexit 1\n", 0o755)
+    bun = shutil.which("bun") or "/opt/homebrew/bin/bun"
+    write(d / "bin/claude", f"#!{bun}\nimport {json.dumps(str(FAKE_CLAUDE))};\n", 0o755)
+    # the testing package's fake EC2: the Boxes tab and box states without AWS (state in bin/)
+    write(d / "bin/aws", f"#!{bun}\nimport {json.dumps(str(FAKE_EC2))};\n", 0o755)
+    write(d / "bin/state.json", json.dumps(EC2_STATE))
+    write(
+        d / "home/.gitconfig",
+        "[user]\n\tname = QA Rig\n\temail = qa@example.test\n[init]\n\tdefaultBranch = main\n" + ("" if a.path else origin_rewrite(d)),
+    )
+    # yours on this Mac; the board is the repo's .abe/settings.local.yaml (installed())
+    write(d / "cfg/settings.yaml", "serve.target: local\n")
+    if a.path:
+        path = Path(a.path).resolve()
+    else:
+        make_repo(d / "repo", d / "origin.git")
+        path = Path(real(d / "repo"))  # /private/tmp/…: what serve's checkouts say
+    installed(d, path, seed)
+    rig = {
+        "version": RIG_VERSION,
+        "name": a.name,
+        "abe_bin": str(ABE_BIN),
+        "ado_port": free_port(),
+        "path": str(path),
+        "seed": str(seed),
+        "seed_offset": a.seed_offset,
+        "extra_env": {"QARIG_DIR": str(d)},
+    }
+    start_env(d, rig)
+
+
+# core's INSTALL_PARTS (abe/packages/core/src/install/install.ts), Done last
+INSTALL_PARTS = ("logins", "board", "sources", "env-files", "worktree", "checks", "workflows", "skills", "verify", "done")
+
+
+def installed(d, path, seed):
+    """The project as `abe install` leaves it, so cards start there (3.3): a finished install record
+    in serve's state (`s/installs/<sha256 of the checkout>[:16]/install.json`, by the path serve or
+    the app may name: /private/tmp/… and /tmp/…) and the board in its `.abe/settings.local.yaml`
+    (one there already stays)."""
+    at = "2026-01-01T00:00:00.000Z"
+    names = {str(path)}
+    if str(path).startswith("/private/tmp/"):
+        names.add(str(path)[len("/private"):])
+    # Done is every part passing (core's installDone over INSTALL_PARTS), not finishedAt: parts {}
+    # read as todo (status 0 of 9, the Board's "Install in progress")
+    check = {"state": "pass", "line": "Set up by the QA rig.", "checkedAt": at}
+    parts = {part: dict(check) for part in INSTALL_PARTS}
+    for repo in names:
+        record = {
+            "v": 2, "repo": repo, "startedAt": at, "join": False, "parts": parts, "finishedAt": at,
+            "read": None, "board": None, "logins": None, "gate": None, "testHosts": [],
+        }
+        key = hashlib.sha256(repo.encode()).hexdigest()[:16]
+        write(d / "s/installs" / key / "install.json", json.dumps(record, indent=2) + "\n")
+    local = path / ".abe/settings.local.yaml"
+    if not local.exists():
+        s = json.loads(Path(seed).read_text())
+        write(
+            local,
+            f"board:\n  organization: https://dev.azure.com/{RIG_ORG}\n"
+            f"  project: {s.get('project', 'Sandbox')}\n  team: {s.get('team', {}).get('name', 'Sandbox')}\n",
+        )
+
+
+def start_env(d, rig):
+    """The env's fake board and its serve, then env.sh."""
+    port = rig["ado_port"]
+    path = rig["path"]
+    seed = rig["seed"]
+    env = abe_env(d, rig)
+    (d / "logs").mkdir(parents=True, exist_ok=True)
+    (d / "logs/ado.log").write_text("")
+    (d / "logs/serve.log").write_text("")
+    rig["ado_pgid"] = daemon(
+        ["bun", FAKE_ADO, "--port", port, "--seed", seed, "--log", d / "logs/ado-requests.log"],
+        d / "logs/ado.log",
+        env,
+    )
+    save(d, rig)  # down finds it even if a wait below gives up
+    wait_for(lambda: "listening" in (d / "logs/ado.log").read_text() or "fake Azure DevOps on" in (d / "logs/ado.log").read_text(), 15, "the fake Azure DevOps")
+    rig["serve_pgid"] = daemon([rig["abe_bin"], "serve"], d / "logs/serve.log", serve_env(d, rig), cwd=str(path))
+    save(d, rig)
+    wait_for(lambda: (d / "s/s.sock").exists(), 20, "abe serve")
+    write(d / "env.sh", env_text(d, rig))
+    print_env(d, rig)
+    print(f"# up: board http://127.0.0.1:{port}, project {path}; source {d / 'env.sh'}", file=sys.stderr)
+
+
+RIG_ORG = "qa-rig"  # the rig board's Azure DevOps organization
+SEED_ORG = re.compile(r"https://dev\.azure\.com/[^/\"\\\s]+/")
+
+
+def rig_seed(seed, offset, to):
+    """The seed as this env's board serves it: its cards moved up by `offset` (offset_seed) and
+    every dev.azure.com link in it (attachments in a card's text) on the rig board's own org, so
+    `abe card images` takes them as the board's attachments."""
+    if offset:
+        seed = offset_seed(seed, offset, to)
+    write(to, SEED_ORG.sub(f"https://dev.azure.com/{RIG_ORG}/", seed.read_text()))
+    return to
+
+
+def offset_seed(seed, offset, to):
+    """The seed with every card's number (and parent) moved up by `offset`, so two testers' boards
+    number their cards apart (A 1xx, B 2xx) and a card of one showing in the other is plain."""
+    if offset < 0:
+        die("--seed-offset is 0 or more")
+    js = json.loads(seed.read_text())
+    for item in js.get("items", []):
+        item["id"] += offset
+        if item.get("parent") is not None:
+            item["parent"] += offset
+    write(to, json.dumps(js, indent=1, ensure_ascii=False) + "\n")
+    return to
+
+
+LOCAL = Path(os.environ.get("QARIG_LOCAL", HERE / "qarig.local.toml"))  # the gate's accounts: untracked
+
+
+def gate_config():
+    """The release gate's accounts and orgs (only --real reads them), from LOCAL (gitignored; copy
+    qarig.local.example.toml): `org` (the GitHub org the repo copies go in, you a member),
+    `source` (the gate's product repo: main and its .abe pack), `org_infra` (the org's
+    infrastructure repo: terraform/org.yaml names the org store's account), `aws_profile` and
+    `aws_region` (where the env's boxes live)."""
+    import tomllib
+
+    if not LOCAL.exists():
+        die(f"up --real needs {LOCAL} (copy {HERE / 'qarig.local.example.toml'} and fill it in)")
+    cfg = tomllib.loads(LOCAL.read_text())
+    missing = [k for k in ("org", "source", "org_infra", "aws_profile", "aws_region") if not cfg.get(k)]
+    if missing:
+        die(f"{LOCAL}: no {', '.join(missing)}")
+    return cfg
+
+
+def gate_slug(org):
+    """A gate env's repo copy: <org>/gate-<name>-<4hex> (down deletes only such a repo)."""
+    return re.compile(rf"{re.escape(org)}/gate-[A-Za-z0-9_-]+-[0-9a-f]{{4}}")
+REAL_TOOLS = ("gh", "aws", "claude", "git")
+# the org store (the org infrastructure's terraform/org-store: abe-org-store-<tooling account>); a gate env gets
+# its own prefix in it, gate/<name>-<4hex> (the repo copy's hex), and down deletes only that
+GATE_STORE = re.compile(r"s3://abe-org-store-[0-9]{12}/gate/[A-Za-z0-9_-]+-[0-9a-f]{4}")
+GATE_OVERRIDE = "  limits.maxBoxesPerPerson:\n    value: 6\n    reason: release gate (two testers' boxes count against one owner)\n"
+
+
+def real_gh(*args, check=True, cwd=None):
+    """gh as you, where your login lives (never a copy of it; nothing printed)."""
+    env = {k: v for k, v in os.environ.items() if not k.startswith(("GH_", "GITHUB_"))}
+    env["HOME"] = REAL_HOME
+    p = subprocess.run(["gh", *args], capture_output=True, text=True, env=env, cwd=cwd)
+    if check and p.returncode != 0:
+        die(f"gh {' '.join(args[:3])}: {p.stderr.strip()[-300:]}")
+    return p
+
+
+def gate_store(org_infra, name, hexid):
+    """The env's org store: its own prefix in the org's bucket, whose account is the org
+    infrastructure's terraform/org.yaml `tooling.account` (terraform/org-store's abe-org-store-<account>)."""
+    yaml = Path(org_infra) / "terraform/org.yaml"
+    m = re.search(r"^tooling:\n(?:[ \t]+.*\n)*?[ \t]+account:[ \t]*\"?([0-9]{12})\"?", yaml.read_text() if yaml.exists() else "", re.M)
+    if not m:
+        die(f"up --real: no tooling.account in {yaml}: no org store for the env")
+    url = f"s3://abe-org-store-{m.group(1)}/gate/{name}-{hexid}"
+    if not GATE_STORE.fullmatch(url):
+        die(f"up --real: {url} is no gate prefix of the org store")
+    return url
+
+
+def gate_layer(store):
+    """Yours on this Mac for the env: its org store prefix (a factory key there is not read)."""
+    return f"stores.org: {store}\n"
+
+
+def real_aws(rig, *args):
+    """aws as you on the env's profile and region (qarig.local.toml), where your SSO cache lives."""
+    env = {k: v for k, v in os.environ.items() if not k.startswith("AWS_")}
+    env.update(HOME=REAL_HOME, AWS_PROFILE=rig["extra_env"]["AWS_PROFILE"], AWS_REGION=rig["extra_env"].get("AWS_REGION", ""))
+    found = shutil.which("aws", path=":".join(rig.get("real_dirs") or [])) or "aws"
+    return subprocess.run([found, *args], capture_output=True, text=True, env=env)
+
+
+def down_store(d, rig, aws=real_aws):
+    """The env's org store prefix deleted: only a gate/<name>-<4hex>/ prefix, never the bucket."""
+    url = rig.get("org_store")
+    if not url:
+        return True
+    if not GATE_STORE.fullmatch(url):
+        print(f"qarig: {d.name}'s rig.json names the org store {url!r}, no gate prefix: left alone", file=sys.stderr)
+        return True
+    p = aws(rig, "s3", "rm", f"{url}/", "--recursive", "--only-show-errors")
+    if p.returncode != 0:
+        print(f"qarig: {url}/ NOT emptied ({(p.stderr or p.stdout).strip()[-200:]}): qarig down {d.name} again", file=sys.stderr)
+        return False
+    print(f"deleted {url}/")
+    rig["org_store"] = None
+    save(d, rig)
+    return True
+
+
+def up_real(a, d):
+    """A real tester env (#232): its own private copy of the gate repo on GitHub, your gh / aws /
+    claude logins where they live, a gate Override of limits.maxBoxesPerPerson, the demo board as the local fake on the repo's own seed. Boxes are
+    made by the app's own Launch; down deletes the env's boxes and the repo copy."""
+    cfg = gate_config()
+    org = cfg["org"]
+    who = real_gh("api", "user", "-q", ".login", check=False)
+    if who.returncode != 0 or not who.stdout.strip():
+        die("up --real needs your gh login (gh auth login under your own HOME)")
+    login = who.stdout.strip()
+    member = real_gh("api", f"orgs/{org}/memberships/{login}", "-q", ".state", check=False)
+    if member.stdout.strip() != "active":
+        die(f"up --real: gh's login {login} is no active member of {org}: no repo copy made")
+    dirs = []
+    for tool in REAL_TOOLS:
+        found = shutil.which(tool, path=":".join(x for x in os.environ.get("PATH", "").split(":") if not shim_dir(x)) + ":/opt/homebrew/bin:/usr/local/bin:" + f"{REAL_HOME}/.local/bin")
+        if not found:
+            die(f"up --real: no {tool} on PATH")
+        if str(Path(found).parent) not in dirs:
+            dirs.append(str(Path(found).parent))
+    hexid = os.urandom(2).hex()
+    slug = f"{org}/gate-{a.name}-{hexid}"
+    rig = {
+        "version": RIG_VERSION,
+        "name": a.name,
+        "real": True,
+        "gh_repo": slug,
+        "path": str(d),  # the clone's, once made
+        "abe_bin": str(ABE_BIN),
+        "ado_port": free_port(),
+        "seed_offset": a.seed_offset,
+        "real_dirs": dirs,
+        # boxes live in the gate's own account (qarig.local.toml; never a work profile)
+        "extra_env": {"QARIG_DIR": str(d), "AWS_PROFILE": os.environ.get("QARIG_AWS_PROFILE", cfg["aws_profile"]), "AWS_REGION": cfg["aws_region"]},
+    }
+    save(d, rig)  # down finds the repo copy even if a step below gives up
+    # your logins where they live, never copied: gh, aws and claude run under your own HOME (their
+    # keychain items and SSO cache are found by it); the files serve itself reads are links
+    for name in (".aws", ".claude.json"):
+        if (Path(REAL_HOME) / name).exists():
+            (d / "home" / name).symlink_to(Path(REAL_HOME) / name)
+    for tool in ("gh", "aws", "claude"):
+        found = shutil.which(tool, path=":".join(dirs))
+        board = {k: abe_env(d, rig)[k] for k in ("ABE_ADO_BASE_URL", "ABE_LOGIN_PATH")}  # a serve it starts reads the env's board
+        pins = " ".join(f"{k}={sh_quote(v)}" for k, v in {**pinned_env(d, rig), **board}.items() if k.startswith(("ABE_", "QARIG_", "VIMSTORM_")))
+        write(
+            d / f"bin/{tool}",
+            f"#!/bin/sh\n# qarig --real: {tool} as you, where your login lives; the env's Abe dirs pinned, so an abe\n"
+            f"# it starts never meets your own state or serve; a session's own socket in the env's state\n"
+            f"# is kept (its hooks answer there)\n_qs=\"$ABE_SOCKET\"\nexport {pins}\n"
+            f"case \"$_qs\" in {sh_quote(str(d))}/s/sessions/*|/private{sh_quote(str(d))}/s/sessions/*) ABE_SOCKET=\"$_qs\" ;; esac\n"
+            f"HOME={sh_quote(REAL_HOME)} exec {sh_quote(found)} \"$@\"\n",
+            0o755,
+        )
+    write(
+        d / "home/.gitconfig",
+        "[user]\n\tname = QA Rig\n\temail = qa@example.test\n[init]\n\tdefaultBranch = main\n"
+        f"[credential \"https://github.com\"]\n\thelper =\n\thelper = !{d / 'bin/gh'} auth git-credential\n",
+    )
+    write(d / "bin/az", AZ, 0o755)  # the board stays the fake Azure DevOps (its token is fake)
+    for tool in ("copilot", "codex"):
+        write(d / f"bin/{tool}", f"#!/bin/sh\necho \"qarig: no {tool} in a rig env\" >&2\nexit 1\n", 0o755)
+    repo = d / "repo"
+    real_gh("repo", "create", slug, "--private", "--description", f"Release gate copy of {cfg['source']} for qarig env {a.name}: deleted by qarig down")
+    real_gh("repo", "clone", cfg["source"], str(repo), "--", "-q", "--single-branch", "--branch", "main")
+    g = lambda *c: subprocess.run(["git", *c], cwd=repo, check=True, capture_output=True, env=abe_env(d, rig))
+    g("remote", "set-url", "origin", f"https://github.com/{slug}.git")
+    g("push", "-q", "-u", "origin", "main")
+    real_gh("repo", "edit", slug, "--enable-auto-merge", "--delete-branch-on-merge")
+    gate_local(repo)
+    real_gh("repo", "clone", cfg["org_infra"], str(d / "org-infra"), "--", "-q", "--depth", "1")
+    rig["org_store"] = gate_store(d / "org-infra", a.name, hexid)
+    save(d, rig)  # down empties the prefix even if a step below gives up
+    seed = Path(a.seed).resolve() if a.seed else repo / "board/seed.json"
+    if not seed.exists():
+        die(f"no seed {seed}")
+    if a.seed_offset:
+        seed = offset_seed(seed, a.seed_offset, d / "seed.json")
+    write(d / "cfg/settings.yaml", gate_layer(rig["org_store"]))
+    rig.update({"path": real(repo), "seed": str(seed)})
+    save(d, rig)
+    start_env(d, rig)
+    print(f"# real: {slug}, logins in place (gh, aws, claude), Override limits.maxBoxesPerPerson 6, org store {rig['org_store']}/", file=sys.stderr)
+
+
+def gate_local(repo):
+    """Yours for the env's repo, where ADR 0030 reads a factory key: the gate Override, out of git
+    as Abe keeps it."""
+    write(repo / ".abe/settings.local.yaml", f"# qarig --real: yours for the repo, the gate Override\noverrides:\n{GATE_OVERRIDE}")
+    exclude = repo / ".git/info/exclude"
+    exclude.parent.mkdir(parents=True, exist_ok=True)
+    if ".abe/settings.local.yaml" not in (exclude.read_text() if exclude.exists() else "").splitlines():
+        with open(exclude, "a") as f:
+            f.write(".abe/settings.local.yaml\n")
+
+
+def down_real(d, rig):
+    """A real env's boxes deleted (its repo copy goes, so they could never be used again), the
+    repo copy deleted, then its org store prefix (kept while a box or the copy is)."""
+    slug = rig.get("gh_repo")
+    if not slug:
+        down_store(d, rig)
+        return
+    if not gate_slug(gate_config()["org"]).fullmatch(slug):
+        print(f"qarig: {d.name}'s rig.json names {slug!r}, no gate copy: left alone", file=sys.stderr)
+        return
+    if Path(rig.get("path", "")).is_dir():
+        try:
+            ensure_serve(d, rig)  # its boxes are listed by its own serve
+        except SystemExit:
+            print(f"qarig: {d.name}'s serve did not start", file=sys.stderr)
+        try:
+            listed = abe(d, rig, "box", "list", check=False, json_out=True, timeout=120)
+        except subprocess.TimeoutExpired:
+            listed = {}
+        boxes = (listed.get("data") or {}).get("boxes")  # abe --json answers {ok, data}
+        if (listed.get("error") or {}).get("code") == "boxes-off":
+            boxes = []  # serve.target local: no box of it can exist
+        if boxes is None:
+            print(f"qarig: could not list {d.name}'s boxes: {slug} kept so a box of it is not lost; qarig down {d.name} again", file=sys.stderr)
+            return
+        for b in boxes or []:
+            if b.get("repo") == slug and b.get("state") not in ("terminated", "shutting-down"):
+                t = abe(d, rig, "box", "terminate", b["name"], "--yes", check=False, timeout=300)
+                print(f"box {b['name']}: {'terminated' if t.returncode == 0 else 'NOT terminated: ' + (t.stderr or t.stdout).strip()[-200:]}")
+    if real_gh("repo", "view", slug, "--json", "name", check=False).returncode == 0:
+        gone = real_gh("repo", "delete", slug, "--yes", check=False)
+        if gone.returncode != 0:
+            print(f"qarig: {slug} NOT deleted ({gone.stderr.strip()[-200:]}): qarig down {d.name} again", file=sys.stderr)
+            return
+        print(f"deleted {slug}")
+    rig["gh_repo"] = None
+    save(d, rig)
+    down_store(d, rig)
+
+
+def env_text(d, rig):
+    env = abe_env(d, rig)
+    keys = ["ABE_BIN", "ABE_STATE_DIR", "ABE_SOCKET", "ABE_CONFIG_DIR", "ABE_ADO_BASE_URL", "ABE_LOGIN_PATH", "ABE_OWNER", "VIMSTORM_NO_INSTANCE", "QARIG_NAME", "QARIG_DIR"]
+    lines = [f"export {k}={sh_quote(env[k])}" for k in keys if k in env]  # a real env has no ABE_OWNER
+    lines.append(f"export PATH={sh_quote(env['PATH'])}")
+    lines.append(f"# the serve's HOME (claude's transcripts, .claude.json): {serve_home(d, rig)}")
+    lines.append(f"# abe as this env: HOME={d / 'home'} $ABE_BIN <command>, or qarig abe {d.name} <command>")
+    return "\n".join(lines) + "\n"
+
+
+def print_env(d, rig):
+    print(env_text(d, rig), end="")
+
+
+def cmd_env(a):
+    d = env_dir(a.name)
+    print_env(d, load(d))
+
+
+def cmd_abe(a):
+    d = env_dir(a.name)
+    rig = load(d)
+    p = subprocess.run([rig["abe_bin"], *a.args], env=abe_env(d, rig), cwd=rig["path"])
+    sys.exit(p.returncode)
+
+
+def cmd_down(a, quiet=False):
+    d = env_dir(a.name)
+    if not (d / "rig.json").exists():
+        if not quiet:
+            die(f"no env {a.name}")
+        return
+    rig = load(d, fixed=False)
+    stop_live(d, rig)
+    if rig.get("real"):
+        down_real(d, rig)
+    try:
+        abe(d, rig, "serve", "stop", "--no-start", check=False, timeout=15)
+    except subprocess.TimeoutExpired:
+        pass
+    tmux = d / "s/tmux.sock"
+    if tmux.exists():
+        subprocess.run(["tmux", "-S", str(tmux), "kill-server"], capture_output=True)
+    for key in ("serve_pgid", "ado_pgid"):
+        pgid = rig.get(key)
+        if pgid and alive(pgid) and ours(pgid):
+            try:
+                os.killpg(pgid, signal.SIGTERM)
+            except ProcessLookupError:
+                pass
+    # a serve on the env's state qarig did not start (the app's bridge, a session's abe): only by its
+    # state or socket, never another serve
+    for pid, x in env_serves(d).items():
+        try:
+            os.kill(pid, signal.SIGTERM)
+            print(f"stopped {d.name}'s serve pid {pid}")
+        except ProcessLookupError:
+            pass
+    rig["ado_pgid"] = rig["serve_pgid"] = 0
+    save(d, rig)
+    if not quiet:
+        print(f"down: {a.name} (files kept in {d}; rm -r it to drop them)")
+
+
+def cmd_ls(a):
+    if not ROOT.exists():
+        return
+    for d in sorted(ROOT.iterdir()):
+        f = d / "rig.json"
+        if not f.exists():
+            continue
+        rig = json.loads(f.read_text())
+        state = "up" if alive(rig.get("ado_pgid", 0)) else "down"
+        if rig.get("version", 1) < RIG_VERSION:
+            state += " OLD: re-make (down, up)"
+        serve = "serve up" if (d / "s/s.sock").exists() and alive(rig.get("serve_pgid", 0) or 0) else "serve auto"
+        live = "live" if alive(rig.get("live_pgid", 0)) else "-"
+        print(f"{d.name:16} {state:5} board :{rig['ado_port']:<6} {serve:10} {live:4} {rig['path']}")
+
+
+def live_apps():
+    """(env name, the binary it runs) of each live app under ROOT (any checkout's build: envs of
+    other checkouts' qarigs share ROOT; an env from before live_bin counts as this build's)."""
+    out = []
+    for d in sorted(ROOT.iterdir()) if ROOT.exists() else []:
+        try:
+            rig = json.loads((d / "rig.json").read_text())
+        except (OSError, json.JSONDecodeError):
+            continue
+        if alive(rig.get("live_pgid", 0)):
+            out.append((d.name, rig.get("live_bin", str(BIN))))
+    return out
+
+
+def cmd_rebuild(a):
+    if lives := [n for n, bin_ in live_apps() if bin_ == str(BIN)]:
+        die(f"live apps run on this build ({', '.join(lives)}): qarig quit <name> first")
+    lock = build_lock(True)
+    try:
+        run = lambda *c, cwd=None, env=None: subprocess.run(c, cwd=cwd, env=env, check=True)
+        if BUILD.resolve() == REPO.resolve():
+            # QARIG_BUILD=<this checkout>: build it as it is, uncommitted changes too (never checked out)
+            if a.ref:
+                die("--ref builds in .scratch/qa/build; QARIG_BUILD=<this checkout> builds it as it is")
+        else:
+            # the ref as REPO names it (default its HEAD: what this checkout has committed)
+            ref = subprocess.run(["git", "-C", str(REPO), "rev-parse", "--verify", f"{a.ref or 'HEAD'}^{{commit}}"], capture_output=True, text=True, check=True).stdout.strip()
+            if not BUILD.exists():
+                BUILD.parent.mkdir(parents=True, exist_ok=True)
+                run("git", "-C", str(REPO), "worktree", "add", "--detach", str(BUILD), ref)
+            run("git", "-C", str(BUILD), "checkout", "-q", "--detach", ref)
+        commit = subprocess.run(["git", "-C", str(BUILD), "rev-parse", "--short=8", "HEAD"], capture_output=True, text=True, check=True).stdout.strip()
+        if subprocess.run(["git", "-C", str(BUILD), "status", "--porcelain", "--untracked-files=no"], capture_output=True, text=True).stdout.strip():
+            commit += "-dirty"
+        env = dict(os.environ)
+        env["PATH"] = f"{Path.home()}/.rustup/toolchains/stable-aarch64-apple-darwin/bin:" + env["PATH"]
+        env["CARGO_TARGET_DIR"] = str(TARGET)
+        env.setdefault("CARGO_BUILD_JOBS", "4")
+        serial = Path(os.environ.get("QARIG_SERIAL", REPO / ".scratch/bin/serial"))  # a machine-wide build queue, if there is one
+        build = [str(serial)] if serial.exists() else []
+        run(*build, "cargo", "build", "--release", "--features", "shots", cwd=str(BUILD / "app"), env=env)
+        run("bun", "install", "--frozen-lockfile", cwd=str(BUILD / "abe"))
+        run("bun", "run", "build:darwin", cwd=str(BUILD / "abe"))
+        (TARGET / "abe").mkdir(parents=True, exist_ok=True)
+        tmp = ABE_BIN.with_suffix(".new")
+        shutil.copy2(BUILD / "abe/dist/abe-darwin-arm64", tmp)
+        os.replace(tmp, ABE_BIN)
+        write(RIG / "BUILT", f"{commit}\n")
+        ready = RIG / "READY"  # its first line names the commit the shared build is from; the rest stays
+        rest = ready.read_text().split("\n", 1)[1] if ready.exists() and "\n" in ready.read_text() else ""
+        write(ready, f"{commit}\n{rest}")
+        print(f"built {commit}: {BIN} + {ABE_BIN}")
+    finally:
+        lock.close()
+
+
+def pid_alive(pid):
+    try:
+        os.kill(pid, 0)
+        return True
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
+
+
+# ---------------------------------------------------------------- scenarios
+
+QUESTION = {
+    "question": "Which market table should the cart total read?",
+    "header": "Market table",
+    "multiSelect": False,
+    "options": [
+        {"label": "The existing market table (Recommended)", "description": "What checkout reads today"},
+        {"label": "A per-market value", "description": "A new column on the market"},
+    ],
+}
+
+
+def ask_step(q=QUESTION):
+    return {"hook": "PreToolUse", "payload": {"tool_name": "AskUserQuestion", "tool_input": {"questions": [q]}}}
+
+
+def answer_line(q=QUESTION, n=1):
+    label = q["options"][n - 1]["label"].replace(" (Recommended)", "")
+    return f'Answer to "{q["question"]}": {n} {label}'
+
+
+def script_claude(d, steps, replies=None):
+    """The fake claude's script for the next session started in this env (read at its start)."""
+    write(d / "home/fake-claude.json", json.dumps({"steps": steps, "replies": replies or {}}, indent=1) + "\n")
+
+
+def sessions(d, rig, card=None):
+    data = abe(d, rig, "session", "list", json_out=True)["data"]["sessions"]
+    return [x for x in data if card is None or x.get("card") == card]
+
+
+def live(d, rig, card):
+    return [x for x in sessions(d, rig, card) if x.get("state") not in ("ended", "stopped")]
+
+
+def stop_card(d, rig, card):
+    for x in live(d, rig, card):
+        abe(d, rig, "session", "stop", x["id"], check=False)
+    runs = abe(d, rig, "factory", "status", json_out=True, check=False)
+    for r in (runs.get("data", {}) or {}).get("runs", []) if isinstance(runs, dict) else []:
+        if r.get("card") == card and r.get("state") not in ("done",):
+            abe(d, rig, "factory", "end", str(card), "--as", "abandoned", "--reason", "qarig: a new scenario on this card", check=False)
+
+
+def launch(d, rig, card, factory):
+    try:
+        return _launch(d, rig, card, factory)
+    except subprocess.TimeoutExpired:
+        die("the launch took over 120 s: qarig abe <name> session list")
+
+
+def _launch(d, rig, card, factory):
+    if factory:
+        return abe(d, rig, "factory", "run", str(card), "--repo", rig["path"], "--target", "local-sandbox", check=False, timeout=120)
+    return abe(d, rig, "session", "launch", "--card", str(card), "--repo", rig["path"], check=False, timeout=120)
+
+
+def wait_state(d, rig, card, states, secs):
+    end = time.time() + secs
+    while time.time() < end:
+        now = live(d, rig, card)
+        if now and now[0].get("state") in states:
+            return now[0]
+        time.sleep(0.5)
+    return None
+
+
+def factory_cmd(*args):
+    return {"abe": ["factory", *args, "--json"]}
+
+
+SCENARIOS = {}
+
+
+def scenario(name, help):
+    def reg(fn):
+        SCENARIOS[name] = (fn, help)
+        return fn
+
+    return reg
+
+
+ASK_TRIGGER = "qarig: ask now"
+
+
+def asking_turn(work_ms):
+    """A turn that reads a file for work_ms, then asks the question card."""
+    read = {"tool_name": "Read", "tool_input": {"file_path": "src/cart.ts"}}
+    return [
+        {"hook": "PreToolUse", "payload": read},
+        {"sleep": work_ms},
+        {"hook": "PostToolUse", "payload": dict(read, tool_response={"type": "text"})},
+        ask_step(),
+    ]
+
+
+@scenario("chat-question", "a session on --card (4) that asks a question card (Needs you in Chat): with --after ms after it starts; without, when `qarig scenario <name> ask` types its trigger (exact timing: run that from the shot's keys, see the README). --factory: as a Factory run")
+def sc_chat_question(d, rig, o):
+    stop_card(d, rig, o.card)
+    steps = [{"say": "Read the card. Say the word and I look at the cart."}]
+    if o.after:
+        steps = [{"sleep": o.after}] + asking_turn(1500)
+    replies = {ASK_TRIGGER: asking_turn(1500), answer_line(): [{"say": "Going on with the existing market table."}]}
+    script_claude(d, steps, replies)
+    t0 = time.time()
+    p = launch(d, rig, o.card, o.factory)
+    print(p.stdout.strip().splitlines()[0] if p.stdout.strip() else p.stderr.strip())
+    if wait_state(d, rig, o.card, ("waiting", "working", "idle"), 30) is None:
+        print("the session did not start within 30 s", file=sys.stderr)
+    when = f"~{o.after / 1000:.0f} s after the agent started" if o.after else f"on `qarig scenario {d.name} ask`"
+    print(f"launched in {time.time() - t0:.1f}s; the question comes {when}")
+
+
+@scenario("ask", "type the trigger into --card's chat-question session: it works 1.5 s (a Read), then asks its question card")
+def sc_ask(d, rig, o):
+    x = live(d, rig, o.card)
+    if not x:
+        die(f"no live session on card {o.card}: qarig scenario {d.name} chat-question first")
+    p = abe(d, rig, "session", "send", x[0]["id"], ASK_TRIGGER, check=False)
+    print(p.stdout.strip() or p.stderr.strip())
+
+
+@scenario("answer", "answer --card's open question with option --option (1): the card leaves Chat, the agent goes on")
+def sc_answer(d, rig, o):
+    for x in live(d, rig, o.card):
+        asks = abe(d, rig, "session", "asks", x["id"], json_out=True)["data"]["cards"]
+        for c in asks:
+            p = abe(d, rig, "session", "answer", x["id"], "--card", c["id"], "--option", str(o.option), check=False)
+            print(p.stdout.strip() or p.stderr.strip())
+            return
+    die(f"no open question on card {o.card}")
+
+
+FACTORY_SPEC = """# {title}
+
+## Stories
+1. {title}.
+
+## Decisions
+1. Keep it to the one page (over a new one: the smallest change).
+
+## Acceptance criteria
+1. It works on the demo shop
+"""
+
+
+@scenario("factory-stages", "a Feature run on --card (a User Story, 4) walks create-specification → to-tickets → build → checks → review → verify, the playbook's gate answered no, one step every --every ms (4000), and stops in pr at Needs you (pr needs GitHub)")
+def sc_factory_stages(d, rig, o):
+    stop_card(d, rig, o.card)
+    w = {"sleep": o.every}
+    spec, scratch = f".abe/specs/{o.card}/spec.md", f".scratch/{o.card}"
+    write_step = lambda path, text: {"write": {"path": path, "text": text}}
+    steps = [
+        {"say": "Writing the spec."},
+        write_step(spec, FACTORY_SPEC.format(title=f"Card {o.card}")),
+        factory_cmd("stage-done", "create-specification", "--report", spec),
+        w,
+        {"say": "Cutting tickets."},
+        factory_cmd("stage-done", "to-tickets"),
+        w,
+        {"say": "Building."},
+        write_step(f"{scratch}/build.md", "# Build\n\nOne change, its tests green.\n"),
+        # checks run inside it (none configured in the rig: on to review)
+        factory_cmd("stage-done", "build", "--report", f"{scratch}/build.md"),
+        w,
+        write_step(f"{scratch}/review.md", "# Review\n\nStandards: fine. Spec: every criterion met.\n"),
+        factory_cmd("review", "--findings", "0", "--report", f"{scratch}/review.md"),
+        w,
+        write_step(f"{scratch}/verify.md", "# Verify\n\n1. The demo shop: it works\n"),
+        factory_cmd("verify", "--phase", "after", "--result", "pass", "--report", f"{scratch}/verify.md"),
+        w,
+        # the playbook's gate: no manual steps, so the run goes on to pr
+        factory_cmd("judge", "--answer", "no", "--reason", "the diff needs no manual steps after merge"),
+        w,
+        factory_cmd("needs-you", "--reason", "the pull request needs GitHub (the rig has none)"),
+        {"say": "Waiting for you."},
+    ]
+    script_claude(d, steps)
+    p = launch(d, rig, o.card, True)
+    print(p.stdout.strip() or p.stderr.strip())
+
+
+@scenario("needs-you", "a Factory run on --card that, after --after ms (3000) in its first step, needs you with a reason")
+def sc_needs_you(d, rig, o):
+    stop_card(d, rig, o.card)
+    script_claude(
+        d,
+        [
+            {"sleep": o.after},
+            factory_cmd("needs-you", "--reason", "which test account should verify sign-in?"),
+            {"say": "I need a test account."},
+        ],
+    )
+    p = launch(d, rig, o.card, True)
+    print(p.stdout.strip() or p.stderr.strip())
+
+
+@scenario("working", "a plain session on --card that keeps working (tool calls every 2 s for --after ms, 60000)")
+def sc_working(d, rig, o):
+    stop_card(d, rig, o.card)
+    steps = []
+    for i in range(max(1, o.after // 2000)):
+        steps += [
+            {"hook": "PreToolUse", "payload": {"tool_name": "Read", "tool_input": {"file_path": f"src/cart.ts"}}},
+            {"sleep": 1000},
+            {"hook": "PostToolUse", "payload": {"tool_name": "Read", "tool_input": {"file_path": "src/cart.ts"}, "tool_response": {"type": "text"}}},
+            {"sleep": 1000},
+        ]
+    steps.append({"say": "Done reading."})
+    script_claude(d, steps)
+    p = launch(d, rig, o.card, False)
+    print(p.stdout.strip() or p.stderr.strip())
+
+
+@scenario("send", "type --text into --card's session (as Chat's field does)")
+def sc_send(d, rig, o):
+    x = live(d, rig, o.card)
+    if not x:
+        die(f"no live session on card {o.card}")
+    p = abe(d, rig, "session", "send", x[0]["id"], o.text or "Go on.", check=False)
+    print(p.stdout.strip() or p.stderr.strip())
+
+
+@scenario("stop", "stop --card's sessions and end its Factory run (--card 0: every session)")
+def sc_stop(d, rig, o):
+    cards = {x["card"] for x in sessions(d, rig)} if o.card == 0 else {o.card}
+    for c in cards:
+        stop_card(d, rig, c)
+    print("stopped", ", ".join(map(str, sorted(c for c in cards if c is not None))) or "nothing")
+
+
+@scenario("board-down", "the fake Azure DevOps stops (an outage; reseed brings it back on the same port)")
+def sc_board_down(d, rig, o):
+    if not alive(rig.get("ado_pgid", 0)):
+        print("the board is down already")
+        return
+    os.killpg(rig["ado_pgid"], signal.SIGTERM)
+    wait_for(lambda: not alive(rig["ado_pgid"]), 10, "the fake Azure DevOps to stop")
+    print(f"board down (port {rig['ado_port']})")
+
+
+@scenario("reseed", "the board starts over from its seed (the fake Azure DevOps restarted on the same port)")
+def sc_reseed(d, rig, o):
+    if alive(rig.get("ado_pgid", 0)):
+        os.killpg(rig["ado_pgid"], signal.SIGTERM)
+        wait_for(lambda: not alive(rig["ado_pgid"]), 10, "the old fake Azure DevOps to stop")
+    log = d / "logs/ado.log"
+    log.write_text("")
+    rig["ado_pgid"] = daemon(
+        ["bun", FAKE_ADO, "--port", rig["ado_port"], "--seed", rig["seed"], "--log", d / "logs/ado-requests.log"],
+        log,
+        abe_env(d, rig),
+    )
+    save(d, rig)
+    wait_for(lambda: "fake Azure DevOps on" in log.read_text(), 15, "the fake Azure DevOps")
+    print(log.read_text().strip().splitlines()[0])
+
+
+def ec2_change(d, fn):
+    """Changes the fake EC2's state under its lock, as its `aws` does (fake-ec2/state.ts)."""
+    lock = d / "bin/state.lock"
+    end = time.time() + 10
+    while True:
+        try:
+            lock.mkdir()
+            break
+        except FileExistsError:
+            if time.time() > end:
+                shutil.rmtree(lock, ignore_errors=True)
+            time.sleep(0.01)
+    try:
+        f = d / "bin/state.json"
+        st = json.loads(f.read_text())
+        fn(st)
+        tmp = f.with_suffix(f".{os.getpid()}.tmp")
+        tmp.write_text(json.dumps(st))
+        os.replace(tmp, f)
+    finally:
+        shutil.rmtree(lock, ignore_errors=True)
+
+
+@scenario("box", "put a box --box (qa-1) of yours in --state (pending|running|stopping|stopped; default pending), --held keeps it there (else pending → running after 20 s, stopping → stopped after 8 s); --card ties it to a card, --repo owner/name to a repo (qa-rig/demo-shop). Then film the Boxes tab ({@super+6})")
+def sc_box(d, rig, o):
+    name, state = o.box or "qa-1", o.state or "pending"
+    now = int(time.time() * 1000)
+
+    def put(st):
+        tags = [
+            {"Key": "abe:owner", "Value": st["owner"]},
+            {"Key": "abe:box", "Value": name},
+            {"Key": "abe:team", "Value": "qa"},
+            {"Key": "abe:repo", "Value": o.repo or DEMO_REPO},
+            {"Key": "abe:card", "Value": str(o.card)},
+            {"Key": "Name", "Value": name},
+        ]
+        for i in st["instances"]:
+            if any(t["Key"] == "abe:box" and t["Value"] == name for t in i["Tags"]):
+                i.update({"State": state, "since": now, "held": o.held, "Tags": tags})
+                return
+        n = st["next"]
+        st["next"] = n + 1
+        st["instances"].append(
+            {
+                "InstanceId": f"i-0qa{n:014x}",
+                "InstanceType": "m8g.xlarge",
+                "State": state,
+                "since": now,
+                "launchedAt": now,
+                "held": o.held,
+                "PrivateIpAddress": f"10.40.0.{n}",
+                "Tags": tags,
+                "profile": f"abe-box-{st['owner']}-boxes",
+            }
+        )
+
+    ec2_change(d, put)
+    print(f"box {name}: {state}{' (held)' if o.held else ''}, repo {o.repo or DEMO_REPO}")
+
+
+@scenario("box-gone", "take every fake box away (--box: only that one)")
+def sc_box_gone(d, rig, o):
+    def drop(st):
+        st["instances"] = [
+            i for i in st["instances"] if o.box and not any(t["Key"] == "abe:box" and t["Value"] == o.box for t in i["Tags"])
+        ]
+
+    ec2_change(d, drop)
+    print("boxes gone" if not o.box else f"box {o.box} gone")
+
+
+# GitHub Actions for the Pipelines tab: the env's fake gh answers from gh/runs.json (qarig_gh.py).
+WORKFLOWS = {"CI": ("ci.yml", 81234567, 1180), "Deploy Dev": ("deploy-dev.yml", 81234590, 307), "Deploy Test": ("deploy-test.yml", 81234611, 92), "Deploy Prod": ("deploy-prod.yml", 81234633, 40)}
+BRANCHES = [
+    ("feature/AB-1234-checkout-total-reads-the-market-table-instead-of-a-per-market-value", "pull_request", "Checkout total reads the market table instead of a per-market value"),
+    ("fix/AB-17-signin-email", "pull_request", "Sign-in accepts a plus address"),
+    ("main", "push", "Merge pull request #212 from qa-rig/fix/AB-17-signin-email"),
+    ("copilot/fix-cart-rounding-when-a-market-has-no-currency-decimals", "pull_request", "Fix cart rounding when a market has no currency decimals"),
+    ("feature/AB-4-cart-total", "pull_request", "Cart total"),
+    ("dependabot/npm_and_yarn/vite-5.4.11", "pull_request", "Bump vite from 5.4.10 to 5.4.11"),
+    ("main", "push", "Cart total reads prices in cents"),
+    ("me/try", "push", "wip"),
+]
+
+
+def pipeline_runs(n, now_ms):
+    """n runs newest first: the newest running, the next failed, one cancelled, the rest passed;
+    ids far from the run numbers (each workflow counts its own), branches short and long; over 30, the
+    oldest a Deploy Prod by hand."""
+    import hashlib
+
+    counters = {w: c for w, (_, _, c) in WORKFLOWS.items()}
+    runs = []
+    for i in range(n):
+        branch, event, title = BRANCHES[i % len(BRANCHES)]
+        workflow = "CI"
+        if i % 3 == 2 and i > 1:
+            workflow, branch, event, title = "Deploy Dev", "main", "push", "Cart total reads prices in cents"
+        if i % 7 == 6:
+            workflow, branch, event, title = "Deploy Test", "release/2026.10", "workflow_dispatch", "Deploy Test"
+        if i == 9:
+            branch, event, title = "main", "schedule", "Nightly"
+        if i == n - 1 and n > 30:  # prod deployed by hand before the newest 30: only Deploys shows it
+            workflow, branch, event, title = "Deploy Prod", "main", "workflow_dispatch", "Release rc-41"
+        file, wid, _ = WORKFLOWS[workflow]
+        created = now_ms - i * 23 * 60_000 - 40_000
+        started = created + 8_000
+        state = "running" if i == 0 else "failed" if i == 1 else "cancelled" if i == 4 else "passed"
+        rid = 9_026_000_000 + (n - i) * 7_919
+        keys = [("build", "Build", []), ("lint", "Lint", []), ("test", "Test", ["build"])] if workflow == "CI" else [("build", "Build", []), ("deploy", f"Deploy to {workflow.split()[-1].lower()}", ["build"])]
+        jobs = []
+        t = started
+        for k, (key, name, needs) in enumerate(keys):
+            last = k == len(keys) - 1
+            steps = []
+            for sn in ("Set up job", "Checkout", "Install", name, "Complete job"):
+                steps.append({"name": sn, "status": "completed", "conclusion": "success", "started": t, "completed": t + 20_000})
+                t += 20_000
+            j = {"id": 51_000_000_000 + rid % 1_000_000 * 10 + k, "key": key, "name": name, "needs": needs, "status": "completed", "conclusion": "success", "started": steps[0]["started"], "completed": steps[-1]["completed"], "steps": steps}
+            if last and state != "passed":
+                j["steps"][3].update(status="in_progress" if state == "running" else "completed", conclusion={"running": None, "failed": "failure", "cancelled": "cancelled"}[state], completed=None if state == "running" else j["steps"][3]["completed"])
+                j["steps"][4].update(status="queued" if state == "running" else "completed", conclusion=None if state == "running" else "skipped", started=None if state == "running" else j["steps"][4]["started"], completed=None if state == "running" else j["steps"][4]["completed"])
+                j.update(status="in_progress" if state == "running" else "completed", conclusion={"running": None, "failed": "failure", "cancelled": "cancelled"}[state], completed=None if state == "running" else j["completed"])
+            jobs.append(j)
+        if state == "running":  # started 90 s ago, its last job at its test step
+            shift = (now_ms - 90_000) - started
+            for j in jobs:
+                for x in [j, *j["steps"]]:
+                    for f in ("started", "completed"):
+                        if x.get(f) is not None:
+                            x[f] = min(x[f] + shift, now_ms - 1_000)
+            started += shift
+            created += shift
+        updated = max([x for j in jobs for x in (j["started"], j["completed"]) if x is not None] + [started])
+        runs.append(
+            {
+                "id": rid,
+                "number": 0,
+                "workflow": workflow,
+                "workflow_id": wid,
+                "file": file,
+                "title": title,
+                "attempt": 2 if i == 3 else 1,
+                "event": event,
+                "status": "in_progress" if state == "running" else "completed",
+                "conclusion": {"running": None, "failed": "failure", "cancelled": "cancelled", "passed": "success"}[state],
+                "branch": branch,
+                "sha": hashlib.sha1(f"qarig-run-{i}".encode()).hexdigest(),
+                "created": created,
+                "started": started,
+                "updated": updated,
+                "actor": "dependabot[bot]" if branch.startswith("dependabot/") else "sam-qa" if i % 5 == 3 else "alex",
+                "pr": 200 + i % len(BRANCHES) if event == "pull_request" else None,
+                "jobs": jobs,
+            }
+        )
+    for r in reversed(runs):  # each workflow numbers its own runs, oldest first
+        counters[r["workflow"]] += 1
+        r["number"] = counters[r["workflow"]]
+    return runs
+
+
+@scenario("pipelines", "GitHub Actions runs for the Pipelines tab (--runs 40; 0: none again): the env's fake gh answers them for any repo, `gh api user` says alex; the newest runs, the next failed, one cancelled; ids unlike run numbers; long and short branches. Cancel / rerun change them")
+def sc_pipelines(d, rig, o):
+    install_gh(d)  # an env made before the scenario had a gh that knows no runs
+    f = d / "gh/runs.json"
+    if o.runs <= 0:
+        f.unlink(missing_ok=True)
+        print("pipelines: no runs")
+        return
+    runs = pipeline_runs(o.runs, int(time.time() * 1000))
+    write(f, json.dumps({"me": "alex", "runs": runs}, indent=1) + "\n")
+    origin = subprocess.run(["git", "-C", rig["path"], "config", "--get", "remote.origin.url"], capture_output=True, text=True).stdout.strip()
+    print(f"pipelines: {len(runs)} runs (#{runs[0]['number']} id {runs[0]['id']} running, #{runs[1]['number']} failed) in {f}; the repo's origin {origin or 'none'}")
+
+
+def cmd_diff(a):
+    qarig_diff.run(a)
+
+
+def cmd_scenario(a):
+    d = env_dir(a.name)
+    if a.scenario == "list":
+        for k, (_, h) in SCENARIOS.items():
+            print(f"{k:16} {h}")
+        return
+    if a.scenario not in SCENARIOS:
+        die(f"no scenario {a.scenario}: qarig scenario {a.name} list")
+    rig = load(d)
+    if a.after is None:
+        a.after = {"needs-you": 3000, "working": 60000}.get(a.scenario, 0)
+    t0 = time.time()
+    SCENARIOS[a.scenario][0](d, rig, a)
+    qarig_drive.log(d, "scenario", a.scenario, {"ok": True}, int((time.time() - t0) * 1000))
+
+
+# ---------------------------------------------------------------- shot
+
+
+def link_plugins(d):
+    real = Path(pwd.getpwuid(os.getuid()).pw_dir) / ".local/share/vimstorm"
+    link = d / "home/.local/share/vimstorm"
+    if real.exists() and not link.exists():
+        link.parent.mkdir(parents=True, exist_ok=True)
+        link.symlink_to(real)
+
+
+def build_lock(exclusive):
+    """The shared build's lock: shots hold it shared, rebuild exclusive (the binary reads its nvim
+    config and the fakes from the build's checkout, which rebuild moves)."""
+    RIG.mkdir(parents=True, exist_ok=True)
+    f = open(RIG / "build.flock", "a")
+    if exclusive:
+        try:
+            fcntl.flock(f, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            print("qarig: waiting for running shots / another rebuild", file=sys.stderr)
+            fcntl.flock(f, fcntl.LOCK_EX)
+    else:
+        try:
+            fcntl.flock(f, fcntl.LOCK_SH | fcntl.LOCK_NB)
+        except BlockingIOError:
+            print("qarig: a rebuild runs; the shot waits for it", file=sys.stderr)
+            fcntl.flock(f, fcntl.LOCK_SH)
+    return f
+
+
+def check_label(label):
+    if not label or "/" in label or label.startswith(".") or not all(c.isalnum() or c in "-_." for c in label):
+        die(f"bad label {label!r}: letters, digits, - _ . only")
+
+
+# ---------------------------------------------------------------- the real HOME guard
+
+REAL_HOME = pwd.getpwuid(os.getuid()).pw_dir
+SERVE_KEYS = ("HOME", "ABE_STATE_DIR", "ABE_SOCKET", "QARIG_NAME", "VIMSTORM_SHOT")
+
+
+def parse_serves(ps_text):
+    """`ps -axwwE -o pid=,command=` -> {pid: {"argv": [...], <SERVE_KEYS>: value}} for every
+    `abe serve` (not qarig's `/bin/sh` wrapper). Only those keys are kept: the rest of a process's
+    env (tokens) never leaves this function."""
+    found = {}
+    for line in ps_text.splitlines():
+        parts = line.split()
+        if len(parts) < 3 or not parts[0].isdigit():
+            continue
+        words = parts[1:]
+        n = next((i for i, w in enumerate(words) if i > 0 and "=" in w and (w.split("=", 1)[0].replace("_", "a").isalnum())), len(words))
+        argv, env = words[:n], words[n:]
+        if not argv or argv[-1] != "serve" or argv[0] in ("/bin/sh", "sh"):
+            continue
+        if not any("abe" in w or w.endswith("main.ts") for w in argv[:-1]):
+            continue
+        kept = {"argv": argv}
+        for w in env:
+            k, _, v = w.partition("=")
+            if k in SERVE_KEYS:
+                kept[k] = v
+        found[int(parts[0])] = kept
+    return found
+
+
+def serves():
+    out = subprocess.run(["ps", "-axwwE", "-o", "pid=,command="], capture_output=True, text=True).stdout
+    return parse_serves(out)
+
+
+def env_serves(d):
+    """The serves on env d's state or socket."""
+    return {pid: x for pid, x in serves().items() if x.get("ABE_STATE_DIR") == str(d / "s") or x.get("ABE_SOCKET") == str(d / "s/s.sock")}
+
+
+def stray_serves(before, after, d, png, home=None):
+    """The serves in `after` and not `before` that are not this env's: under the real HOME (your
+    Abe state), or started by this shot (its QARIG_NAME / VIMSTORM_SHOT) on any HOME but the env's.
+    The env's own serve (its state, under `home`: serve_home) is none of them."""
+    home = home or str(d / "home")
+    bad = []
+    for pid, x in sorted(after.items()):
+        if pid in before or (x.get("ABE_STATE_DIR") == str(d / "s") and x.get("HOME") == home):
+            continue
+        mine = x.get("QARIG_NAME") == d.name or x.get("VIMSTORM_SHOT") == str(png)
+        if x.get("HOME") == REAL_HOME or (mine and x.get("HOME") != str(d / "home")):
+            bad.append((pid, x, mine))
+    return bad
+
+
+def answers(sock):
+    """Something listens on the unix socket (a stale file left by a dead serve does not)."""
+    with socket.socket(socket.AF_UNIX) as s:
+        s.settimeout(1)
+        try:
+            s.connect(str(sock))
+            return True
+        except OSError:
+            return False
+
+
+def ensure_serve(d, rig):
+    """The env's own serve answers before the app starts, so the app's bridge never has to start
+    one; a serve on the env's socket under another HOME is refused."""
+    for pid, x in serves().items():
+        if (x.get("ABE_SOCKET") == str(d / "s/s.sock") or x.get("ABE_STATE_DIR") == str(d / "s")) and x.get("HOME") != serve_home(d, rig):
+            die(
+                f"env {d.name}'s socket is served by pid {pid} under HOME={x.get('HOME')}, not the env's: "
+                f"a shot would read and write that HOME's Abe state. Not touched; stop it yourself if it is "
+                f"yours, then qarig down {d.name} && qarig up {d.name}"
+            )
+    if answers(d / "s/s.sock"):
+        return
+    print(f"# {d.name}'s serve was not answering: starting it again (log {d / 'logs/serve.log'})", file=sys.stderr)
+    (d / "s/s.sock").unlink(missing_ok=True)
+    rig["serve_pgid"] = daemon([rig["abe_bin"], "serve"], d / "logs/serve.log", serve_env(d, rig), cwd=rig["path"])
+    save(d, rig)
+    wait_for(lambda: answers(d / "s/s.sock"), 20, f"{d.name}'s abe serve")
+
+
+def cmd_shot(a):
+    d = env_dir(a.name)
+    check_label(a.label)
+    if not (d / "rig.json").exists():
+        die(f"no env {a.name}: qarig up {a.name} first (a shot always runs on an env)")
+    rig = load(d)
+    if not BIN.exists():
+        die(f"no shared build at {BIN}: qarig rebuild")
+    label = a.label
+    shots = d / "shots" / label  # each label's PNGs, frames and flipbook in a folder of its own
+    shutil.rmtree(shots, ignore_errors=True)
+    shots.mkdir(parents=True)
+    png = shots / f"{label}.png"
+    env = abe_env(d, rig)
+    # the app runs on the env's HOME too, so a serve its bridge starts is the env's; the plugins
+    # come from the real ~/.local/share/vimstorm through a link
+    link_plugins(d)
+    keys = a.keys
+    if a.abe:
+        keys = "{@super+alt+a}{wait:%d}" % a.abe_wait + keys
+    env.update(
+        {
+            "VIMSTORM_SHOT": str(png),
+            "VIMSTORM_SHOT_STATE": str(d / "state" / label),
+            "VIMSTORM_SHOT_KEYS": keys,
+            "VIMSTORM_SHOT_DELAY_MS": str(a.delay),
+            "VIMSTORM_WINDOW_SIZE": a.size,
+        }
+    )
+    if a.frames:
+        env["VIMSTORM_SHOT_FRAMES"] = str(a.frames)
+        env["VIMSTORM_SHOT_EVERY_MS"] = str(a.every)
+    shutil.rmtree(d / "state" / label, ignore_errors=True)
+    path = str(Path(a.path).resolve()) if a.path else rig["path"]
+    log = d / "logs" / f"shot-{label}.log"
+    log.parent.mkdir(parents=True, exist_ok=True)
+    ensure_serve(d, rig)
+    lock = build_lock(False)
+    t0 = time.time()
+    before = serves()
+    with open(log, "w") as out:
+        p = subprocess.Popen([str(BIN), path], env=env, cwd=path, stdout=out, stderr=subprocess.STDOUT, start_new_session=True)
+        try:
+            code = p.wait(timeout=a.timeout)
+        except subprocess.TimeoutExpired:
+            code = "timeout"
+            try:
+                os.killpg(p.pid, signal.SIGKILL)  # the app with its nvim, LSPs and bridge
+            except ProcessLookupError:
+                pass
+    lock.close()
+    took = time.time() - t0
+    stray = stray_serves(before, serves(), d, png, serve_home(d, rig))
+    if stray:
+        for pid, x, mine in stray:
+            print(
+                f"qarig: STRAY SERVE pid {pid} ({' '.join(x['argv'])}) HOME={x.get('HOME')} "
+                f"ABE_STATE_DIR={x.get('ABE_STATE_DIR', '-')} ABE_SOCKET={x.get('ABE_SOCKET', '-')}"
+                + (" started by this shot" if mine else " appeared during this shot (another process's?)"),
+                file=sys.stderr,
+            )
+        die(
+            f"shot {label} FAILED: a new abe serve outside env {d.name} appeared while it ran (left running, "
+            f"not touched: tell the coordinator, never kill it). Shots in {shots}, log {log}",
+            3,
+        )
+    bad = [l for l in log.read_text(errors="replace").splitlines() if "shot: unknown key" in l]
+    if bad:  # a key that names nothing: the film would show a screen nobody drove
+        die("\n".join(l.split("] ", 1)[-1] for l in bad[:1]) + f"\n(log: {log})")
+    made = sorted(shots.glob(f"{label}-*.png"))
+    if png.exists():
+        made.append(png)
+    if not made:
+        die(f"no PNG (exit {code}, {took:.1f}s); log: {log}")
+    if (shots / f"{label}-frames.tsv").exists():
+        print(flipbook(shots, label))
+    for f in made:
+        print(f)
+    print(f"# {len(made)} png in {took:.1f}s, log {log}", file=sys.stderr)
+
+
+def flipbook(shots, label):
+    """`<label>.html` beside the frames: a slider over them with each frame's ms and the step
+    played just before, and a contact sheet of them all below."""
+    rows = []
+    last_step = ""
+    for line in (shots / f"{label}-frames.tsv").read_text().splitlines():
+        parts = line.split("\t")
+        if parts[0] == "step" and len(parts) >= 3:
+            last_step = f"{parts[1]} ms {parts[2]}"
+        elif parts[0] == "frame" and len(parts) >= 3:
+            rows.append({"file": parts[1], "ms": int(parts[2]), "label": parts[3] if len(parts) > 3 else "", "step": last_step})
+    data = json.dumps(rows)
+    html = f"""<!doctype html><meta charset=utf-8><title>{label} frames</title>
+<style>
+:root{{color-scheme:dark}} body{{background:#1e1f22;color:#dfe1e5;font:13px -apple-system,sans-serif;margin:16px}}
+#bar{{display:flex;gap:12px;align-items:center;position:sticky;top:0;background:#1e1f22;padding:6px 0}}
+input[type=range]{{flex:1}} #view{{max-width:100%;border:1px solid #393b40}}
+#sheet{{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;margin-top:16px}}
+#sheet figure{{margin:0;cursor:pointer}} #sheet img{{width:100%;border:1px solid #393b40}}
+#sheet figcaption{{color:#8c8f94;font-size:11px}} .on img{{outline:2px solid #3574f0}}
+</style>
+<div id=bar><button id=prev>&larr;</button><input id=r type=range min=0 value=0><button id=next>&rarr;</button>
+<button id=play>play</button><span id=info></span></div>
+<img id=view><div id=sheet></div>
+<script>
+const F={data};const r=document.getElementById('r'),v=document.getElementById('view'),info=document.getElementById('info');
+r.max=F.length-1;const sheet=document.getElementById('sheet');
+F.forEach((f,i)=>{{const fig=document.createElement('figure');fig.innerHTML=`<img loading=lazy src="${{f.file}}"><figcaption>#${{i+1}} ${{f.ms}} ms ${{f.label}}</figcaption>`;fig.onclick=()=>show(i);sheet.appendChild(fig)}});
+function show(i){{i=Math.max(0,Math.min(F.length-1,i));r.value=i;const f=F[i];v.src=f.file;
+info.textContent=`#${{i+1}}/${{F.length}} · ${{f.ms}} ms`+(i?` (+${{f.ms-F[i-1].ms}})`:'')+(f.label?` · ${{f.label}}`:'')+(f.step?` · last step ${{f.step}}`:'');
+[...sheet.children].forEach((c,j)=>c.classList.toggle('on',j==i))}}
+r.oninput=()=>show(+r.value);prev.onclick=()=>show(+r.value-1);next.onclick=()=>show(+r.value+1);
+let t=null;play.onclick=()=>{{if(t){{clearInterval(t);t=null;play.textContent='play';return}}play.textContent='stop';
+t=setInterval(()=>show(+r.value+1>=F.length?0:+r.value+1),(F[1]?F[1].ms-F[0].ms:100))}};
+document.onkeydown=e=>{{if(e.key=='ArrowLeft')show(+r.value-1);if(e.key=='ArrowRight')show(+r.value+1)}};show(0);
+</script>
+"""
+    out = shots / f"{label}.html"
+    out.write_text(html)
+    return out
+
+
+# ---------------------------------------------------------------- the live app (drive socket, #232)
+
+LIVE_UP_SECS = 120
+
+
+def live_sock(d):
+    return d / "live.sock"  # short: a socket path is at most 104 bytes
+
+
+def live_rig(name):
+    d = env_dir(name)
+    rig = load(d)
+    if not alive(rig.get("live_pgid", 0)) or not qarig_drive.answers(live_sock(d)):
+        die(f"no live app in {name}: qarig live {name}")
+    return d, rig
+
+
+def drive(d, request, timeout=120):
+    try:
+        return qarig_drive.ask(live_sock(d), request, timeout)
+    except qarig_drive.DriveError as e:
+        die(str(e))
+
+
+def stop_live(d, rig):
+    """Quits the env's live app (over its socket, else its process group)."""
+    pgid = rig.get("live_pgid", 0)
+    if not alive(pgid):
+        return
+    if qarig_drive.answers(live_sock(d)):
+        try:
+            qarig_drive.ask(live_sock(d), {"quit": True}, 10)
+        except qarig_drive.DriveError:
+            pass
+        end = time.time() + 15
+        while group_runs_more_than_its_sleep(pgid) and time.time() < end:
+            time.sleep(0.2)
+    if alive(pgid) and ours(pgid):
+        try:
+            os.killpg(pgid, signal.SIGTERM)
+        except ProcessLookupError:
+            pass
+    rig["live_pgid"] = 0
+    save(d, rig)
+
+
+def cmd_live(a):
+    d = env_dir(a.name)
+    rig = load(d)
+    if alive(rig.get("live_pgid", 0)) and qarig_drive.answers(live_sock(d)):
+        print(f"# {a.name}'s live app runs already (pid group {rig['live_pgid']}, {live_sock(d)})", file=sys.stderr)
+        return
+    if not BIN.exists():
+        die(f"no shared build at {BIN}: qarig rebuild")
+    ensure_serve(d, rig)
+    link_plugins(d)
+    state = d / "state/live"
+    if not a.keep:  # --keep: what the last run left (open set, pages, sessions) for a restart
+        shutil.rmtree(state, ignore_errors=True)
+    live_sock(d).unlink(missing_ok=True)
+    env = abe_env(d, rig)
+    env.update(
+        {
+            "VIMSTORM_DRIVE": str(live_sock(d)),
+            "VIMSTORM_SHOT_STATE": str(state),
+            "VIMSTORM_WINDOW_SIZE": a.size,
+            "VIMSTORM_DRIVE_FPS": str(a.fps),
+        }
+    )
+    path = str(Path(a.path).resolve()) if a.path else rig["path"]
+    log = d / "logs/live.log"
+    log.write_text("")
+    # --no-path: as the Dock launches it (no path, cwd /): the open set at the last quit, else Welcome
+    argv, cwd = ([BIN], "/") if a.no_path else ([BIN, path], path)
+    rig["live_pgid"] = daemon(argv, log, env, cwd=cwd)
+    rig["live_path"] = path
+    rig["live_bin"] = str(BIN)  # rebuild waits only for the live apps of its own build
+    save(d, rig)
+    t0 = time.time()
+    end = t0 + LIVE_UP_SECS
+    while not qarig_drive.answers(live_sock(d)):
+        if not alive(rig["live_pgid"]) or time.time() > end:
+            tail = "\n".join(log.read_text(errors="replace").splitlines()[-15:])
+            stop_live(d, rig)
+            die(f"the live app did not come up ({time.time() - t0:.0f}s); log {log}:\n{tail}")
+        time.sleep(0.2)
+    if a.abe:
+        drive(d, {"keys": "{@super+alt+a}"})
+        drive(d, {"wait": {"text": "factory", "in": "view", "ms": 10_000}})
+    qarig_drive.log(d, "live", "(no path)" if a.no_path else path, {"ok": True}, int((time.time() - t0) * 1000))
+    print(f"live {a.name}: pid group {rig['live_pgid']}, socket {live_sock(d)}, up in {time.time() - t0:.1f}s")
+
+
+def cmd_do(a):
+    d, rig = live_rig(a.name)
+    given = [x for x in (a.keys, a.type, a.click) if x]
+    if len(given) != 1:
+        die("do takes one of: '<keys>', --type '<text>', --click x,y")
+    if a.type:
+        ans = type_slowly(d, a.type, a.key_ms / 1000, a.timeout)
+        qarig_drive.log(d, "do", f"type:{a.type}", ans, ans.get("ms", 0))
+        if not ans.get("ok"):
+            die(f"refused: {ans.get('error')}", 2)
+        print(f"ok {ans.get('ms', 0)} ms")
+        return
+    if a.click:
+        try:
+            x, y = (float(v) for v in a.click.split(","))
+        except ValueError:
+            die(f"--click is x,y in logical px, not {a.click!r}")
+        req, arg = {"click": [x, y]}, f"click:{a.click}"
+    else:
+        req, arg = {"keys": a.keys}, a.keys
+    ans = drive(d, req, timeout=a.timeout)
+    qarig_drive.log(d, "do", arg, ans, ans.get("ms", 0))
+    if not ans.get("ok"):
+        die(f"refused: {ans.get('error')}", 2)
+    print(f"ok {ans.get('ms', 0)} ms")
+
+
+def type_slowly(d, text, pause, timeout, ask=None):
+    """`text` a key at a time, `pause` s apart: a picker's or filter's field takes each before the
+    next (all at once, the hidden window's 10 frames a second dropped some: "hello" came out "heo").
+    The first refusal stops it; the answer's ms are the whole text's."""
+    ask = ask or (lambda req: drive(d, req, timeout=timeout))
+    t0 = time.time()
+    for i, c in enumerate(text):
+        ans = ask({"type": c})
+        if not ans.get("ok"):
+            return ans
+        if i < len(text) - 1:
+            time.sleep(pause)
+    return {"ok": True, "ms": int((time.time() - t0) * 1000)}
+
+
+def cmd_see(a):
+    d, rig = live_rig(a.name)
+    for p in a.parts:
+        if p not in qarig_drive.PARTS:
+            die(f"no part {p!r}: {', '.join(qarig_drive.PARTS)}")
+    ans = drive(d, {"see": list(a.parts)})
+    if not ans.get("ok"):
+        die(f"refused: {ans.get('error')}")
+    print(json.dumps(ans, indent=1, ensure_ascii=False) if a.json else qarig_drive.seen_text(ans, a.parts), end="" if not a.json else "\n")
+
+
+def timeout_evidence(d, rig, label, ans):
+    """A timed-out wait's evidence: what was seen, a PNG, the serve log's tail."""
+    out = d / "logs/timeouts" / f"{time.strftime('%H%M%S')}-{label}"
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "trees.txt").write_text(qarig_drive.seen_text(ans))
+    try:
+        qarig_drive.ask(live_sock(d), {"shot": str(out / "snap.png")}, 30)
+    except qarig_drive.DriveError:
+        pass
+    serve = d / "logs/serve.log"
+    if serve.exists():
+        (out / "serve-tail.log").write_text("\n".join(serve.read_text(errors="replace").splitlines()[-200:]) + "\n")
+    return out
+
+
+def cmd_wait(a):
+    d, rig = live_rig(a.name)
+    try:
+        ms = qarig_drive.parse_ms(a.timeout)
+    except ValueError as e:
+        die(str(e))
+    w = {"text": a.text, "ms": ms}
+    if a.within:
+        w["in"] = a.within
+    if a.gone:
+        w["gone"] = True
+    ans = drive(d, {"wait": w}, timeout=ms / 1000 + 60)
+    qarig_drive.log(d, "wait", f"{'gone ' if a.gone else ''}{a.text!r} in {a.within or 'any'}", ans, ans.get("ms", 0))
+    if ans.get("ok"):
+        print(f"ok {ans.get('ms', 0)} ms")
+        return
+    if ans.get("error") != "timeout":
+        die(f"refused: {ans.get('error')}", 2)
+    slug = "".join(c if c.isalnum() else "-" for c in a.text)[:30]
+    out = timeout_evidence(d, rig, slug, ans)
+    print(qarig_drive.seen_text(ans), end="", file=sys.stderr)
+    die(f"timeout after {ans.get('ms')} ms waiting for {'no ' if a.gone else ''}{a.text!r} in {a.within or 'any part'}; evidence {out}")
+
+
+def cmd_snap(a):
+    check_label(a.label)
+    d, rig = live_rig(a.name)
+    png = d / "shots" / a.label / f"{a.label}.png"
+    shutil.rmtree(png.parent, ignore_errors=True)
+    ans = drive(d, {"shot": str(png)})
+    qarig_drive.log(d, "snap", a.label, ans, ans.get("ms", 0))
+    if not ans.get("ok"):
+        die(f"snap failed: {ans.get('error')}")
+    print(png)
+
+
+def cmd_film(a):
+    check_label(a.label)
+    d, rig = live_rig(a.name)
+    shots = d / "shots" / a.label
+    shutil.rmtree(shots, ignore_errors=True)
+    shots.mkdir(parents=True)
+    png = shots / f"{a.label}.png"
+    ans = drive(d, {"keys": a.keys, "film": {"to": str(png), "frames": a.frames, "every": a.every}}, timeout=a.timeout)
+    qarig_drive.log(d, "film", a.keys, ans, ans.get("ms", 0))
+    if not ans.get("ok"):
+        die(f"refused: {ans.get('error')}", 2)
+    if (shots / f"{a.label}-frames.tsv").exists():
+        print(flipbook(shots, a.label))
+    for f in sorted(shots.glob(f"{a.label}-*.png")):
+        print(f)
+
+
+def cmd_quit(a):
+    d = env_dir(a.name)
+    rig = load(d, fixed=False)
+    stop_live(d, rig)
+    print(f"quit: {a.name}'s live app")
+
+
+def cmd_fleet(a):
+    """N isolated envs at once, each up with its own live app: <prefix>1 … <prefix>N."""
+    if a.n < 1 or a.n > 8:
+        die("fleet: 1 to 8 envs")
+    names = [f"{a.prefix}{i}" for i in range(1, a.n + 1)]
+    me = [sys.executable, str(Path(__file__).resolve())]
+    for n in names:  # up one by one (each picks its own free port), then all live at once
+        p = subprocess.run([*me, "up", n], capture_output=True, text=True)
+        if p.returncode != 0:
+            die(f"up {n}: {p.stderr.strip()}")
+    live = [[*me, "live", n, "--size", a.size] + (["--abe"] if a.abe else []) for n in names]
+    procs = [subprocess.Popen(c, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True) for c in live]
+    bad = []
+    for n, p in zip(names, procs):
+        out, _ = p.communicate()
+        print(out.strip())
+        if p.returncode != 0:
+            bad.append(n)
+    if bad:
+        die(f"fleet: {', '.join(bad)} did not come up")
+    print(f"# fleet: {' '.join(names)} (qarig do <name> …; qarig down <name> each)", file=sys.stderr)
+
+
+def ado_call(d, rig, method, path, body, who):
+    import urllib.error
+    import urllib.request
+
+    seed = json.loads(Path(rig["seed"]).read_text())
+    base = rig.get("ado_url") or f"http://127.0.0.1:{rig['ado_port']}"
+    url = f"{base}/qa-rig/{urllib.request.quote(seed.get('project', 'Sandbox'))}/_apis/wit/{path}"
+    req = urllib.request.Request(
+        url,
+        data=json.dumps(body).encode(),
+        method=method,
+        headers={"Authorization": "Bearer fake-token", "Content-Type": "application/json-patch+json", "X-Fake-As": who},
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=15) as r:
+            return r.status, json.loads(r.read() or b"{}")
+    except urllib.error.HTTPError as e:
+        return e.code, json.loads(e.read() or b"{}")
+
+
+def cmd_teammate(a):
+    d = env_dir(a.name)
+    rig = load(d)
+    t0 = time.time()
+    what = " ".join([a.service, a.action, *a.args])
+    if a.service == "azure":
+        if a.action == "move" and len(a.args) == 2:
+            card, state = a.args
+            status, js = ado_call(d, rig, "PATCH", f"workitems/{card}?api-version=7.1", [{"op": "add", "path": "/fields/System.State", "value": state}], a.who)
+        elif a.action == "comment" and len(a.args) == 2:
+            card, text = a.args
+            status, js = ado_call(d, rig, "POST", f"workItems/{card}/comments?api-version=7.1-preview.4", {"text": text}, a.who)
+        else:
+            die("teammate azure move <card> <state> | comment <card> '<text>' [--as sam]")
+        ok = status == 200
+        qarig_drive.log(d, "teammate", f"{what} --as {a.who}", {"ok": ok, "error": js.get("message")}, int((time.time() - t0) * 1000))
+        if not ok:
+            die(f"the board refused ({status}): {js.get('message')}")
+        print(f"ok: {what} as {a.who}")
+        return
+    if a.service == "github" and a.action == "push" and len(a.args) == 1:
+        branch = a.args[0]
+        if branch.startswith("-") or subprocess.run(["git", "check-ref-format", "--branch", branch], capture_output=True).returncode != 0:
+            die(f"not a branch name: {branch!r}")
+        work = d / "teammate" / branch.replace("/", "_")
+        shutil.rmtree(work, ignore_errors=True)
+        origin = f"https://github.com/{rig['gh_repo']}.git" if rig.get("real") else d / "origin.git"
+        if not rig.get("real") and not origin.exists():
+            die(f"env {a.name} has no local origin (a --path repo): push there yourself")
+        name = a.who.capitalize()
+        genv = abe_env(d, rig) if rig.get("real") else None  # the env's git credential: your gh
+        g = lambda *c: subprocess.run(["git", *c], cwd=work, check=True, capture_output=True, text=True, env=genv)
+        subprocess.run(["git", "clone", "-q", str(origin), str(work)], check=True, capture_output=True, env=genv)
+        has = subprocess.run(["git", "-C", str(work), "ls-remote", "--heads", "origin", branch], capture_output=True, text=True, env=genv).stdout.strip()
+        g("checkout", "-q", "-B", branch, f"origin/{branch}" if has else "origin/main")
+        f = work / "TEAMMATE.md"
+        f.write_text((f.read_text() if f.exists() else "") + f"- {name} at {time.strftime('%H:%M:%S')}\n")
+        g("add", "TEAMMATE.md")
+        g("-c", f"user.name={name}", "-c", f"user.email={a.who}@example.test", "commit", "-qm", f"{name}'s change")
+        g("push", "-q", "origin", f"HEAD:{branch}")
+        qarig_drive.log(d, "teammate", f"{what} --as {a.who}", {"ok": True}, int((time.time() - t0) * 1000))
+        print(f"ok: {a.who} pushed {branch}")
+        return
+    if a.service == "github" and a.action == "comment" and len(a.args) == 2:
+        if not rig.get("real"):
+            die("teammate github comment needs a real env (qarig up --real): the fake gh has no pull requests")
+        pr, text = a.args
+        if not pr.isdigit():
+            die(f"a pull request number, not {pr!r}")
+        if a.who != "sam":
+            print(f"# --as {a.who}: GitHub writes go as gh's one login", file=sys.stderr)
+        # as you (the env's one GitHub login): the comment comes from outside the app all the same
+        p = real_gh("pr", "comment", pr, "-R", rig["gh_repo"], "--body", text, check=False)
+        qarig_drive.log(d, "teammate", f"{what} (as gh's login)", {"ok": p.returncode == 0, "error": p.stderr.strip()[-200:]}, int((time.time() - t0) * 1000))
+        if p.returncode != 0:
+            die(f"gh pr comment: {p.stderr.strip()[-300:]}")
+        print(f"ok: commented on {rig['gh_repo']}#{pr}")
+        return
+    die("teammate azure move|comment … | github push <branch> | github comment <pr> '<text>' (real envs)")
+
+
+# ---------------------------------------------------------------- gate runs (#352)
+
+GATE_OUT = Path(os.environ.get("QARIG_GATE_OUT", RIG / "gate"))
+ME = [sys.executable, str(Path(__file__).resolve())]
+
+
+def built_commit():
+    """The commit the driven build is from: QARIG_COMMIT, else the shared build's BUILT."""
+    if os.environ.get("QARIG_COMMIT"):
+        return os.environ["QARIG_COMMIT"]
+    if "QARIG_BIN" not in os.environ and (RIG / "BUILT").exists():
+        return (RIG / "BUILT").read_text().split()[0]
+    return "local"
+
+
+def gate_script(path):
+    """The script as given, else under the shared build's checkout (the release commit's own)."""
+    f = Path(path)
+    if f.exists():
+        return f.resolve()
+    if not f.is_absolute() and (BUILD / f).exists():
+        return BUILD / f
+    die(f"no gate script {path} (here or in {BUILD})")
+
+
+class QarigCtx(qarig_gate.Ctx):
+    """A gate run's world: qarig's own verbs on the env (so drive.log has every one) and the
+    listed reads in the env's env."""
+
+    def __init__(self, name, d, rig, serves_before):
+        self.name, self.d, self.rig, self.before = name, d, rig, serves_before
+
+    def qarig(self, *args, timeout=None):
+        t0 = time.time()
+        try:
+            p = subprocess.run([*ME, *map(str, args)], capture_output=True, text=True, timeout=timeout)
+            code, said = p.returncode, p.stdout + p.stderr
+        except subprocess.TimeoutExpired:
+            code, said = 124, f"qarig {args[0]}: no end in {timeout}s"
+        m = re.search(r"^ok (\d+) ms", said, re.M)
+        return code, int(m.group(1)) if m else int((time.time() - t0) * 1000), said
+
+    def drive(self, verb, args, out):
+        n = self.name
+        if verb == "do":
+            code, ms, said = self.qarig("do", n, args[0])
+        elif verb == "type":
+            code, ms, said = self.qarig("do", n, "--type", args[0])
+        elif verb == "click":
+            code, ms, said = self.qarig("do", n, "--click", args[0])
+        elif verb == "wait":
+            w = args[0]
+            extra = (["--in", w["in"]] if w["in"] else []) + (["--gone"] if w["gone"] else [])
+            code, ms, said = self.qarig("wait", n, w["text"], "--timeout", w["within"], *extra)
+            if code != 0:
+                said += self.timed_out(said, out)
+        elif verb == "see":
+            label, parts = args[0], args[1:]
+            code, ms, said = self.qarig("see", n, *parts)
+            if label and out is not None:
+                f = out / "trees" / f"{label}.txt"
+                f.parent.mkdir(parents=True, exist_ok=True)
+                f.write_text(said)
+                said += f"\nevidence trees/{label}.txt"
+        elif verb == "snap":
+            code, ms, said = self.qarig("snap", n, args[0])
+            if code == 0:
+                said += "\nevidence " + self.keep(Path(said.strip().splitlines()[-1]), out / "shots" / f"{args[0]}.png", out)
+        elif verb == "film":
+            label, frames, every, keys = args
+            code, ms, said = self.qarig("film", n, label, keys, "--frames", frames, "--every", every)
+            if code == 0:
+                said += "\nevidence " + self.keep(self.d / "shots" / label, out / "films" / label, out) + f"/{label}.html"
+        elif verb == "timeout":  # a regex wait gave up: its evidence, as a wait's
+            text, seen = args
+            slug = "".join(c if c.isalnum() else "-" for c in text)[:30]
+            src = self.d / "logs/timeouts" / f"{time.strftime('%H%M%S')}-{slug}"
+            src.mkdir(parents=True, exist_ok=True)
+            (src / "trees.txt").write_text(seen)
+            self.qarig("snap", n, f"timeout-{src.name}"[:60])
+            snap = self.d / "shots" / f"timeout-{src.name}"[:60]
+            self.keep(snap, src / "snap", src)
+            serve = self.d / "logs/serve.log"
+            if serve.exists():
+                (src / "serve-tail.log").write_text("\n".join(serve.read_text(errors="replace").splitlines()[-200:]) + "\n")
+            code, ms, said = 0, 0, self.timed_out(f"evidence {src}", out)
+        elif verb == "teammate":
+            code, ms, said = self.qarig("teammate", n, *args)
+        elif verb == "scenario":
+            code, ms, said = self.qarig("scenario", n, *args, timeout=300)
+        elif verb == "down":
+            code, ms, said = self.qarig("down", n, timeout=300)
+            if code == 0:
+                end = time.time() + 15  # a serve still stopping is given its stop time
+                left = self.left_running()
+                while left and time.time() < end:
+                    time.sleep(0.5)
+                    left = self.left_running()
+                if left:
+                    code, said = 1, said + "\nstill running: " + "; ".join(left)
+        else:
+            raise qarig_gate.GateError(f"qarig has no {verb}")
+        return code == 0, ms, said
+
+    def keep(self, src, dst, out):
+        if not src.exists():
+            return ""
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        if src.is_dir():
+            shutil.rmtree(dst, ignore_errors=True)
+            shutil.copytree(src, dst)
+        else:
+            shutil.copy2(src, dst)
+        return str(dst.relative_to(out))
+
+    def timed_out(self, said, out):
+        """A wait that timed out: its evidence (trees, PNG, serve log) and 5 s of film after it."""
+        m = re.search(r"evidence (/\S+)", said)
+        if not m:
+            return ""
+        src = Path(m.group(1))
+        kept = self.keep(src, out / "timeouts" / src.name, out)
+        dst = out / "timeouts" / src.name
+        drive_log = self.d / "logs/drive.log"
+        if drive_log.exists():
+            (dst / "drive-tail.log").write_text("\n".join(drive_log.read_text(errors="replace").splitlines()[-50:]) + "\n")
+        code, said_sessions = self.shell(["abe", "session", "list", "--json"])
+        (dst / "sessions.json").write_text(said_sessions)
+        label = f"timeout-{src.name}"[:60]
+        code, _, _ = self.qarig("film", self.name, label, "", "--frames", 20, "--every", 250, timeout=180)
+        if code == 0:
+            self.keep(self.d / "shots" / label, out / "timeouts" / src.name / "film", out)
+        return f"\nevidence {kept}"
+
+    def left_running(self):
+        """What still runs after down: a process naming the env's folder, or a new serve under
+        the real HOME (the #213 orphans)."""
+        ps = subprocess.run(["ps", "-axww", "-o", "pid=,command="], capture_output=True, text=True).stdout
+        mine = {os.getpid(), os.getppid()}
+        left = []
+        for line in ps.splitlines():
+            pid, _, cmd = line.strip().partition(" ")
+            if pid.isdigit() and int(pid) not in mine and str(self.d) in cmd and "qarig" not in cmd.split(" ", 1)[0]:
+                left.append(f"pid {pid} {cmd[:120]}")
+        for pid, x in sorted(serves().items()):
+            if pid not in self.before and x.get("HOME") == REAL_HOME:
+                left.append(f"STRAY SERVE pid {pid} under the real HOME")
+        return left
+
+    def shell(self, argv):
+        argv = list(argv)
+        if argv[0] == "abe":
+            argv[0] = self.rig["abe_bin"]
+        try:
+            p = subprocess.run(argv, env=abe_env(self.d, self.rig), cwd=self.rig["path"], capture_output=True, text=True, timeout=120)
+            return p.returncode, p.stdout + p.stderr
+        except subprocess.TimeoutExpired:
+            return 124, f"{argv[0]}: no end in 120s"
+        except FileNotFoundError:
+            return 127, f"no {argv[0]}"
+
+
+def gate_out(a, name):
+    return Path(a.out).resolve() if getattr(a, "out", None) else GATE_OUT / built_commit() / name
+
+
+def cmd_gate(a):
+    script = gate_script(a.script)
+    try:
+        steps = qarig_gate.parse(script.read_text(), script.name)
+    except qarig_gate.GateError as e:
+        die(str(e))
+    only = [x for x in (a.only or "").split(",") if x]
+    d = env_dir(a.name)
+    if a.dry_run:
+        for st in steps:
+            if (only and st.id not in only):
+                continue
+            print(f"{st.id} · {st.title}")
+            for x in st.actions:
+                print(f"  {x.text}")
+        return
+    rig = load(d)
+    out = gate_out(a, a.name)
+    meta = qarig_gate.load_meta(out)
+    if meta.get("script") and meta["script"] != script.name:
+        die(f"{out} holds a run of {meta['script']}: --out another folder")
+    if not (a.start or only):
+        if (out / "meta.json").exists() and (out / "results.json").exists():
+            shutil.rmtree(out)  # a run from the top starts clean (only a gate run's folder)
+        meta = {}
+    meta = {
+        "script": script.name,
+        "name": a.name,
+        "commit": built_commit(),
+        "started": meta.get("started") or time.strftime("%Y-%m-%d %H:%M:%S"),
+        "serves_before": meta.get("serves_before") or sorted(serves()),
+    }
+    ctx = QarigCtx(a.name, d, rig, set(meta["serves_before"]))
+    vars_ = {"name": a.name, "repo": rig["path"], "seed_offset": rig.get("seed_offset", 0)}
+    try:
+        rows, status = qarig_gate.run(steps, ctx, out, vars_, meta, start=a.start, only=only, keep_going=a.keep_going)
+    except qarig_gate.GateError as e:
+        die(str(e))
+    print((out / "RESULT.md").read_text(), end="", flush=True)
+    print(f"# {out / 'RESULT.md'}", file=sys.stderr)
+    if status == "fail":
+        sys.exit(1)
+    if status.startswith("agent:"):
+        _, at, *after = status.split(":")
+        what = next((r.check for r in reversed(rows) if r.result == "AGENT"), "")
+        go_on = f"qarig gate {a.name} {a.script} --from {after[0]}" if after else "the script's last step"
+        print(f"# the tester agent's turn ({at}): {what}\n# then: {go_on}", file=sys.stderr)
+        sys.exit(4)
+
+
+def cmd_judge(a):
+    out = gate_out(a, a.name)
+    try:
+        r = qarig_gate.judge(out, a.row, a.verdict, a.note)
+    except qarig_gate.GateError as e:
+        die(str(e))
+    print(f"{r.id} {r.result}: {r.check} — {r.note}")
+
+
+def main():
+    p = argparse.ArgumentParser(prog="qarig", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    sub = p.add_subparsers(dest="cmd", required=True)
+
+    s = sub.add_parser("shot")
+    s.add_argument("name")
+    s.add_argument("label")
+    s.add_argument("keys", nargs="?", default="")
+    s.add_argument("--frames", type=int, default=0)
+    s.add_argument("--every", type=int, default=100)
+    s.add_argument("--size", default="1400x900")
+    s.add_argument("--path")
+    s.add_argument("--delay", type=int, default=2500, help="ms before the keys and after them (default 2500)")
+    s.add_argument("--abe", action="store_true", help="show the Factory view first ({@super+alt+a})")
+    s.add_argument("--abe-wait", type=int, default=2500)
+    s.add_argument("--timeout", type=int, default=240)
+    s.set_defaults(fn=cmd_shot)
+
+    u = sub.add_parser("up")
+    u.add_argument("name")
+    u.add_argument("--seed", help="a fake Azure DevOps seed JSON (default the testing package's)")
+    u.add_argument("--path", help="the project folder (default a demo repo with a bare origin); sessions make <path>-wt/ beside it and fetch its origin: use a throwaway copy")
+    u.add_argument("--box", help="not yet: boxes need AWS; see the README")
+    u.add_argument("--real", action="store_true", help="a release gate env: a private copy of the gate repo (qarig.local.toml), your gh / aws / claude logins in place, real boxes (deleted by down)")
+    u.add_argument("--seed-offset", type=int, default=0, help="add this to every seed card's number (gate testers: 100, 200); {card:N} in gate scripts")
+    u.set_defaults(fn=cmd_up)
+    for name, fn in (("down", cmd_down), ("env", cmd_env)):
+        x = sub.add_parser(name)
+        x.add_argument("name")
+        x.set_defaults(fn=fn)
+    x = sub.add_parser("abe", help="run abe in an env: qarig abe <name> card list")
+    x.add_argument("name")
+    x.add_argument("args", nargs=argparse.REMAINDER)
+    x.set_defaults(fn=cmd_abe)
+    sub.add_parser("ls").set_defaults(fn=cmd_ls)
+    x = sub.add_parser("scenario", help="qarig scenario <name> list")
+    x.add_argument("name")
+    x.add_argument("scenario")
+    x.add_argument("--card", type=int, default=4)
+    x.add_argument("--after", type=int, default=None)
+    x.add_argument("--every", type=int, default=4000)
+    x.add_argument("--option", type=int, default=1)
+    x.add_argument("--factory", action="store_true")
+    x.add_argument("--text")
+    x.add_argument("--box")
+    x.add_argument("--state", choices=["pending", "running", "stopping", "stopped", "shutting-down", "terminated"])
+    x.add_argument("--held", action="store_true")
+    x.add_argument("--repo", help="box: the repo it is tagged with (owner/name; default qa-rig/demo-shop)")
+    x.add_argument("--runs", type=int, default=40, help="pipelines: how many runs (0: none again)")
+    x.set_defaults(fn=cmd_scenario)
+    x = sub.add_parser("diff", help="frame-diff a film: qarig diff <name> <label> | <folder>")
+    qarig_diff.add_args(x)
+    x.set_defaults(fn=cmd_diff)
+    r = sub.add_parser("rebuild")
+    r.add_argument("--ref", help="what to build (default this checkout's HEAD)")
+    r.set_defaults(fn=cmd_rebuild)
+
+    x = sub.add_parser("live", help="start the env's live, driven app")
+    x.add_argument("name")
+    x.add_argument("--size", default="1400x900")
+    x.add_argument("--path")
+    x.add_argument("--abe", action="store_true", help="show the Factory view first")
+    x.add_argument("--fps", type=int, default=10, help="draws a second of the hidden window (10)")
+    x.add_argument("--keep", action="store_true", help="keep <env>/state/live (a restart: the open set, pages, sessions)")
+    x.add_argument("--no-path", action="store_true", help="launch without a path, as the Dock does (with --keep: reopens the last open set)")
+    x.set_defaults(fn=cmd_live)
+    x = sub.add_parser("do", help="play keys / text / a click in the live app")
+    x.add_argument("name")
+    x.add_argument("keys", nargs="?", default="")
+    x.add_argument("--type")
+    x.add_argument("--key-ms", type=int, default=150, help="--type: ms between its keys (150; the hidden window draws every 100)")
+    x.add_argument("--click")
+    x.add_argument("--timeout", type=int, default=600, help="seconds the keys may take (600)")
+    x.set_defaults(fn=cmd_do)
+    x = sub.add_parser("see", help="what the live app shows, as text")
+    x.add_argument("name")
+    x.add_argument("parts", nargs="*")
+    x.add_argument("--json", action="store_true")
+    x.set_defaults(fn=cmd_see)
+    x = sub.add_parser("wait", help="wait for a text in the live app")
+    x.add_argument("name")
+    x.add_argument("text")
+    x.add_argument("--in", dest="within", choices=list(qarig_drive.PARTS))
+    x.add_argument("--gone", action="store_true")
+    x.add_argument("--timeout", default="60s", help="90s, 10m (60s)")
+    x.set_defaults(fn=cmd_wait)
+    x = sub.add_parser("snap", help="a PNG of the live window")
+    x.add_argument("name")
+    x.add_argument("label")
+    x.set_defaults(fn=cmd_snap)
+    x = sub.add_parser("film", help="frames of the live window while keys play")
+    x.add_argument("name")
+    x.add_argument("label")
+    x.add_argument("keys", nargs="?", default="")
+    x.add_argument("--frames", type=int, default=30)
+    x.add_argument("--every", type=int, default=100)
+    x.add_argument("--timeout", type=int, default=600)
+    x.set_defaults(fn=cmd_film)
+    x = sub.add_parser("quit", help="quit the env's live app")
+    x.add_argument("name")
+    x.set_defaults(fn=cmd_quit)
+    x = sub.add_parser("fleet", help="N isolated envs, each up with a live app")
+    x.add_argument("n", type=int)
+    x.add_argument("--prefix", default="t")
+    x.add_argument("--abe", action="store_true")
+    x.add_argument("--size", default="1400x900")
+    x.set_defaults(fn=cmd_fleet)
+    x = sub.add_parser("teammate", help="a teammate's change from outside the app")
+    x.add_argument("name")
+    x.add_argument("service", choices=["azure", "github"])
+    x.add_argument("action")
+    x.add_argument("args", nargs="*")
+    x.add_argument("--as", dest="who", default="sam")
+    x.set_defaults(fn=cmd_teammate)
+
+    x = sub.add_parser("gate", help="run a gate script on the env's live app")
+    x.add_argument("name")
+    x.add_argument("script")
+    x.add_argument("--from", dest="start", help="start at this step (a run picked up after the agent's turn)")
+    x.add_argument("--only", help="only these steps: G1,G4")
+    x.add_argument("--keep-going", action="store_true", help="a FAIL ends its step, not the run (a later down is skipped)")
+    x.add_argument("--dry-run", action="store_true", help="parse and list the steps, run nothing")
+    x.add_argument("--out", help="the results folder (default .scratch/qa/gate/<commit>/<name>)")
+    x.set_defaults(fn=cmd_gate)
+    x = sub.add_parser("judge", help="the tester agent's verdict on a judge row")
+    x.add_argument("name")
+    x.add_argument("row")
+    x.add_argument("verdict", choices=["PASS", "FAIL"])
+    x.add_argument("note")
+    x.add_argument("--out")
+    x.set_defaults(fn=cmd_judge)
+
+    a = p.parse_args()
+    a.fn(a)
+
+
+if __name__ == "__main__":
+    main()

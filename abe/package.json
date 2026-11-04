@@ -1,0 +1,31 @@
+{
+  "name": "abe-workspace",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "bun test",
+    "typecheck": "tsc6 -p tsconfig.json && tsc6 -p packages/core && tsc6 -p packages/ui",
+    "lint": "eslint . && prettier . --check",
+    "lint:fix": "eslint . --fix && prettier . --write",
+    "build": "bun run build:darwin && bun run build:linux",
+    "build:darwin": "scripts/build.sh darwin",
+    "build:linux": "scripts/build.sh linux",
+    "check": "bun run typecheck && bun run lint && bun test",
+    "contract": "ABE_WRITE_CONTRACT=1 bun test packages/ui/src/contract.test.ts",
+    "prose": "bun scripts/prose.ts",
+    "count": "bun scripts/count.ts"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/bun": "1.4.4",
+    "eslint": "10.13.0",
+    "eslint-config-prettier": "10.1.8",
+    "globals": "17.13.0",
+    "prettier": "3.9.10",
+    "typescript": "npm:@typescript/typescript6@6.0.2",
+    "typescript-eslint": "8.72.0"
+  }
+}

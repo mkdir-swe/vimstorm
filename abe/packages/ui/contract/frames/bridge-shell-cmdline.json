@@ -1,0 +1,7 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "cmdline"
+  }
+}

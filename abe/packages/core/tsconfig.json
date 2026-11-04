@@ -1,0 +1,8 @@
+{
+  // Core is pure: no Bun or Node types, so the process, the file system, timers and fetch do not typecheck here.
+  // Its tests are checked by the root tsconfig.
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": { "lib": ["ES2023"], "types": [] },
+  "include": ["src"],
+  "exclude": ["src/**/*.test.ts"]
+}

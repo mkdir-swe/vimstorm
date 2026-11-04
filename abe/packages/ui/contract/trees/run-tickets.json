@@ -1,0 +1,533 @@
+{
+  "kind": "Stack",
+  "props": {
+    "direction": "column",
+    "sizes": [
+      {
+        "fixed": 34
+      },
+      {
+        "flex": 1
+      }
+    ]
+  },
+  "children": [
+    {
+      "kind": "RunBar",
+      "id": "run-bar",
+      "props": {
+        "card": "#4",
+        "title": "As a visitor I can sign in with email",
+        "on": false,
+        "context": "demo-shop · Feature run · Local sandbox · 21 min so far",
+        "linked": false
+      }
+    },
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "row",
+        "gap": 0,
+        "sizes": [
+          {
+            "fixed": 240
+          },
+          {
+            "flex": 1
+          }
+        ],
+        "align": "stretch"
+      },
+      "children": [
+        {
+          "kind": "RunSteps",
+          "id": "run-steps",
+          "props": {
+            "rows": [
+              {
+                "id": "spec:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "create-specification",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "step:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "to-tickets",
+                "outcome": "4 tickets",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "build:1",
+                "mark": {
+                  "glyph": "●",
+                  "hue": "warn"
+                },
+                "name": "build",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "todo:checks",
+                "mark": {
+                  "glyph": "",
+                  "hue": "dim"
+                },
+                "name": "checks",
+                "outcome": "",
+                "back": false,
+                "dim": true,
+                "todo": true,
+                "needsYou": false
+              },
+              {
+                "id": "todo:review",
+                "mark": {
+                  "glyph": "",
+                  "hue": "dim"
+                },
+                "name": "review",
+                "outcome": "",
+                "back": false,
+                "dim": true,
+                "todo": true,
+                "needsYou": false
+              },
+              {
+                "id": "todo:verify",
+                "mark": {
+                  "glyph": "",
+                  "hue": "dim"
+                },
+                "name": "verify",
+                "outcome": "",
+                "back": false,
+                "dim": true,
+                "todo": true,
+                "needsYou": false
+              },
+              {
+                "id": "todo:playbook",
+                "mark": {
+                  "glyph": "",
+                  "hue": "dim"
+                },
+                "name": "playbook",
+                "outcome": "",
+                "back": false,
+                "dim": true,
+                "todo": true,
+                "needsYou": false
+              },
+              {
+                "id": "todo:pr",
+                "mark": {
+                  "glyph": "",
+                  "hue": "dim"
+                },
+                "name": "pr",
+                "outcome": "",
+                "back": false,
+                "dim": true,
+                "todo": true,
+                "needsYou": false
+              }
+            ],
+            "selected": "step:1"
+          }
+        },
+        {
+          "kind": "RunFocus",
+          "id": "run-focus",
+          "props": {
+            "step": "step:1",
+            "name": "to-tickets",
+            "skill": "to-tickets",
+            "meta": "09:06 · 2 min",
+            "state": {
+              "text": "✓ done",
+              "hue": "good"
+            },
+            "fresh": false,
+            "round": "",
+            "back": "",
+            "chat": false,
+            "did": "Cut spec #40 into 4 tickets in 3 waves, with 2 milestones.",
+            "pending": false,
+            "actions": [],
+            "read": {
+              "note": "the spec and the code its modules are in",
+              "blocks": [
+                {
+                  "title": "",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "card",
+                      "ref": "Spec #40 · issue",
+                      "title": "As a visitor I can sign in with email",
+                      "text": ""
+                    }
+                  ]
+                },
+                {
+                  "title": "User stories",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "list",
+                      "numbered": true,
+                      "rows": [
+                        {
+                          "text": "As a visitor, I want to sign in with just my email, so that I need no password.",
+                          "note": ""
+                        },
+                        {
+                          "text": "As a returning visitor, I want my guest cart kept when I sign in, so that I do not start over.",
+                          "note": ""
+                        },
+                        {
+                          "text": "As a visitor who opened an old link, I want to be told it expired, so that I am not stuck.",
+                          "note": ""
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Implementation decisions",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "list",
+                      "numbered": true,
+                      "rows": [
+                        {
+                          "text": "Found in ADR-003 No passwords: accounts carry no password; sign-in is by token only.",
+                          "note": ""
+                        },
+                        {
+                          "text": "The card leaves the guest cart open; we merge it on sign-in, quantities summed.",
+                          "note": ""
+                        },
+                        {
+                          "text": "Decided with the product owner: links expire after 15 minutes.",
+                          "note": ""
+                        },
+                        {
+                          "text": "Decided with the product owner: a link is single-use.",
+                          "note": ""
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Acceptance criteria",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "list",
+                      "numbered": true,
+                      "rows": [
+                        {
+                          "text": "A visitor enters their email and is told to check their inbox.",
+                          "note": ""
+                        },
+                        {
+                          "text": "Opening the link signs the visitor in.",
+                          "note": ""
+                        },
+                        {
+                          "text": "A used or old link shows an expired page.",
+                          "note": ""
+                        },
+                        {
+                          "text": "The guest cart is kept after sign-in.",
+                          "note": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "made": {
+              "note": "4 tickets, sub-issues of demo-shop#40, by wave · open a ticket",
+              "blocks": [
+                {
+                  "title": "",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "lanes",
+                      "lanes": [
+                        {
+                          "label": "Wave 1",
+                          "note": "starts now",
+                          "cards": [
+                            {
+                              "id": "run:ticket:step:1:T1",
+                              "ref": "#41 · T1",
+                              "title": "Sign-in tokens: issue, store, expire",
+                              "time": "",
+                              "summary": "A token is made for an email, stored with its expiry, and marked used when opened.",
+                              "tags": [
+                                {
+                                  "text": "starts now",
+                                  "hue": "good"
+                                },
+                                {
+                                  "text": "auth/token",
+                                  "hue": "accent"
+                                },
+                                {
+                                  "text": "db/migrations",
+                                  "hue": "accent"
+                                }
+                              ],
+                              "rows": [
+                                {
+                                  "label": "Parent",
+                                  "value": "demo-shop#40 · As a visitor I can sign in with email"
+                                },
+                                {
+                                  "label": "What to build",
+                                  "value": "A token is made for an email, stored with its expiry, and marked used when opened."
+                                },
+                                {
+                                  "label": "Area",
+                                  "value": "auth/token, db/migrations"
+                                },
+                                {
+                                  "label": "Acceptance criteria",
+                                  "value": "☐ A token is refused after 15 minutes"
+                                },
+                                {
+                                  "label": "",
+                                  "value": "☐ A token is refused after one use"
+                                },
+                                {
+                                  "label": "Blocked by",
+                                  "value": "None (can start immediately)"
+                                },
+                                {
+                                  "label": "Milestone",
+                                  "value": "Milestone 1 · A visitor asks for a link, opens it and lands signed in."
+                                }
+                              ],
+                              "chips": [
+                                "Decision 3: Decided with the product owner: links expire after 15 minutes.",
+                                "Decision 4: Decided with the product owner: a link is single-use.",
+                                "Story 1"
+                              ],
+                              "open": true
+                            }
+                          ]
+                        },
+                        {
+                          "label": "Wave 2",
+                          "note": "2 side by side",
+                          "cards": [
+                            {
+                              "id": "run:ticket:step:1:T2",
+                              "ref": "#42 · T2",
+                              "title": "Ask for a link: the sign-in page and the email",
+                              "time": "",
+                              "summary": "A visitor types an email on the sign-in page and lands on “Check your email”.",
+                              "tags": [
+                                {
+                                  "text": "after T1",
+                                  "hue": "dim"
+                                },
+                                {
+                                  "text": "web/sign-in",
+                                  "hue": "accent"
+                                },
+                                {
+                                  "text": "mail/templates",
+                                  "hue": "accent"
+                                }
+                              ],
+                              "rows": [
+                                {
+                                  "label": "Parent",
+                                  "value": "demo-shop#40 · As a visitor I can sign in with email"
+                                },
+                                {
+                                  "label": "What to build",
+                                  "value": "A visitor types an email on the sign-in page and lands on “Check your email”."
+                                },
+                                {
+                                  "label": "Area",
+                                  "value": "web/sign-in, mail/templates"
+                                },
+                                {
+                                  "label": "Acceptance criteria",
+                                  "value": "☐ The form leads to the confirmation page"
+                                },
+                                {
+                                  "label": "",
+                                  "value": "☐ The email carries the link"
+                                },
+                                {
+                                  "label": "Blocked by",
+                                  "value": "#41 · T1 · Sign-in tokens: issue, store, expire"
+                                },
+                                {
+                                  "label": "Milestone",
+                                  "value": "Milestone 1 · A visitor asks for a link, opens it and lands signed in."
+                                }
+                              ],
+                              "chips": [
+                                "Story 1",
+                                "Criterion 1"
+                              ],
+                              "open": false
+                            },
+                            {
+                              "id": "run:ticket:step:1:T3",
+                              "ref": "#43 · T3",
+                              "title": "Open a link: the session and the way back",
+                              "time": "",
+                              "summary": "Opening a valid link starts a session on that browser.",
+                              "tags": [
+                                {
+                                  "text": "after T1",
+                                  "hue": "dim"
+                                },
+                                {
+                                  "text": "auth/session",
+                                  "hue": "accent"
+                                }
+                              ],
+                              "rows": [
+                                {
+                                  "label": "Parent",
+                                  "value": "demo-shop#40 · As a visitor I can sign in with email"
+                                },
+                                {
+                                  "label": "What to build",
+                                  "value": "Opening a valid link starts a session on that browser."
+                                },
+                                {
+                                  "label": "Area",
+                                  "value": "auth/session"
+                                },
+                                {
+                                  "label": "Acceptance criteria",
+                                  "value": "☐ A valid link starts a session"
+                                },
+                                {
+                                  "label": "Blocked by",
+                                  "value": "#41 · T1 · Sign-in tokens: issue, store, expire"
+                                },
+                                {
+                                  "label": "Milestone",
+                                  "value": "Milestone 1 · A visitor asks for a link, opens it and lands signed in."
+                                }
+                              ],
+                              "chips": [
+                                "Story 1",
+                                "Criterion 2"
+                              ],
+                              "open": false
+                            }
+                          ],
+                          "milestone": {
+                            "label": "◆ Milestone 1",
+                            "text": "A visitor asks for a link, opens it and lands signed in. Heavy tests run here."
+                          }
+                        },
+                        {
+                          "label": "Wave 3",
+                          "note": "1 ticket",
+                          "cards": [
+                            {
+                              "id": "run:ticket:step:1:T4",
+                              "ref": "#44 · T4",
+                              "title": "Keep the guest cart on sign-in",
+                              "time": "",
+                              "summary": "The lines a visitor put in the cart as a guest are there after sign-in.",
+                              "tags": [
+                                {
+                                  "text": "after T3",
+                                  "hue": "dim"
+                                },
+                                {
+                                  "text": "cart/merge",
+                                  "hue": "accent"
+                                }
+                              ],
+                              "rows": [
+                                {
+                                  "label": "Parent",
+                                  "value": "demo-shop#40 · As a visitor I can sign in with email"
+                                },
+                                {
+                                  "label": "What to build",
+                                  "value": "The lines a visitor put in the cart as a guest are there after sign-in."
+                                },
+                                {
+                                  "label": "Area",
+                                  "value": "cart/merge"
+                                },
+                                {
+                                  "label": "Acceptance criteria",
+                                  "value": "☐ Guest lines are kept"
+                                },
+                                {
+                                  "label": "",
+                                  "value": "☐ Quantities are summed on a clash"
+                                },
+                                {
+                                  "label": "Blocked by",
+                                  "value": "#43 · T3 · Open a link: the session and the way back"
+                                },
+                                {
+                                  "label": "Milestone",
+                                  "value": "Milestone 2 · Every ticket: the guest cart survives sign-in."
+                                }
+                              ],
+                              "chips": [
+                                "Story 2",
+                                "Decision 2: The card leaves the guest cart open; we merge it on sign-in, quantities summed.",
+                                "Criterion 4"
+                              ],
+                              "open": false
+                            }
+                          ],
+                          "milestone": {
+                            "label": "◆ Milestone 2",
+                            "text": "Every ticket: the guest cart survives sign-in. Heavy tests run here."
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "details": []
+          }
+        }
+      ]
+    }
+  ]
+}

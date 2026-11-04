@@ -1,0 +1,57 @@
+{
+  "kind": "PickLayer",
+  "id": "action-menu",
+  "props": {
+    "title": "Held writes · 7",
+    "filter": "",
+    "rows": [
+      {
+        "id": "held:7",
+        "text": "Move AB#1240 to Resolved",
+        "note": "would go to Storefront/Web on dev.azure.com/demo-org",
+        "lead": "09:07"
+      },
+      {
+        "id": "held:6",
+        "text": "Comment on AB#1240",
+        "note": "would go to Storefront/Web on dev.azure.com/demo-org",
+        "lead": "09:06"
+      },
+      {
+        "id": "held:5",
+        "text": "Open pull request L3 \"Checkout copy for Nordic markets\" (card/1240-checkout-copy → main)",
+        "note": "would go to mkdir-swe/demo-shop on GitHub",
+        "lead": "09:05"
+      },
+      {
+        "id": "held:4",
+        "text": "Push card/1240-checkout-copy",
+        "note": "would go to origin of /home/me/projects/demo-shop-wt/1240-checkout-copy",
+        "lead": "09:04"
+      },
+      {
+        "id": "held:3",
+        "text": "Open issue L2 \"Checkout copy: SE, NO, DK, FI\"",
+        "note": "would go to mkdir-swe/demo-shop on GitHub",
+        "lead": "09:03"
+      },
+      {
+        "id": "held:2",
+        "text": "Move AB#1240 to Active",
+        "note": "would go to Storefront/Web on dev.azure.com/demo-org",
+        "lead": "09:02"
+      },
+      {
+        "id": "held:1",
+        "text": "Assign AB#1240 to me",
+        "note": "would go to Storefront/Web on dev.azure.com/demo-org",
+        "lead": "09:01"
+      }
+    ],
+    "selected": "held:7",
+    "hint": "⏎ opens it · turning local mode off keeps them here as a record; nothing is ever sent",
+    "caption": "demo-shop · nothing left this machine",
+    "wide": true,
+    "local": true
+  }
+}

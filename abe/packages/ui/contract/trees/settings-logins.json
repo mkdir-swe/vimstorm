@@ -1,0 +1,238 @@
+{
+  "kind": "SettingsDialog",
+  "id": "settings",
+  "props": {
+    "title": "Settings",
+    "search": {
+      "text": ""
+    },
+    "note": "Each change saves as you make it; ⌘⏎ proposes one for the repo",
+    "focus": "page"
+  },
+  "children": [
+    {
+      "kind": "SettingsTree",
+      "id": "settings:tree",
+      "props": {
+        "nodes": [
+          {
+            "id": "settings:tree:problems",
+            "label": "Problems",
+            "depth": 0,
+            "count": {
+              "text": "· 3",
+              "tone": "warn"
+            },
+            "separator": true
+          },
+          {
+            "id": "settings:tree:appearance-behavior",
+            "label": "Appearance & Behavior",
+            "depth": 0,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:appearance",
+            "label": "Appearance",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:import-config",
+            "label": "Import config",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:editor",
+            "label": "Editor",
+            "depth": 0,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:editor-general",
+            "label": "General",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:editor-font",
+            "label": "Font",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:color-scheme",
+            "label": "Color scheme",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:vim",
+            "label": "Vim",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:abe",
+            "label": "Abe",
+            "depth": 0,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:agents",
+            "label": "Agents & models",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:board-team",
+            "label": "Board & you",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:boxes-cloud",
+            "label": "Boxes & cloud",
+            "depth": 1,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:browser-profiles",
+            "label": "Browser profiles",
+            "depth": 2
+          },
+          {
+            "id": "settings:tree:factory-policy",
+            "label": "Factory policy",
+            "depth": 1,
+            "count": {
+              "text": "1",
+              "tone": "dim"
+            }
+          },
+          {
+            "id": "settings:tree:local-mode",
+            "label": "Local mode",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:reach",
+            "label": "Reach",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:logins-tools",
+            "label": "Logins & tools",
+            "depth": 0,
+            "count": {
+              "text": "2",
+              "tone": "dim"
+            },
+            "selected": true
+          },
+          {
+            "id": "settings:tree:tools",
+            "label": "Tools check",
+            "depth": 0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "SettingsPage",
+      "id": "settings:page",
+      "props": {
+        "crumbs": [
+          "Logins & tools"
+        ],
+        "scope": "this machine · checked when Settings opens",
+        "reveal": "settings:checks:Logins"
+      },
+      "children": [
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:checks:Logins",
+          "props": {
+            "caption": "Logins"
+          },
+          "children": [
+            {
+              "kind": "CheckRow",
+              "id": "settings:line:0",
+              "props": {
+                "label": "GitHub",
+                "check": "gh auth status",
+                "state": {
+                  "text": "✓ OK"
+                }
+              }
+            },
+            {
+              "kind": "CheckRow",
+              "id": "settings:line:1",
+              "props": {
+                "label": "Claude",
+                "check": "claude auth status",
+                "state": {
+                  "text": "✓ OK"
+                }
+              }
+            },
+            {
+              "kind": "CheckRow",
+              "id": "settings:line:2",
+              "props": {
+                "label": "Azure DevOps",
+                "check": "az account get-access-token",
+                "state": {
+                  "text": "⚠ sign in again: this checkout reads az's own folder (~/.azure)",
+                  "tone": "warn"
+                },
+                "way": "queued · ⏎ runs it",
+                "focused": true
+              }
+            }
+          ]
+        },
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:checks:Tools",
+          "props": {
+            "caption": "Tools"
+          },
+          "children": [
+            {
+              "kind": "CheckRow",
+              "id": "settings:line:3",
+              "props": {
+                "label": "node",
+                "check": "command -v node, as abe serve runs it",
+                "state": {
+                  "text": "⚠ not found on serve's PATH",
+                  "tone": "warn"
+                },
+                "way": "fix…"
+              }
+            },
+            {
+              "kind": "CheckRow",
+              "id": "settings:line:4",
+              "props": {
+                "label": "tmux",
+                "value": "3.5a",
+                "check": "tmux -V",
+                "state": {
+                  "text": "✓ OK"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "SettingsFix",
+      "id": "settings:fix",
+      "props": {
+        "title": "fix · Azure DevOps",
+        "state": "queued · ⏎ runs it · Esc drops it",
+        "command": "$ az login --allow-no-subscriptions",
+        "note": "A fix runs below in a real terminal; the row checks again when it ends"
+      },
+      "children": []
+    }
+  ]
+}

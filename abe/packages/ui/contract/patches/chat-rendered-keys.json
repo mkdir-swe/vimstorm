@@ -1,0 +1,918 @@
+{
+  "base": {
+    "kind": "Island",
+    "id": "chat",
+    "props": {},
+    "children": [
+      {
+        "kind": "Stack",
+        "props": {
+          "direction": "column",
+          "sizes": [
+            "auto",
+            {
+              "flex": 1
+            },
+            "auto"
+          ]
+        },
+        "children": [
+          {
+            "kind": "ChatHeader",
+            "id": "chat-header",
+            "props": {
+              "title": "Chat",
+              "env": "Local sandbox",
+              "story": {
+                "id": "#2",
+                "title": "The cart total ignores quantity"
+              },
+              "hint": "⌘⏎",
+              "rail": {
+                "segments": [
+                  "done",
+                  "now",
+                  "todo",
+                  "todo",
+                  "todo"
+                ],
+                "stage": "Build",
+                "state": "running",
+                "glyph": "●",
+                "word": "Running",
+                "elapsed": "21 min"
+              }
+            }
+          },
+          {
+            "kind": "Transcript",
+            "id": "chat:transcript",
+            "props": {
+              "session": "2-1e65"
+            },
+            "children": [
+              {
+                "kind": "StageDivider",
+                "id": "stage:0",
+                "props": {
+                  "from": "Spec",
+                  "to": "Build",
+                  "at": "01:42"
+                }
+              },
+              {
+                "kind": "ChatMessage",
+                "id": "msg:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116",
+                "props": {
+                  "text": "Work on card AB#2: The cart total ignores quantity",
+                  "context": "#2 The cart total ignores quantity · story"
+                }
+              },
+              {
+                "kind": "Turn",
+                "id": "turn:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116",
+                "props": {},
+                "children": [
+                  {
+                    "kind": "ChangesBar",
+                    "id": "bar:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116",
+                    "props": {
+                      "files": 1,
+                      "added": 1,
+                      "removed": 1,
+                      "actions": [
+                        {
+                          "id": "bar:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116:open-all",
+                          "label": "Open all",
+                          "tooltip": "Open the diffs"
+                        },
+                        {
+                          "id": "bar:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116:keep",
+                          "label": "Keep",
+                          "tooltip": "Keep these changes"
+                        },
+                        {
+                          "id": "bar:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116:revert",
+                          "label": "Revert",
+                          "tooltip": "Revert the files"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "kind": "DiffCard",
+                    "id": "diff:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116:api/src/cart.ts",
+                    "props": {
+                      "path": "api/src/cart.ts",
+                      "added": 1,
+                      "removed": 1,
+                      "lines": [],
+                      "note": "show 8 lines",
+                      "folded": true
+                    }
+                  },
+                  {
+                    "kind": "StepsFold",
+                    "id": "steps:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116",
+                    "props": {
+                      "count": 7
+                    }
+                  },
+                  {
+                    "kind": "Prose",
+                    "id": "prose:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116",
+                    "props": {
+                      "markdown": "The failure reproduces: 375 vs 1125. Per the card workflow, a writer makes the change in its own worktree.\n\nI ran the API tests: 2 pass and 1 fails. \"cart total counts each line's quantity\" expects 1125 and gets 375, because `cartTotal` in `api/src/cart.ts` adds `line.price` once per line instead of `line.price * line.quantity`.\n\nA writer subagent is making that one-line change in its own worktree and committing it there, without touching the tests. It's still running. When it returns, I'll merge its branch into `card/2-the-cart-total-ignores-quantity`, run `npm test` again on the card branch, and report the result.\n\nMerged and green; now cleaning up the writer's worktree and branch.\n\nCart totals now count quantity, and the API's tests pass. `cartTotal` in `api/src/cart.ts` multiplies each line's price by its quantity before adding VAT.\n\n- **Before:** 2 pass, 1 fail. \"cart total counts each line's quantity\" got 375 instead of 1125.\n- **After:** 3 pass, 0 fail, 1 skipped (\"currency rounding per market\" was already skipped).\n\nThe fix (commit 2a23e58) is merged into `card/2-the-cart-total-ignores-quantity`. I didn't change any tests, and nothing is pushed.\n\nOne cleanup step failed. I removed the writer's worktree folder, but the sandbox wouldn't let me delete git's own record of that worktree (`.git/worktrees/agent-af9c71177cb18213e`). Git won't delete the merged branch `worktree-agent-af9c71177cb18213e` while that record exists. To finish the cleanup, run:\n\n```\n! git worktree prune && git branch -d worktree-agent-af9c71177cb18213e\n```"
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "ChatMessage",
+                "id": "msg:f9e5a095-a69a-42ca-a777-8f795a506ee4",
+                "props": {
+                  "text": "Using only shell commands (no Edit or Write tool): append the line 'Each line counts its quantity.' to README.md with echo, and create api/src/vat.ts containing 'export const VAT = 0.25;' with a heredoc. Then run git status. Do not commit."
+                }
+              },
+              {
+                "kind": "Turn",
+                "id": "turn:f9e5a095-a69a-42ca-a777-8f795a506ee4",
+                "props": {},
+                "children": [
+                  {
+                    "kind": "ChangesBar",
+                    "id": "bar:f9e5a095-a69a-42ca-a777-8f795a506ee4",
+                    "props": {
+                      "files": 2,
+                      "added": 2,
+                      "removed": 0,
+                      "actions": [
+                        {
+                          "id": "bar:f9e5a095-a69a-42ca-a777-8f795a506ee4:open-all",
+                          "label": "Open all",
+                          "tooltip": "Open the diffs"
+                        },
+                        {
+                          "id": "bar:f9e5a095-a69a-42ca-a777-8f795a506ee4:keep",
+                          "label": "Keep",
+                          "tooltip": "Keep these changes"
+                        },
+                        {
+                          "id": "bar:f9e5a095-a69a-42ca-a777-8f795a506ee4:revert",
+                          "label": "Revert",
+                          "tooltip": "Revert the files"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "kind": "DiffCard",
+                    "id": "diff:f9e5a095-a69a-42ca-a777-8f795a506ee4:README.md",
+                    "props": {
+                      "path": "README.md",
+                      "added": 1,
+                      "removed": 0,
+                      "lines": [
+                        {
+                          "kind": "context",
+                          "number": 1,
+                          "text": "# demo-shop"
+                        },
+                        {
+                          "kind": "context",
+                          "number": 2,
+                          "text": ""
+                        },
+                        {
+                          "kind": "context",
+                          "number": 3,
+                          "text": "A tiny shop. `cd api && npm test`."
+                        },
+                        {
+                          "kind": "inserted",
+                          "number": 4,
+                          "text": "Each line counts its quantity."
+                        }
+                      ],
+                      "note": "⏎ open · u revert"
+                    }
+                  },
+                  {
+                    "kind": "DiffCard",
+                    "id": "diff:f9e5a095-a69a-42ca-a777-8f795a506ee4:api/src/vat.ts",
+                    "props": {
+                      "path": "api/src/vat.ts",
+                      "added": 1,
+                      "removed": 0,
+                      "lines": [],
+                      "note": "show 1 line",
+                      "folded": true
+                    }
+                  },
+                  {
+                    "kind": "StepRow",
+                    "id": "step:toolu_016jLLNEzwK1ssTdbUpDqwDw",
+                    "props": {
+                      "mark": "good",
+                      "verb": "Wrote",
+                      "object": "README.md, api/src/vat.ts",
+                      "objectKind": "path"
+                    }
+                  },
+                  {
+                    "kind": "Prose",
+                    "id": "prose:f9e5a095-a69a-42ca-a777-8f795a506ee4",
+                    "props": {
+                      "markdown": "I made both changes with shell commands only, and nothing is committed:\n\n- **`README.md`:** `Each line counts its quantity.` is now the last line, added with `echo`.\n- **`api/src/vat.ts`:** created with a heredoc. It contains `export const VAT = 0.25;`.\n\n`git status` shows `README.md` as modified but not staged, and `api/src/vat.ts` as untracked."
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Stack",
+            "id": "composer:dock",
+            "props": {
+              "direction": "column",
+              "gap": 4,
+              "pad": [
+                4,
+                12,
+                12,
+                12
+              ]
+            },
+            "children": [
+              {
+                "kind": "ChatStatus",
+                "id": "chat:status",
+                "props": {
+                  "tone": "working",
+                  "words": "Thinking",
+                  "since": 1792806151000
+                }
+              },
+              {
+                "kind": "Composer",
+                "id": "composer:composer",
+                "props": {
+                  "text": "",
+                  "placeholder": "Message #2 The cart total ignores quantity…"
+                },
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "frame": {
+    "v": 2,
+    "type": "patch",
+    "screen": "chat",
+    "rev": 2,
+    "base": 1,
+    "ops": [
+      {
+        "path": [
+          0,
+          1
+        ],
+        "node": {
+          "kind": "Transcript",
+          "id": "chat:transcript",
+          "props": {
+            "reveal": "step:toolu_016jLLNEzwK1ssTdbUpDqwDw",
+            "bottom": 1,
+            "session": "2-1e65"
+          },
+          "children": [
+            {
+              "kind": "StageDivider",
+              "id": "stage:0",
+              "props": {
+                "from": "Spec",
+                "to": "Build",
+                "at": "01:42"
+              }
+            },
+            {
+              "kind": "ChatMessage",
+              "id": "msg:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116",
+              "props": {
+                "text": "Work on card AB#2: The cart total ignores quantity",
+                "context": "#2 The cart total ignores quantity · story"
+              }
+            },
+            {
+              "kind": "Turn",
+              "id": "turn:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116",
+              "props": {},
+              "children": [
+                {
+                  "kind": "ChangesBar",
+                  "id": "bar:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116",
+                  "props": {
+                    "files": 1,
+                    "added": 1,
+                    "removed": 1,
+                    "actions": [
+                      {
+                        "id": "bar:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116:open-all",
+                        "label": "Open all",
+                        "tooltip": "Open the diffs"
+                      },
+                      {
+                        "id": "bar:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116:keep",
+                        "label": "Keep",
+                        "tooltip": "Keep these changes"
+                      },
+                      {
+                        "id": "bar:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116:revert",
+                        "label": "Revert",
+                        "tooltip": "Revert the files"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "DiffCard",
+                  "id": "diff:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116:api/src/cart.ts",
+                  "props": {
+                    "path": "api/src/cart.ts",
+                    "added": 1,
+                    "removed": 1,
+                    "lines": [],
+                    "note": "show 8 lines",
+                    "folded": true
+                  }
+                },
+                {
+                  "kind": "StepRow",
+                  "id": "step:toolu_01JSHdVqMf61h9fWqDjn4uuq",
+                  "props": {
+                    "mark": "good",
+                    "verb": "Ran",
+                    "object": "ls; cat api/package.json 2>/dev/null; cat api/src/cart.ts;…",
+                    "objectKind": "command"
+                  }
+                },
+                {
+                  "kind": "StepRow",
+                  "id": "step:toolu_012X6fpAkqgMEAvVbZZWgyG1",
+                  "props": {
+                    "mark": "bad",
+                    "verb": "Ran",
+                    "object": "npm test",
+                    "objectKind": "command",
+                    "result": "1 failed · cart total counts each line's quantity"
+                  }
+                },
+                {
+                  "kind": "StepRow",
+                  "id": "step:toolu_01DGbyPHEXxZmk5LeDr5sQ2w",
+                  "props": {
+                    "mark": "good",
+                    "verb": "Task",
+                    "object": "Fix cartTotal quantity",
+                    "objectKind": "text",
+                    "result": "writer · in background"
+                  }
+                },
+                {
+                  "kind": "StepRow",
+                  "id": "step:toolu_01A3pPCwpgbXsG6haqTRBjmc",
+                  "props": {
+                    "mark": "good",
+                    "verb": "Ran",
+                    "object": "npm test",
+                    "objectKind": "command",
+                    "result": "3 passed · 1 skipped"
+                  }
+                },
+                {
+                  "kind": "StepRow",
+                  "id": "step:toolu_011HtoMR6kTNcDNdmzj4Q1pz",
+                  "props": {
+                    "mark": "bad",
+                    "verb": "Ran",
+                    "object": "git worktree remove /home/me/projects/demo-shop/.claude/wor…",
+                    "objectKind": "command",
+                    "result": "exit 255 · error: failed to delete '/home/me/projects/demo-shop/.git/worktrees/agent-af9c7…"
+                  }
+                },
+                {
+                  "kind": "StepRow",
+                  "id": "step:toolu_01NzQqhy8E89GXGTuVyfxvR2",
+                  "props": {
+                    "mark": "good",
+                    "verb": "Ran",
+                    "object": "git worktree list; git log --oneline -3; git status --short",
+                    "objectKind": "command"
+                  }
+                },
+                {
+                  "kind": "StepRow",
+                  "id": "step:toolu_019jYqnNUodUiyzNAEjWtu2p",
+                  "props": {
+                    "mark": "bad",
+                    "verb": "Ran",
+                    "object": "git branch -d worktree-agent-af9c71177cb18213e 2>&1",
+                    "objectKind": "command",
+                    "result": "exit 1 · error: cannot delete branch 'worktree-agent-af9c71177cb18213e' used by worktree…"
+                  }
+                },
+                {
+                  "kind": "Prose",
+                  "id": "prose:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116",
+                  "props": {
+                    "markdown": "The failure reproduces: 375 vs 1125. Per the card workflow, a writer makes the change in its own worktree.\n\nI ran the API tests: 2 pass and 1 fails. \"cart total counts each line's quantity\" expects 1125 and gets 375, because `cartTotal` in `api/src/cart.ts` adds `line.price` once per line instead of `line.price * line.quantity`.\n\nA writer subagent is making that one-line change in its own worktree and committing it there, without touching the tests. It's still running. When it returns, I'll merge its branch into `card/2-the-cart-total-ignores-quantity`, run `npm test` again on the card branch, and report the result.\n\nMerged and green; now cleaning up the writer's worktree and branch.\n\nCart totals now count quantity, and the API's tests pass. `cartTotal` in `api/src/cart.ts` multiplies each line's price by its quantity before adding VAT.\n\n- **Before:** 2 pass, 1 fail. \"cart total counts each line's quantity\" got 375 instead of 1125.\n- **After:** 3 pass, 0 fail, 1 skipped (\"currency rounding per market\" was already skipped).\n\nThe fix (commit 2a23e58) is merged into `card/2-the-cart-total-ignores-quantity`. I didn't change any tests, and nothing is pushed.\n\nOne cleanup step failed. I removed the writer's worktree folder, but the sandbox wouldn't let me delete git's own record of that worktree (`.git/worktrees/agent-af9c71177cb18213e`). Git won't delete the merged branch `worktree-agent-af9c71177cb18213e` while that record exists. To finish the cleanup, run:\n\n```\n! git worktree prune && git branch -d worktree-agent-af9c71177cb18213e\n```"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "ChatMessage",
+              "id": "msg:f9e5a095-a69a-42ca-a777-8f795a506ee4",
+              "props": {
+                "text": "Using only shell commands (no Edit or Write tool): append the line 'Each line counts its quantity.' to README.md with echo, and create api/src/vat.ts containing 'export const VAT = 0.25;' with a heredoc. Then run git status. Do not commit."
+              }
+            },
+            {
+              "kind": "Turn",
+              "id": "turn:f9e5a095-a69a-42ca-a777-8f795a506ee4",
+              "props": {},
+              "children": [
+                {
+                  "kind": "ChangesBar",
+                  "id": "bar:f9e5a095-a69a-42ca-a777-8f795a506ee4",
+                  "props": {
+                    "files": 2,
+                    "added": 2,
+                    "removed": 0,
+                    "actions": [
+                      {
+                        "id": "bar:f9e5a095-a69a-42ca-a777-8f795a506ee4:open-all",
+                        "label": "Open all",
+                        "tooltip": "Open the diffs"
+                      },
+                      {
+                        "id": "bar:f9e5a095-a69a-42ca-a777-8f795a506ee4:keep",
+                        "label": "Keep",
+                        "tooltip": "Keep these changes"
+                      },
+                      {
+                        "id": "bar:f9e5a095-a69a-42ca-a777-8f795a506ee4:revert",
+                        "label": "Revert",
+                        "tooltip": "Revert the files"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "DiffCard",
+                  "id": "diff:f9e5a095-a69a-42ca-a777-8f795a506ee4:README.md",
+                  "props": {
+                    "path": "README.md",
+                    "added": 1,
+                    "removed": 0,
+                    "lines": [
+                      {
+                        "kind": "context",
+                        "number": 1,
+                        "text": "# demo-shop"
+                      },
+                      {
+                        "kind": "context",
+                        "number": 2,
+                        "text": ""
+                      },
+                      {
+                        "kind": "context",
+                        "number": 3,
+                        "text": "A tiny shop. `cd api && npm test`."
+                      },
+                      {
+                        "kind": "inserted",
+                        "number": 4,
+                        "text": "Each line counts its quantity."
+                      }
+                    ],
+                    "note": "⏎ open · u revert"
+                  }
+                },
+                {
+                  "kind": "DiffCard",
+                  "id": "diff:f9e5a095-a69a-42ca-a777-8f795a506ee4:api/src/vat.ts",
+                  "props": {
+                    "path": "api/src/vat.ts",
+                    "added": 1,
+                    "removed": 0,
+                    "lines": [],
+                    "note": "show 1 line",
+                    "folded": true
+                  }
+                },
+                {
+                  "kind": "StepRow",
+                  "id": "step:toolu_016jLLNEzwK1ssTdbUpDqwDw",
+                  "props": {
+                    "mark": "good",
+                    "verb": "Wrote",
+                    "object": "README.md, api/src/vat.ts",
+                    "objectKind": "path",
+                    "unfolded": true,
+                    "output": [
+                      "A tiny shop. `cd api && npm test`.",
+                      "Each line counts its quantity.",
+                      "export const VAT = 0.25;",
+                      "On branch card/2-the-cart-total-ignores-quantity",
+                      "Changes not staged for commit:",
+                      "  (use \"git add <file>...\" to update what will be committed)",
+                      "  (use \"git restore <file>...\" to discard changes in working directory)",
+                      "\tmodified:   README.md",
+                      "",
+                      "Untracked files:"
+                    ],
+                    "more": {
+                      "count": 4,
+                      "id": "step:toolu_016jLLNEzwK1ssTdbUpDqwDw:more"
+                    },
+                    "selected": true
+                  }
+                },
+                {
+                  "kind": "Prose",
+                  "id": "prose:f9e5a095-a69a-42ca-a777-8f795a506ee4",
+                  "props": {
+                    "markdown": "I made both changes with shell commands only, and nothing is committed:\n\n- **`README.md`:** `Each line counts its quantity.` is now the last line, added with `echo`.\n- **`api/src/vat.ts`:** created with a heredoc. It contains `export const VAT = 0.25;`.\n\n`git status` shows `README.md` as modified but not staged, and `api/src/vat.ts` as untracked."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "slot": "chat"
+  },
+  "want": {
+    "kind": "Island",
+    "id": "chat",
+    "props": {},
+    "children": [
+      {
+        "kind": "Stack",
+        "props": {
+          "direction": "column",
+          "sizes": [
+            "auto",
+            {
+              "flex": 1
+            },
+            "auto"
+          ]
+        },
+        "children": [
+          {
+            "kind": "ChatHeader",
+            "id": "chat-header",
+            "props": {
+              "title": "Chat",
+              "env": "Local sandbox",
+              "story": {
+                "id": "#2",
+                "title": "The cart total ignores quantity"
+              },
+              "hint": "⌘⏎",
+              "rail": {
+                "segments": [
+                  "done",
+                  "now",
+                  "todo",
+                  "todo",
+                  "todo"
+                ],
+                "stage": "Build",
+                "state": "running",
+                "glyph": "●",
+                "word": "Running",
+                "elapsed": "21 min"
+              }
+            }
+          },
+          {
+            "kind": "Transcript",
+            "id": "chat:transcript",
+            "props": {
+              "reveal": "step:toolu_016jLLNEzwK1ssTdbUpDqwDw",
+              "bottom": 1,
+              "session": "2-1e65"
+            },
+            "children": [
+              {
+                "kind": "StageDivider",
+                "id": "stage:0",
+                "props": {
+                  "from": "Spec",
+                  "to": "Build",
+                  "at": "01:42"
+                }
+              },
+              {
+                "kind": "ChatMessage",
+                "id": "msg:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116",
+                "props": {
+                  "text": "Work on card AB#2: The cart total ignores quantity",
+                  "context": "#2 The cart total ignores quantity · story"
+                }
+              },
+              {
+                "kind": "Turn",
+                "id": "turn:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116",
+                "props": {},
+                "children": [
+                  {
+                    "kind": "ChangesBar",
+                    "id": "bar:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116",
+                    "props": {
+                      "files": 1,
+                      "added": 1,
+                      "removed": 1,
+                      "actions": [
+                        {
+                          "id": "bar:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116:open-all",
+                          "label": "Open all",
+                          "tooltip": "Open the diffs"
+                        },
+                        {
+                          "id": "bar:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116:keep",
+                          "label": "Keep",
+                          "tooltip": "Keep these changes"
+                        },
+                        {
+                          "id": "bar:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116:revert",
+                          "label": "Revert",
+                          "tooltip": "Revert the files"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "kind": "DiffCard",
+                    "id": "diff:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116:api/src/cart.ts",
+                    "props": {
+                      "path": "api/src/cart.ts",
+                      "added": 1,
+                      "removed": 1,
+                      "lines": [],
+                      "note": "show 8 lines",
+                      "folded": true
+                    }
+                  },
+                  {
+                    "kind": "StepRow",
+                    "id": "step:toolu_01JSHdVqMf61h9fWqDjn4uuq",
+                    "props": {
+                      "mark": "good",
+                      "verb": "Ran",
+                      "object": "ls; cat api/package.json 2>/dev/null; cat api/src/cart.ts;…",
+                      "objectKind": "command"
+                    }
+                  },
+                  {
+                    "kind": "StepRow",
+                    "id": "step:toolu_012X6fpAkqgMEAvVbZZWgyG1",
+                    "props": {
+                      "mark": "bad",
+                      "verb": "Ran",
+                      "object": "npm test",
+                      "objectKind": "command",
+                      "result": "1 failed · cart total counts each line's quantity"
+                    }
+                  },
+                  {
+                    "kind": "StepRow",
+                    "id": "step:toolu_01DGbyPHEXxZmk5LeDr5sQ2w",
+                    "props": {
+                      "mark": "good",
+                      "verb": "Task",
+                      "object": "Fix cartTotal quantity",
+                      "objectKind": "text",
+                      "result": "writer · in background"
+                    }
+                  },
+                  {
+                    "kind": "StepRow",
+                    "id": "step:toolu_01A3pPCwpgbXsG6haqTRBjmc",
+                    "props": {
+                      "mark": "good",
+                      "verb": "Ran",
+                      "object": "npm test",
+                      "objectKind": "command",
+                      "result": "3 passed · 1 skipped"
+                    }
+                  },
+                  {
+                    "kind": "StepRow",
+                    "id": "step:toolu_011HtoMR6kTNcDNdmzj4Q1pz",
+                    "props": {
+                      "mark": "bad",
+                      "verb": "Ran",
+                      "object": "git worktree remove /home/me/projects/demo-shop/.claude/wor…",
+                      "objectKind": "command",
+                      "result": "exit 255 · error: failed to delete '/home/me/projects/demo-shop/.git/worktrees/agent-af9c7…"
+                    }
+                  },
+                  {
+                    "kind": "StepRow",
+                    "id": "step:toolu_01NzQqhy8E89GXGTuVyfxvR2",
+                    "props": {
+                      "mark": "good",
+                      "verb": "Ran",
+                      "object": "git worktree list; git log --oneline -3; git status --short",
+                      "objectKind": "command"
+                    }
+                  },
+                  {
+                    "kind": "StepRow",
+                    "id": "step:toolu_019jYqnNUodUiyzNAEjWtu2p",
+                    "props": {
+                      "mark": "bad",
+                      "verb": "Ran",
+                      "object": "git branch -d worktree-agent-af9c71177cb18213e 2>&1",
+                      "objectKind": "command",
+                      "result": "exit 1 · error: cannot delete branch 'worktree-agent-af9c71177cb18213e' used by worktree…"
+                    }
+                  },
+                  {
+                    "kind": "Prose",
+                    "id": "prose:2d2b7c20-d4d1-4c15-bb7b-f5f1c714d116",
+                    "props": {
+                      "markdown": "The failure reproduces: 375 vs 1125. Per the card workflow, a writer makes the change in its own worktree.\n\nI ran the API tests: 2 pass and 1 fails. \"cart total counts each line's quantity\" expects 1125 and gets 375, because `cartTotal` in `api/src/cart.ts` adds `line.price` once per line instead of `line.price * line.quantity`.\n\nA writer subagent is making that one-line change in its own worktree and committing it there, without touching the tests. It's still running. When it returns, I'll merge its branch into `card/2-the-cart-total-ignores-quantity`, run `npm test` again on the card branch, and report the result.\n\nMerged and green; now cleaning up the writer's worktree and branch.\n\nCart totals now count quantity, and the API's tests pass. `cartTotal` in `api/src/cart.ts` multiplies each line's price by its quantity before adding VAT.\n\n- **Before:** 2 pass, 1 fail. \"cart total counts each line's quantity\" got 375 instead of 1125.\n- **After:** 3 pass, 0 fail, 1 skipped (\"currency rounding per market\" was already skipped).\n\nThe fix (commit 2a23e58) is merged into `card/2-the-cart-total-ignores-quantity`. I didn't change any tests, and nothing is pushed.\n\nOne cleanup step failed. I removed the writer's worktree folder, but the sandbox wouldn't let me delete git's own record of that worktree (`.git/worktrees/agent-af9c71177cb18213e`). Git won't delete the merged branch `worktree-agent-af9c71177cb18213e` while that record exists. To finish the cleanup, run:\n\n```\n! git worktree prune && git branch -d worktree-agent-af9c71177cb18213e\n```"
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "ChatMessage",
+                "id": "msg:f9e5a095-a69a-42ca-a777-8f795a506ee4",
+                "props": {
+                  "text": "Using only shell commands (no Edit or Write tool): append the line 'Each line counts its quantity.' to README.md with echo, and create api/src/vat.ts containing 'export const VAT = 0.25;' with a heredoc. Then run git status. Do not commit."
+                }
+              },
+              {
+                "kind": "Turn",
+                "id": "turn:f9e5a095-a69a-42ca-a777-8f795a506ee4",
+                "props": {},
+                "children": [
+                  {
+                    "kind": "ChangesBar",
+                    "id": "bar:f9e5a095-a69a-42ca-a777-8f795a506ee4",
+                    "props": {
+                      "files": 2,
+                      "added": 2,
+                      "removed": 0,
+                      "actions": [
+                        {
+                          "id": "bar:f9e5a095-a69a-42ca-a777-8f795a506ee4:open-all",
+                          "label": "Open all",
+                          "tooltip": "Open the diffs"
+                        },
+                        {
+                          "id": "bar:f9e5a095-a69a-42ca-a777-8f795a506ee4:keep",
+                          "label": "Keep",
+                          "tooltip": "Keep these changes"
+                        },
+                        {
+                          "id": "bar:f9e5a095-a69a-42ca-a777-8f795a506ee4:revert",
+                          "label": "Revert",
+                          "tooltip": "Revert the files"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "kind": "DiffCard",
+                    "id": "diff:f9e5a095-a69a-42ca-a777-8f795a506ee4:README.md",
+                    "props": {
+                      "path": "README.md",
+                      "added": 1,
+                      "removed": 0,
+                      "lines": [
+                        {
+                          "kind": "context",
+                          "number": 1,
+                          "text": "# demo-shop"
+                        },
+                        {
+                          "kind": "context",
+                          "number": 2,
+                          "text": ""
+                        },
+                        {
+                          "kind": "context",
+                          "number": 3,
+                          "text": "A tiny shop. `cd api && npm test`."
+                        },
+                        {
+                          "kind": "inserted",
+                          "number": 4,
+                          "text": "Each line counts its quantity."
+                        }
+                      ],
+                      "note": "⏎ open · u revert"
+                    }
+                  },
+                  {
+                    "kind": "DiffCard",
+                    "id": "diff:f9e5a095-a69a-42ca-a777-8f795a506ee4:api/src/vat.ts",
+                    "props": {
+                      "path": "api/src/vat.ts",
+                      "added": 1,
+                      "removed": 0,
+                      "lines": [],
+                      "note": "show 1 line",
+                      "folded": true
+                    }
+                  },
+                  {
+                    "kind": "StepRow",
+                    "id": "step:toolu_016jLLNEzwK1ssTdbUpDqwDw",
+                    "props": {
+                      "mark": "good",
+                      "verb": "Wrote",
+                      "object": "README.md, api/src/vat.ts",
+                      "objectKind": "path",
+                      "unfolded": true,
+                      "output": [
+                        "A tiny shop. `cd api && npm test`.",
+                        "Each line counts its quantity.",
+                        "export const VAT = 0.25;",
+                        "On branch card/2-the-cart-total-ignores-quantity",
+                        "Changes not staged for commit:",
+                        "  (use \"git add <file>...\" to update what will be committed)",
+                        "  (use \"git restore <file>...\" to discard changes in working directory)",
+                        "\tmodified:   README.md",
+                        "",
+                        "Untracked files:"
+                      ],
+                      "more": {
+                        "count": 4,
+                        "id": "step:toolu_016jLLNEzwK1ssTdbUpDqwDw:more"
+                      },
+                      "selected": true
+                    }
+                  },
+                  {
+                    "kind": "Prose",
+                    "id": "prose:f9e5a095-a69a-42ca-a777-8f795a506ee4",
+                    "props": {
+                      "markdown": "I made both changes with shell commands only, and nothing is committed:\n\n- **`README.md`:** `Each line counts its quantity.` is now the last line, added with `echo`.\n- **`api/src/vat.ts`:** created with a heredoc. It contains `export const VAT = 0.25;`.\n\n`git status` shows `README.md` as modified but not staged, and `api/src/vat.ts` as untracked."
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Stack",
+            "id": "composer:dock",
+            "props": {
+              "direction": "column",
+              "gap": 4,
+              "pad": [
+                4,
+                12,
+                12,
+                12
+              ]
+            },
+            "children": [
+              {
+                "kind": "ChatStatus",
+                "id": "chat:status",
+                "props": {
+                  "tone": "working",
+                  "words": "Thinking",
+                  "since": 1792806151000
+                }
+              },
+              {
+                "kind": "Composer",
+                "id": "composer:composer",
+                "props": {
+                  "text": "",
+                  "placeholder": "Message #2 The cart total ignores quantity…"
+                },
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "v": 2,
+  "type": "jump",
+  "to": "workspace",
+  "from": {
+    "place": "chat",
+    "view": "editor"
+  }
+}

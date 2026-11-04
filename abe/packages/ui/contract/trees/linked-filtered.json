@@ -1,0 +1,23 @@
+{
+  "kind": "LinkedLayer",
+  "id": "linked",
+  "props": {
+    "story": "#2 The cart total ignores quantity",
+    "keys": "⌃L",
+    "filter": "pu",
+    "rows": [
+      {
+        "id": "linked:row:pr",
+        "label": "Pull request",
+        "value": [
+          {
+            "text": "none yet"
+          }
+        ],
+        "dim": true
+      }
+    ],
+    "selected": "linked:row:pr",
+    "hint": "⏎ open · Esc close"
+  }
+}

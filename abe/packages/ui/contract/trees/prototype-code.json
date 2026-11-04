@@ -1,0 +1,41 @@
+{
+  "kind": "PrototypePage",
+  "id": "prototype-page",
+  "props": {
+    "page": "code",
+    "body": {
+      "kind": "code",
+      "files": [
+        {
+          "id": "proto:file:0",
+          "path": "web/src/Header.tsx",
+          "added": 14,
+          "removed": 2,
+          "selected": true
+        },
+        {
+          "id": "proto:file:1",
+          "path": "web/src/cart.css",
+          "added": 9,
+          "removed": 0,
+          "selected": false
+        }
+      ],
+      "lines": [
+        "@@ -3,4 +3,9 @@",
+        "   export function CartLink() {",
+        "     const count = useCart().lines.length;",
+        "+    const label = count > 9 ? \"9+\" : String(count);",
+        "-    return <a href=\"/cart\">Cart ({count})</a>;"
+      ],
+      "shots": [
+        {
+          "id": "proto:shot:1",
+          "path": "/home/me/.local/state/abe/prototypes/proto-1a2b3c/screenshots/1.png",
+          "what": "products page, 3 in the cart"
+        }
+      ],
+      "note": "2 files · never pushed · l ö the files · ⏎ opens one"
+    }
+  }
+}

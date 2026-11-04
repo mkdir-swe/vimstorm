@@ -1,0 +1,8 @@
+{
+  "v": 2,
+  "type": "error",
+  "error": {
+    "code": "unsupported-version",
+    "message": "this abe ui bridge speaks v3, the app v2: VimStorm and Abe are of different releases, update both"
+  }
+}

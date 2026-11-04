@@ -1,0 +1,12 @@
+# qarig --real's accounts: copy to qarig.local.toml (gitignored) and fill in.
+# Only `qarig up <name> --real` (a release gate env) and its `down` read this file.
+
+# The GitHub org the gate's repo copies go in (<org>/gate-<name>-<4hex>); your gh login a member.
+org = "your-org"
+# The gate's product: its main and .abe pack are copied for each env.
+source = "your-org/demo-shop"
+# The org's infrastructure repo: terraform/org.yaml's tooling.account names the org store's account.
+org_infra = "your-org/abe-org"
+# Where the env's boxes live: a profile of your own account (never a work one) and its region.
+aws_profile = "abe-tooling"
+aws_region = "eu-north-1"

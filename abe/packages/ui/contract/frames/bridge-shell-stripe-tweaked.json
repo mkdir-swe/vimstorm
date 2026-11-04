@@ -1,0 +1,78 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "stripe",
+    "items": [
+      {
+        "id": "project",
+        "label": "Project",
+        "icon": "project",
+        "group": "top",
+        "key": "⌘1",
+        "tooltip": "Project · ⌘1 · the code: tree and editor"
+      },
+      {
+        "id": "board",
+        "label": "Board",
+        "icon": "board",
+        "group": "top",
+        "key": "⌘⌥A",
+        "tooltip": "Board · ⌘⌥A"
+      },
+      {
+        "id": "run",
+        "label": "Run",
+        "icon": "run-path",
+        "group": "top",
+        "workspaceOnly": true,
+        "tooltip": "Run · the path the agent took"
+      },
+      {
+        "id": "git",
+        "label": "Git",
+        "icon": "vcs",
+        "group": "top",
+        "workspaceOnly": true,
+        "tooltip": "Git"
+      },
+      {
+        "id": "terminal",
+        "label": "Terminal",
+        "icon": "terminal",
+        "group": "bottom",
+        "workspaceOnly": true,
+        "key": "⌃`",
+        "tooltip": "Terminal · ⌃`"
+      },
+      {
+        "id": "sessions",
+        "label": "Sessions",
+        "icon": "history",
+        "group": "bottom",
+        "key": "⌘5",
+        "tooltip": "Sessions · ⌘5"
+      },
+      {
+        "id": "boxes",
+        "label": "Boxes",
+        "icon": "archive",
+        "group": "bottom",
+        "key": "⌘6",
+        "tooltip": "Boxes · ⌘6"
+      },
+      {
+        "id": "pipelines",
+        "label": "Pipelines",
+        "icon": "run",
+        "group": "bottom",
+        "hidden": true,
+        "key": "⌘7",
+        "tooltip": "Pipelines · ⌘7"
+      }
+    ],
+    "gear": {
+      "tooltip": "Settings · ⌘,"
+    }
+  }
+}

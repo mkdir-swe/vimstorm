@@ -1,0 +1,168 @@
+{
+  "kind": "Island",
+  "id": "sessions",
+  "props": {},
+  "children": [
+    {
+      "kind": "Table",
+      "id": "sessions-table",
+      "props": {
+        "columns": [
+          {
+            "label": "Story",
+            "width": {
+              "flex": 1
+            }
+          },
+          {
+            "label": "Stage",
+            "width": {
+              "fixed": 230
+            }
+          },
+          {
+            "label": "State",
+            "width": {
+              "fixed": 160
+            }
+          },
+          {
+            "label": "Where",
+            "width": {
+              "fixed": 90
+            }
+          },
+          {
+            "label": "Time",
+            "width": {
+              "fixed": 100
+            }
+          },
+          {
+            "label": "Subagents",
+            "width": {
+              "fixed": 100
+            }
+          }
+        ],
+        "rows": [
+          {
+            "id": "session:s1",
+            "cells": [
+              {
+                "accent": "#1",
+                "text": "Show stock on a product card"
+              },
+              {
+                "rail": [
+                  "need",
+                  "todo",
+                  "todo",
+                  "todo",
+                  "todo"
+                ],
+                "text": "Spec"
+              },
+              {
+                "mark": "◆",
+                "text": "Needs you",
+                "hue": "needs-you"
+              },
+              {
+                "cloud": "running",
+                "tooltip": "Box demo-shop-1 · running"
+              },
+              {
+                "text": "1 h 8 min"
+              },
+              {
+                "text": "1"
+              }
+            ]
+          },
+          {
+            "id": "session:s2",
+            "cells": [
+              {
+                "accent": "#2",
+                "text": "The cart total ignores quantity"
+              },
+              {
+                "rail": [
+                  "done",
+                  "now",
+                  "todo",
+                  "todo",
+                  "todo"
+                ],
+                "text": "Build"
+              },
+              {
+                "mark": "●",
+                "text": "Running",
+                "hue": "warn"
+              },
+              {
+                "text": "Local sandbox",
+                "hue": "dim",
+                "tooltip": "Local sandbox · this machine"
+              },
+              {
+                "text": "21 min"
+              },
+              {
+                "text": "2"
+              }
+            ]
+          },
+          {
+            "id": "session:s3",
+            "cells": [
+              {
+                "accent": "#3",
+                "text": "Pin the Node version"
+              },
+              {
+                "rail": [
+                  "done",
+                  "done",
+                  "done",
+                  "done",
+                  "done"
+                ],
+                "text": "Done"
+              },
+              {
+                "mark": "✓",
+                "text": "On test",
+                "hue": "good"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "31 min"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              }
+            ]
+          }
+        ],
+        "selected": "session:s2",
+        "foot": [
+          {
+            "keys": "⏎",
+            "label": "chat"
+          },
+          {
+            "keys": "⌘⏎",
+            "label": "actions"
+          }
+        ]
+      }
+    }
+  ]
+}

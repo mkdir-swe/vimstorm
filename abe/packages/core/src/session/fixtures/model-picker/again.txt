@@ -1,0 +1,23 @@
+ ▐▛███▛█   Claude Code v2.1.310
+▝▜██████▀  Haiku 5.5 with low effort · API Usage Billing
+ ▝▝   ▝▝   ~/projects/demo-shop-wt/101-cart
+
+
+❯ /model
+  ⎿  Set model to Haiku 5.5 for this session only with low effort
+
+❯ /model
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Select model
+  Switch between Claude models. Your pick becomes the default for new sessions. For other/previous model names,
+  specify with --model.
+
+    1. Default (recommended)  Use the default model (currently Opus 5.5) · $4/$20 per Mtok
+    2. opus                   Custom model (opus)
+    3. sonnet                 Custom model (sonnet)
+  ❯ 4. haiku ✔                Custom model (haiku)
+
+  ○ Low effort ←/→ to adjust
+
+  Enter to set as default · s to use this session only · Esc to cancel

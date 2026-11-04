@@ -1,0 +1,77 @@
+{
+  "kind": "PickLayer",
+  "id": "action-menu",
+  "props": {
+    "title": "#1234 Cart total includes shipping",
+    "filter": "",
+    "rows": [
+      {
+        "id": "workspace",
+        "text": "Open workspace",
+        "dim": "alex-1"
+      },
+      {
+        "id": "worktree",
+        "text": "Open worktree",
+        "dim": "from origin"
+      },
+      {
+        "id": "reopen",
+        "text": "Reopen",
+        "dim": "Chat on it"
+      },
+      {
+        "id": "retry",
+        "text": "Retry run",
+        "dim": "a new session from decide, same worktree",
+        "reason": "already running"
+      },
+      {
+        "id": "stop",
+        "text": "Stop…"
+      },
+      {
+        "id": "end",
+        "text": "End run…",
+        "dim": "done, not reproduced or abandoned, with why"
+      },
+      {
+        "id": "assign",
+        "text": "Assign…",
+        "dim": "Alex Example",
+        "reason": "already yours"
+      },
+      {
+        "id": "move",
+        "text": "Move…",
+        "dim": "now Active"
+      },
+      {
+        "id": "comment",
+        "text": "Comment…",
+        "dim": "markdown, on the card"
+      },
+      {
+        "id": "keep",
+        "text": "Keep box awake",
+        "dim": "its idle stop waits"
+      },
+      {
+        "id": "launch",
+        "text": "Launch new agent…",
+        "dim": "where serve.target says · its workflow, a note · stops s1234 first"
+      },
+      {
+        "id": "launch-local-sandbox",
+        "text": "Launch in Local sandbox",
+        "dim": "this machine · no cloud writes · stops s1234 first",
+        "separator": true
+      }
+    ],
+    "selected": "workspace",
+    "scroll": {
+      "top": 0,
+      "total": 15
+    }
+  }
+}

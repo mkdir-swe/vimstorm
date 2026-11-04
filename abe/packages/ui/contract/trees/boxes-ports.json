@@ -1,0 +1,370 @@
+{
+  "kind": "Island",
+  "id": "boxes",
+  "props": {},
+  "children": [
+    {
+      "kind": "Table",
+      "id": "boxes-table",
+      "props": {
+        "columns": [
+          {
+            "label": "Box",
+            "width": {
+              "fixed": 100
+            }
+          },
+          {
+            "label": "Story",
+            "width": {
+              "flex": 1
+            }
+          },
+          {
+            "label": "State",
+            "width": {
+              "fixed": 180
+            }
+          },
+          {
+            "label": "Size",
+            "width": {
+              "fixed": 72
+            }
+          },
+          {
+            "label": "Disk",
+            "width": {
+              "fixed": 76
+            }
+          },
+          {
+            "label": "Release",
+            "width": {
+              "fixed": 52
+            }
+          },
+          {
+            "label": "Up",
+            "width": {
+              "fixed": 70
+            }
+          },
+          {
+            "label": "Cost",
+            "width": {
+              "fixed": 80
+            }
+          },
+          {
+            "label": "Until",
+            "width": {
+              "fixed": 92
+            }
+          }
+        ],
+        "rows": [
+          {
+            "id": "box:demo-shop",
+            "cells": [
+              {
+                "text": "demo-shop"
+              },
+              {
+                "text": "2 workspaces",
+                "hue": "dim"
+              },
+              {
+                "mark": "●",
+                "text": "running",
+                "hue": "warn"
+              },
+              {
+                "text": "m8g.large",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "v11",
+                "hue": "dim"
+              },
+              {
+                "text": "1 h 12 min"
+              },
+              {
+                "text": "$0.12 today",
+                "tooltip": "today since 00:00 · on-demand estimate"
+              },
+              {
+                "text": "stops at 10:30",
+                "hue": "dim"
+              }
+            ]
+          },
+          {
+            "id": "box:demo-shop:ws:101",
+            "cells": [
+              {
+                "text": ""
+              },
+              {
+                "accent": "#101"
+              },
+              {
+                "mark": "●",
+                "text": "workspace up",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              }
+            ]
+          },
+          {
+            "id": "box:demo-shop:ws:101:port:3000",
+            "cells": [
+              {
+                "text": ""
+              },
+              {
+                "text": ":3000 → localhost:3001",
+                "tooltip": "localhost:3000 was taken"
+              },
+              {
+                "mark": "●",
+                "text": "open",
+                "hue": "good"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              }
+            ]
+          },
+          {
+            "id": "box:demo-shop:ws:101:port:5173",
+            "cells": [
+              {
+                "text": ""
+              },
+              {
+                "text": ":5173",
+                "hue": "dim"
+              },
+              {
+                "text": "listening",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              }
+            ]
+          },
+          {
+            "id": "box:demo-shop:ws:102",
+            "cells": [
+              {
+                "text": ""
+              },
+              {
+                "accent": "#102"
+              },
+              {
+                "mark": "●",
+                "text": "workspace up",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              }
+            ]
+          },
+          {
+            "id": "box:demo-shop:ws:102:port:3000",
+            "cells": [
+              {
+                "text": ""
+              },
+              {
+                "text": ":3000 → localhost:3000"
+              },
+              {
+                "mark": "○",
+                "text": "box asleep",
+                "hue": "dim",
+                "tooltip": "box asleep: back when it wakes"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              }
+            ]
+          },
+          {
+            "id": "box:demo-shop:ws:102:port:8080",
+            "cells": [
+              {
+                "text": ""
+              },
+              {
+                "text": ":8080",
+                "hue": "dim",
+                "tooltip": "fixed: the repo's auth callback names it, only localhost:8080 will do"
+              },
+              {
+                "text": "listening",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              }
+            ]
+          }
+        ],
+        "selected": "box:demo-shop",
+        "note": "Read 10:00",
+        "foot": [
+          {
+            "keys": "⏎",
+            "label": "box shell"
+          },
+          {
+            "keys": "⌘⏎",
+            "label": "actions"
+          },
+          {
+            "keys": "r",
+            "label": "read again"
+          }
+        ]
+      }
+    }
+  ]
+}

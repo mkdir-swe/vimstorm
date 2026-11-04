@@ -1,0 +1,21 @@
+{
+  "kind": "PickLayer",
+  "id": "action-menu",
+  "props": {
+    "title": "demo-shop · #101 :3000",
+    "filter": "",
+    "rows": [
+      {
+        "id": "open",
+        "text": "Open in browser",
+        "dim": "localhost:3001",
+        "note": "⏎"
+      },
+      {
+        "id": "stop-forward",
+        "text": "Stop forwarding"
+      }
+    ],
+    "selected": "open"
+  }
+}

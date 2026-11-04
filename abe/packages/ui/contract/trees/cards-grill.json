@@ -1,0 +1,94 @@
+{
+  "kind": "Island",
+  "id": "cards:grill",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "gap": 8,
+        "pad": [
+          12,
+          12,
+          8,
+          12
+        ],
+        "sizes": [
+          "auto",
+          "auto",
+          {
+            "flex": 1
+          },
+          "auto"
+        ]
+      },
+      "children": [
+        {
+          "kind": "Prose",
+          "id": "cards:prose",
+          "props": {
+            "markdown": "VAT can come from two places: the markets table in `markets.ts`, or a per-market value the story's comments ask for. That decides what the fix multiplies, so I'll wait for you before the pull request."
+          }
+        },
+        {
+          "kind": "GrillRound",
+          "id": "round:q-7",
+          "props": {
+            "round": 1,
+            "questions": 3,
+            "answered": 1,
+            "dots": [
+              "done",
+              "now",
+              "todo"
+            ],
+            "foot": "y recommended · 1–9 pick · o own words · ⏎ send all · Tab next"
+          },
+          "children": [
+            {
+              "kind": "QuestionCard",
+              "id": "card:q-7.2",
+              "props": {
+                "ask": "grill",
+                "title": "Status bar per view?",
+                "why": "Each view says where you are",
+                "options": [
+                  {
+                    "n": 1,
+                    "label": "Yes, each view names its own place",
+                    "recommended": true
+                  },
+                  {
+                    "n": 2,
+                    "label": "One status bar for every view"
+                  }
+                ],
+                "own": "Type your own answer…",
+                "selected": 1,
+                "stack": {
+                  "n": 2,
+                  "of": 3
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "Stack",
+          "props": {
+            "direction": "column"
+          },
+          "children": []
+        },
+        {
+          "kind": "Stack",
+          "props": {
+            "direction": "column"
+          },
+          "children": []
+        }
+      ]
+    }
+  ]
+}

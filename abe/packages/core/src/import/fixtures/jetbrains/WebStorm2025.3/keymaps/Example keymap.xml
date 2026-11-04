@@ -1,0 +1,16 @@
+<keymap version="1" name="Example keymap" parent="Mac OS X 10.5+">
+  <action id="ActivateTerminalToolWindow">
+    <keyboard-shortcut first-keystroke="meta t" />
+  </action>
+  <action id="CloseContent" />
+  <action id="CloseProject">
+    <keyboard-shortcut first-keystroke="alt q" />
+    <keyboard-shortcut first-keystroke="meta q" />
+  </action>
+  <action id="GotoFile">
+    <keyboard-shortcut first-keystroke="meta y" />
+  </action>
+  <action id="GotoAction">
+    <keyboard-shortcut first-keystroke="meta k" second-keystroke="meta p" />
+  </action>
+</keymap>

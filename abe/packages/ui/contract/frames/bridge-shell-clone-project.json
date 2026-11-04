@@ -1,0 +1,8 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "clone-project",
+    "url": "git@github.com:demo/demo-shop.git"
+  }
+}

@@ -1,0 +1,325 @@
+{
+  "kind": "Stack",
+  "props": {
+    "direction": "column",
+    "sizes": [
+      {
+        "fixed": 34
+      },
+      {
+        "flex": 1
+      }
+    ]
+  },
+  "children": [
+    {
+      "kind": "RunBar",
+      "id": "run-bar",
+      "props": {
+        "card": "#2",
+        "title": "The cart total ignores quantity",
+        "on": false,
+        "context": "demo-shop · Feature run · Local sandbox · 19 min so far",
+        "linked": false
+      }
+    },
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "row",
+        "gap": 0,
+        "sizes": [
+          {
+            "fixed": 240
+          },
+          {
+            "flex": 1
+          }
+        ],
+        "align": "stretch"
+      },
+      "children": [
+        {
+          "kind": "RunSteps",
+          "id": "run-steps",
+          "props": {
+            "rows": [
+              {
+                "id": "spec:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "create-specification",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "build:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "build",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "checks:1",
+                "mark": {
+                  "glyph": "●",
+                  "hue": "warn"
+                },
+                "name": "checks",
+                "outcome": "failed",
+                "back": true,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "build:2",
+                "mark": {
+                  "glyph": "●",
+                  "hue": "warn"
+                },
+                "name": "build",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "todo:checks",
+                "mark": {
+                  "glyph": "",
+                  "hue": "dim"
+                },
+                "name": "checks",
+                "outcome": "",
+                "back": false,
+                "dim": true,
+                "todo": true,
+                "needsYou": false
+              },
+              {
+                "id": "todo:review",
+                "mark": {
+                  "glyph": "",
+                  "hue": "dim"
+                },
+                "name": "review",
+                "outcome": "",
+                "back": false,
+                "dim": true,
+                "todo": true,
+                "needsYou": false
+              },
+              {
+                "id": "todo:verify",
+                "mark": {
+                  "glyph": "",
+                  "hue": "dim"
+                },
+                "name": "verify",
+                "outcome": "",
+                "back": false,
+                "dim": true,
+                "todo": true,
+                "needsYou": false
+              },
+              {
+                "id": "todo:playbook",
+                "mark": {
+                  "glyph": "",
+                  "hue": "dim"
+                },
+                "name": "playbook",
+                "outcome": "",
+                "back": false,
+                "dim": true,
+                "todo": true,
+                "needsYou": false
+              },
+              {
+                "id": "todo:pr",
+                "mark": {
+                  "glyph": "",
+                  "hue": "dim"
+                },
+                "name": "pr",
+                "outcome": "",
+                "back": false,
+                "dim": true,
+                "todo": true,
+                "needsYou": false
+              }
+            ],
+            "selected": "build:1"
+          }
+        },
+        {
+          "kind": "RunFocus",
+          "id": "run-focus",
+          "props": {
+            "step": "build:1",
+            "name": "build",
+            "skill": "implement",
+            "meta": "09:11 · 6 min · subagent",
+            "state": {
+              "text": "✓ done",
+              "hue": "good"
+            },
+            "fresh": false,
+            "round": "round 1 of 2",
+            "back": "",
+            "chat": true,
+            "did": "cartTotal() multiplies price by quantity; the repro test went red, then green.",
+            "pending": false,
+            "actions": [],
+            "read": {
+              "note": "the card, the spec",
+              "blocks": [
+                {
+                  "title": "",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "card",
+                      "ref": "AB#2 · bug · Active",
+                      "title": "The cart total ignores quantity",
+                      "text": ""
+                    }
+                  ]
+                },
+                {
+                  "title": "Spec #41",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "list",
+                      "numbered": false,
+                      "rows": [
+                        {
+                          "text": "Cart total counts each line's quantity",
+                          "note": "Why · What · Acceptance criteria · Out of scope"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Decisions it took",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "decisions",
+                      "rows": [
+                        {
+                          "chose": "Fix cartTotal()",
+                          "over": "summing on the cart page",
+                          "why": "The API, the cart page and the order email all read it."
+                        },
+                        {
+                          "chose": "Round each line, then sum",
+                          "over": "rounding only the total",
+                          "why": "The spec says two decimals per line."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "made": {
+              "note": "2 files · +30 −2",
+              "blocks": [
+                {
+                  "title": "",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "text",
+                      "text": "Its writers’ lanes not kept: a run from before Abe kept them.",
+                      "tone": "dim"
+                    }
+                  ]
+                },
+                {
+                  "title": "Files changed · 2",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "files",
+                      "rows": [
+                        {
+                          "id": "run:file:build:1:0",
+                          "path": "api/src/cart.ts",
+                          "added": 6,
+                          "removed": 2,
+                          "lines": [
+                            " export const cartTotal = (lines: Line[]) =>",
+                            "-  old line 1",
+                            "-  old line 2",
+                            "+  new line 1",
+                            "+  new line 2",
+                            "+  new line 3",
+                            "+  new line 4",
+                            "+  new line 5",
+                            "+  new line 6"
+                          ]
+                        },
+                        {
+                          "id": "run:file:build:1:1",
+                          "path": "api/test/cart.test.ts",
+                          "added": 24,
+                          "removed": 0
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "details": [
+              {
+                "kind": "commands",
+                "id": "run:detail:build:1:commands",
+                "label": "Commands run",
+                "note": "1",
+                "open": true,
+                "rows": [
+                  {
+                    "mark": {
+                      "glyph": "✓",
+                      "hue": "good"
+                    },
+                    "command": "npm test",
+                    "result": "18 passed"
+                  }
+                ]
+              },
+              {
+                "kind": "skills",
+                "id": "run:detail:build:1:skills",
+                "label": "Skills it pulled in",
+                "note": "1",
+                "open": true,
+                "names": [
+                  "tdd"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

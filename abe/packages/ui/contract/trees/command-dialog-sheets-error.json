@@ -1,0 +1,86 @@
+{
+  "kind": "CardDialog",
+  "id": "dialog:1234",
+  "props": {
+    "kicker": "User Story",
+    "card": 1234,
+    "state": "Active",
+    "title": "Cart total includes shipping",
+    "meta": [
+      "US",
+      "Active",
+      "AE",
+      "Sprint 14",
+      "tags cart, pricing"
+    ],
+    "facts": [
+      {
+        "text": "US",
+        "tone": "story"
+      },
+      {
+        "text": "Active"
+      },
+      {
+        "text": "AE"
+      },
+      {
+        "text": "Sprint 14"
+      },
+      {
+        "text": "cart, pricing",
+        "tone": "tags",
+        "label": "tags"
+      }
+    ],
+    "sections": [
+      {
+        "title": "Description",
+        "markdown": "## Why\n\nThe amount a shopper sees in the cart is not the amount they pay: shipping is added only at checkout.\n\n## What\n\nThe cart total includes shipping for the cart's country, from `/api/shipping/quote`.\n\n## How\n\nAdd the fee after the subtotal in `cartTotal()` (`src/api/cart.ts`).\n\n## Markets\n\n- SE: its own threshold and fee, from `src/config/markets.ts`\n- NO: its own threshold and fee, from `src/config/markets.ts`\n- DK: its own threshold and fee, from `src/config/markets.ts`\n- FI: its own threshold and fee, from `src/config/markets.ts`\n- DE: its own threshold and fee, from `src/config/markets.ts`\n- NL: its own threshold and fee, from `src/config/markets.ts`\n- BE: its own threshold and fee, from `src/config/markets.ts`\n- FR: its own threshold and fee, from `src/config/markets.ts`\n- ES: its own threshold and fee, from `src/config/markets.ts`\n- IT: its own threshold and fee, from `src/config/markets.ts`\n- PL: its own threshold and fee, from `src/config/markets.ts`\n- AT: its own threshold and fee, from `src/config/markets.ts`"
+      },
+      {
+        "title": "Acceptance criteria",
+        "markdown": "- Total = items + shipping, rounded per currency\n- Free shipping over the threshold shows 0"
+      }
+    ],
+    "scroll": 0,
+    "buttons": [
+      {
+        "id": "dialog:primary",
+        "label": "Open workspace",
+        "keys": "⏎",
+        "primary": true
+      }
+    ],
+    "sheets": {
+      "rows": [],
+      "state": "error",
+      "message": "no org store is set up"
+    },
+    "heading": "Story · demo-shop",
+    "linked": [
+      {
+        "id": "dialog:linked:session",
+        "label": "Session",
+        "words": "alex-1"
+      },
+      {
+        "id": "dialog:linked:pr",
+        "label": "PR",
+        "words": "none yet",
+        "dim": true
+      },
+      {
+        "id": "dialog:linked:box",
+        "label": "Box",
+        "words": "☁ alex-1 #1234 · running"
+      }
+    ],
+    "hint": "⌘⏎ more",
+    "comments": {
+      "state": "error",
+      "message": "no org store is set up",
+      "comments": []
+    }
+  }
+}

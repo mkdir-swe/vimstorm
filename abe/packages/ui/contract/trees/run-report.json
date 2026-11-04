@@ -1,0 +1,172 @@
+{
+  "kind": "Stack",
+  "props": {
+    "direction": "column",
+    "sizes": [
+      {
+        "fixed": 34
+      },
+      {
+        "flex": 1
+      }
+    ]
+  },
+  "children": [
+    {
+      "kind": "RunBar",
+      "id": "run-bar",
+      "props": {
+        "card": "#8",
+        "title": "Password reset link opens a blank page",
+        "on": false,
+        "context": "demo-shop · Bug run · 6 min",
+        "linked": false
+      }
+    },
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "row",
+        "gap": 0,
+        "sizes": [
+          {
+            "fixed": 240
+          },
+          {
+            "flex": 1
+          }
+        ],
+        "align": "stretch"
+      },
+      "children": [
+        {
+          "kind": "RunSteps",
+          "id": "run-steps",
+          "props": {
+            "rows": [
+              {
+                "id": "reproduce:1",
+                "mark": {
+                  "glyph": "●",
+                  "hue": "warn"
+                },
+                "name": "reproduce",
+                "outcome": "not reproduced",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "reported",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "report",
+                "outcome": "reported",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              }
+            ],
+            "selected": "reported"
+          }
+        },
+        {
+          "kind": "RunFocus",
+          "id": "run-focus",
+          "props": {
+            "step": "reported",
+            "name": "report",
+            "skill": "ends",
+            "meta": "09:06",
+            "state": {
+              "text": "✓ done",
+              "hue": "good"
+            },
+            "fresh": false,
+            "round": "",
+            "back": "",
+            "chat": false,
+            "did": "The reproduce step reported. Bug run ended: not reproduced. The card stays in its column for a person to decide; nothing was built, no branch pushed.",
+            "pending": false,
+            "actions": [],
+            "read": {
+              "note": "the step’s report",
+              "blocks": [
+                {
+                  "title": "From",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "list",
+                      "numbered": false,
+                      "rows": [
+                        {
+                          "text": "reproduce · not reproduced",
+                          "note": ".scratch/8/verify-before.md"
+                        },
+                        {
+                          "text": "Workflow · Bug",
+                          "note": "ends: → report · no pull request"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "made": {
+              "note": "a comment on AB#8 · the run ended",
+              "blocks": [
+                {
+                  "title": "",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "doc",
+                      "eyebrow": "Comment on AB#8",
+                      "title": "Password reset link opens a blank page",
+                      "meta": ".scratch/8/verify-before.md",
+                      "markdown": "# Before: AB#8 Password reset link opens a blank page\n\nMerge base a9f3c21 · the shop through the pack’s Playwright\n\n1. Browser: ask for a reset, open the link from the stub outbox → the reset form renders · verify/evidence/password-reset/before-1.png · ▶ 0:03\n2. Browser: the same with a Safari user agent → the form renders · verify/evidence/password-reset/before-2.png\n3. Browser: a link older than an hour → the expired page, not blank · verify/evidence/password-reset/before-3.png\n\nResult: not reproduced\nRecording: verify/evidence/password-reset/before.webm · 0:21\n\n## What would help\n\n- The browser and its version.\n- Whether the link was opened from the mail app’s preview pane."
+                    }
+                  ]
+                },
+                {
+                  "title": "Run ended",
+                  "verdict": {
+                    "text": "■ not reproduced",
+                    "hue": "dim"
+                  },
+                  "boxed": true,
+                  "parts": [
+                    {
+                      "kind": "facts",
+                      "rows": [
+                        {
+                          "label": "Outcome",
+                          "value": "reported · 09:06"
+                        },
+                        {
+                          "label": "Card",
+                          "value": "stays in its column for a person to decide · comment posted"
+                        },
+                        {
+                          "label": "Branch",
+                          "value": "nothing pushed"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "details": []
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Template: scripts/bundle.sh fills CFBundleVersion / CFBundleShortVersionString (Cargo.toml) and
+     LSEnvironment (repo path, PATH of the shell that bundled it) with plutil. -->
+<plist version="1.0">
+<dict>
+	<key>CFBundleName</key>
+	<string>VimStorm</string>
+	<key>CFBundleDisplayName</key>
+	<string>VimStorm</string>
+	<key>CFBundleIdentifier</key>
+	<string>se.mkdir.vimstorm</string>
+	<key>CFBundleExecutable</key>
+	<string>vimstorm</string>
+	<key>CFBundleIconFile</key>
+	<string>VimStorm</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleVersion</key>
+	<string>0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>11.0</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.developer-tools</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>NSSupportsAutomaticGraphicsSwitching</key>
+	<true/>
+	<!-- Folders / files it can open (Finder "Open With", dock drops, `open -a VimStorm <path>`):
+	     rank Alternate / None, so it never takes over a file type's default app. -->
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>Folder</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSHandlerRank</key>
+			<string>Alternate</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.folder</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>Source</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSHandlerRank</key>
+			<string>Alternate</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.text</string>
+				<string>public.source-code</string>
+				<string>public.script</string>
+				<string>public.json</string>
+				<string>public.xml</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>Any file</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>None</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.data</string>
+			</array>
+		</dict>
+	</array>
+	<key>LSEnvironment</key>
+	<dict>
+		<key>VIMSTORM_REPO</key>
+		<string></string>
+		<key>PATH</key>
+		<string></string>
+	</dict>
+</dict>
+</plist>

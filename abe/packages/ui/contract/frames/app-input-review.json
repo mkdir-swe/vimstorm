@@ -1,0 +1,18 @@
+{
+  "v": 2,
+  "type": "input",
+  "input": {
+    "kind": "review",
+    "ask": {
+      "kind": "comment",
+      "path": "src/cart.ts",
+      "side": "RIGHT",
+      "line": 12,
+      "start": 10,
+      "body": "Guard this?",
+      "base": "base000",
+      "head": "c0ffee1234"
+    }
+  },
+  "slot": "review"
+}

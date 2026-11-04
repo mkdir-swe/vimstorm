@@ -1,0 +1,341 @@
+{
+  "kind": "Stack",
+  "props": {
+    "direction": "column",
+    "sizes": [
+      {
+        "fixed": 34
+      },
+      {
+        "flex": 1
+      }
+    ]
+  },
+  "children": [
+    {
+      "kind": "RunBar",
+      "id": "run-bar",
+      "props": {
+        "card": "#2",
+        "title": "The cart total ignores quantity",
+        "on": false,
+        "context": "demo-shop · Feature run · 39 min",
+        "linked": false
+      }
+    },
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "row",
+        "gap": 0,
+        "sizes": [
+          {
+            "fixed": 240
+          },
+          {
+            "flex": 1
+          },
+          {
+            "fixed": 420
+          }
+        ],
+        "align": "stretch"
+      },
+      "children": [
+        {
+          "kind": "RunSteps",
+          "id": "run-steps",
+          "props": {
+            "rows": [
+              {
+                "id": "spec:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "create-specification",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "build:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "build",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "checks:1",
+                "mark": {
+                  "glyph": "●",
+                  "hue": "warn"
+                },
+                "name": "checks",
+                "outcome": "failed",
+                "back": true,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "build:2",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "build",
+                "outcome": "round 2",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "checks:2",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "checks",
+                "outcome": "round 2",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "review:1",
+                "mark": {
+                  "glyph": "●",
+                  "hue": "warn"
+                },
+                "name": "review",
+                "outcome": "1 finding",
+                "back": true,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "build:3",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "build",
+                "outcome": "round 3",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "checks:3",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "checks",
+                "outcome": "round 3",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "review:2",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "review",
+                "outcome": "no findings",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "verify:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "verify",
+                "outcome": "3 of 3",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "pr:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "pr",
+                "outcome": "#57 merged",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "merge",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "merge",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              }
+            ],
+            "selected": "merge"
+          }
+        },
+        {
+          "kind": "RunFocus",
+          "id": "run-focus",
+          "props": {
+            "step": "merge",
+            "name": "merge",
+            "skill": "",
+            "meta": "09:41",
+            "state": {
+              "text": "✓ done",
+              "hue": "good"
+            },
+            "fresh": false,
+            "round": "",
+            "back": "",
+            "chat": false,
+            "did": "Merged",
+            "pending": false,
+            "actions": [
+              {
+                "id": "run:pr",
+                "label": "Open PR #57",
+                "primary": true
+              }
+            ],
+            "read": {
+              "note": "the run",
+              "blocks": [
+                {
+                  "title": "",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "card",
+                      "ref": "AB#2 · bug · Active",
+                      "title": "The cart total ignores quantity",
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            "made": {
+              "note": "Merged",
+              "blocks": [
+                {
+                  "title": "",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "facts",
+                      "rows": [
+                        {
+                          "label": "Result",
+                          "value": "Merged, on test: 3 of 3 criteria verified."
+                        },
+                        {
+                          "label": "Changed",
+                          "value": "3 files · +37 −9"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Run",
+                  "boxed": true,
+                  "parts": [
+                    {
+                      "kind": "facts",
+                      "rows": [
+                        {
+                          "label": "Outcome",
+                          "value": "merged"
+                        },
+                        {
+                          "label": "Pull request",
+                          "value": "#57 merged"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "details": []
+          }
+        },
+        {
+          "kind": "RunSpecPane",
+          "id": "run-spec",
+          "props": {
+            "head": "Spec #41 on GitHub ↗",
+            "title": "Cart total counts each line's quantity",
+            "meta": "Spec · issue #41 · from AB#2",
+            "body": "## Why\n\nA cart with 3 mugs charges for one. The total sums prices and ignores quantity.\n\n## What\n\n- a line's total is price × quantity, rounded to two decimals per line\n- the cart total is the sum of the lines, in cents\n- a line at quantity 0 is removed\n\n## Out of scope\n\nShipping and discounts (AB#7).",
+            "criteria": [
+              {
+                "n": 1,
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "text": "A line's total is its price × quantity",
+                "proof": true
+              },
+              {
+                "n": 2,
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "text": "Changing a quantity updates the total at once",
+                "proof": true
+              },
+              {
+                "n": 3,
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "text": "A line set to quantity 0 leaves the cart",
+                "proof": true
+              }
+            ],
+            "page": true
+          }
+        }
+      ]
+    }
+  ]
+}

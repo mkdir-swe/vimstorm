@@ -1,0 +1,47 @@
+{
+  "kind": "Island",
+  "id": "local-pr-view",
+  "props": {},
+  "children": [
+    {
+      "kind": "LocalPullRequest",
+      "id": "local-pr",
+      "props": {
+        "name": "#L3",
+        "line": "local · card/1240-checkout-copy → main · not pushed · 2 files · +65 −3 · 2 commits",
+        "title": "Checkout copy for Nordic markets",
+        "about": "The Feature run's PR stage wrote it here instead of on GitHub: same title, body, checks and evidence. Merge stays local too (the base on this machine), or throw it away.",
+        "files": [
+          {
+            "path": "src/cart/1240.ts",
+            "status": "M",
+            "added": 24,
+            "removed": 3
+          },
+          {
+            "path": "src/cart/1240.test.ts",
+            "status": "A",
+            "added": 41,
+            "removed": 0
+          }
+        ],
+        "diff": true,
+        "commits": [
+          {
+            "sha": "b1c2d3e",
+            "subject": "Checkout copy for Nordic markets: the rule"
+          },
+          {
+            "sha": "a1b2c3d",
+            "subject": "Checkout copy for Nordic markets: its tests"
+          }
+        ],
+        "body": "Checkout shows its copy in Swedish, Norwegian, Danish and Finnish by market.\n\nCloses AB#1240 (would). Verified on localhost: 3 of 3 criteria, recording attached.",
+        "actions": {
+          "focus": "merge"
+        },
+        "note": "would open on github.com/mkdir-swe/demo-shop"
+      }
+    }
+  ]
+}

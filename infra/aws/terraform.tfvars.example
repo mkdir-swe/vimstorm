@@ -1,0 +1,9 @@
+# Copy to terraform.tfvars (git-ignored) and fill in.
+account_id  = "000000000000"
+region      = "eu-west-1"
+profile     = "abe-play"
+owner       = "your-github-login"
+budget_usd  = 50
+alert_email = "you@example.com"
+# private_boxes = true   # boxes behind a NAT gateway, about 36 USD a month more
+# iam_users     = ["you"] # a plain IAM user that is no administrator

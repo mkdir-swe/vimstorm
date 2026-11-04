@@ -1,0 +1,161 @@
+{
+  "kind": "Island",
+  "id": "board",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "sizes": [
+          "auto",
+          {
+            "flex": 1
+          }
+        ]
+      },
+      "children": [
+        {
+          "kind": "BoardHeader",
+          "id": "board-head",
+          "props": {
+            "title": "Board",
+            "tabs": [
+              {
+                "id": "tab:mine",
+                "label": "Mine"
+              },
+              {
+                "id": "tab:team",
+                "label": "Team"
+              },
+              {
+                "id": "tab:sessions",
+                "label": "Sessions"
+              }
+            ],
+            "selected": "tab:mine",
+            "active": true,
+            "counts": [
+              {
+                "text": "Sprint 14 · 8 cards",
+                "hue": "dim"
+              }
+            ],
+            "note": "/cart▏",
+            "more": "‹ New 1 · Resolved 0 · Closed 0 ›"
+          }
+        },
+        {
+          "kind": "BoardColumns",
+          "id": "columns",
+          "props": {
+            "scroll": {
+              "width": 376,
+              "offset": 382,
+              "view": 376
+            }
+          },
+          "children": [
+            {
+              "kind": "BoardColumn",
+              "id": "col:New",
+              "props": {
+                "name": "New",
+                "count": 1
+              },
+              "children": [
+                {
+                  "kind": "BoardCard",
+                  "id": "card:1251",
+                  "props": {
+                    "card": 1251,
+                    "type": "US",
+                    "initials": "AE",
+                    "title": "Saved carts survive sign-out",
+                    "rail": {
+                      "segments": [
+                        "wait",
+                        "todo",
+                        "todo",
+                        "todo",
+                        "todo"
+                      ],
+                      "stage": "Spec",
+                      "glyph": "●",
+                      "word": "Starting",
+                      "state": "starting",
+                      "time": "1 min",
+                      "box": "starting"
+                    },
+                    "emphasis": "normal",
+                    "selection": "default",
+                    "tooltip": "#1251 Saved carts survive sign-out · Starting"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "BoardColumn",
+              "id": "col:Active",
+              "props": {
+                "name": "Active",
+                "count": 1,
+                "focused": true
+              },
+              "children": [
+                {
+                  "kind": "BoardCard",
+                  "id": "card:1234",
+                  "props": {
+                    "card": 1234,
+                    "type": "US",
+                    "initials": "AE",
+                    "title": "Cart total includes shipping",
+                    "rail": {
+                      "segments": [
+                        "done",
+                        "need",
+                        "todo",
+                        "todo",
+                        "todo"
+                      ],
+                      "stage": "Build",
+                      "glyph": "◆",
+                      "word": "Needs you",
+                      "state": "needs-you",
+                      "time": "4 min",
+                      "box": "running"
+                    },
+                    "emphasis": "needs-you",
+                    "selection": "selected",
+                    "tooltip": "#1234 Cart total includes shipping · Needs you · waiting on you in Chat",
+                    "tipAdds": true
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "BoardColumn",
+              "id": "col:Resolved",
+              "props": {
+                "name": "Resolved",
+                "count": 0
+              },
+              "children": []
+            },
+            {
+              "kind": "BoardColumn",
+              "id": "col:Closed",
+              "props": {
+                "name": "Closed",
+                "count": 0
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

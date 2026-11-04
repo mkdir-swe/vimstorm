@@ -1,0 +1,208 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "workspaces",
+    "workspaces": [
+      {
+        "root": "/workspace/repo",
+        "box": "demo-shop-102",
+        "story": {
+          "id": 1,
+          "short": "show stock on a product card",
+          "title": "Show stock on a product card"
+        },
+        "state": "needs-you",
+        "dot": {
+          "mark": "◆",
+          "hue": "needs-you"
+        },
+        "stage": "Spec",
+        "rail": [
+          "need",
+          "todo",
+          "todo",
+          "todo",
+          "todo"
+        ],
+        "since": "2026-10-01T09:13:00.000Z",
+        "cloud": "running",
+        "cloudHue": "accent",
+        "pr": null,
+        "branch": "card/1-show-stock-on-a-product-card",
+        "tab": "#1 show stock on a product card",
+        "tooltip": "#1 Show stock on a product card · Spec · Needs you 8 min · box demo-shop-102 running",
+        "line": [
+          {
+            "text": "#1 show stock…",
+            "hue": "accent"
+          },
+          {
+            "text": "Spec ◆ Needs you 8 min",
+            "hue": "needs-you"
+          },
+          {
+            "text": "demo-shop-102",
+            "hue": "accent",
+            "cloud": "running"
+          },
+          {
+            "text": "PR —",
+            "hue": "dim"
+          }
+        ],
+        "label": "Linked: #1 show stock…, Spec, Needs you 8 min, box demo-shop-102, no pull request",
+        "crumb": "#1 show stock on a product card",
+        "caption": [
+          {
+            "text": "show stock on a product card · Spec "
+          },
+          {
+            "text": "◆ Needs you",
+            "hue": "needs-you"
+          }
+        ]
+      },
+      {
+        "root": "/home/me/projects/demo-shop-wt/2-cart-total",
+        "story": {
+          "id": 2,
+          "short": "cart total ignores quantity",
+          "title": "The cart total ignores quantity"
+        },
+        "state": "running",
+        "dot": {
+          "mark": "●",
+          "hue": "warn"
+        },
+        "stage": "Build",
+        "rail": [
+          "done",
+          "now",
+          "todo",
+          "todo",
+          "todo"
+        ],
+        "since": "2026-10-01T09:00:00.000Z",
+        "cloud": null,
+        "cloudHue": null,
+        "pr": null,
+        "branch": "card/2-the-cart-total-ignores-quantity",
+        "tab": "#2 cart total ignores quantity",
+        "tooltip": "#2 The cart total ignores quantity · Build · Running 21 min · Local sandbox",
+        "line": [
+          {
+            "text": "#2 cart total ignores…",
+            "hue": "accent"
+          },
+          {
+            "text": "Build ● Running 21 min",
+            "hue": "warn"
+          },
+          {
+            "text": "Local",
+            "hue": "dim"
+          },
+          {
+            "text": "PR —",
+            "hue": "dim"
+          }
+        ],
+        "label": "Linked: #2 cart total ignores…, Build, Running 21 min, local, no pull request",
+        "crumb": "#2 cart total ignores quantity",
+        "caption": [
+          {
+            "text": "cart total ignores quantity · Build "
+          },
+          {
+            "text": "● Running",
+            "hue": "warn"
+          }
+        ]
+      },
+      {
+        "root": "/workspace/repo",
+        "box": "demo-shop-3",
+        "story": {
+          "id": 3,
+          "short": "pin the Node version",
+          "title": "Pin the Node version"
+        },
+        "state": "done",
+        "dot": {
+          "mark": "✓",
+          "hue": "good"
+        },
+        "stage": "Done",
+        "rail": [
+          "done",
+          "done",
+          "done",
+          "done",
+          "done"
+        ],
+        "since": "2026-10-01T08:50:00.000Z",
+        "cloud": "asleep",
+        "cloudHue": "dim",
+        "pr": null,
+        "branch": "card/3-pin-the-node-version",
+        "tab": "#3 pin the Node version",
+        "tooltip": "#3 Pin the Node version · Done · On test 31 min · box demo-shop-3 asleep",
+        "line": [
+          {
+            "text": "#3 pin the Node version",
+            "hue": "accent"
+          },
+          {
+            "text": "Done ✓ On test 31 min",
+            "hue": "good"
+          },
+          {
+            "text": "demo-shop-3",
+            "hue": "dim",
+            "cloud": "asleep"
+          },
+          {
+            "text": "PR —",
+            "hue": "dim"
+          }
+        ],
+        "label": "Linked: #3 pin the Node version, Done, On test 31 min, box demo-shop-3, no pull request",
+        "crumb": "#3 pin the Node version",
+        "caption": [
+          {
+            "text": "pin the Node version · Done "
+          },
+          {
+            "text": "✓ On test",
+            "hue": "good"
+          }
+        ]
+      }
+    ],
+    "factory": {
+      "line": [
+        {
+          "text": "demo-shop",
+          "hue": "accent"
+        },
+        {
+          "text": "Sprint 1",
+          "hue": "dim"
+        },
+        {
+          "text": "◆ 1 needs you",
+          "hue": "needs-you",
+          "id": "toolbar:needs-you"
+        },
+        {
+          "text": "● 1 running",
+          "hue": "warn"
+        }
+      ],
+      "label": "Abe, demo-shop, Sprint 1, 1 needs you, 1 running",
+      "crumb": "demo-shop · Sprint 1"
+    },
+    "answering": true
+  }
+}

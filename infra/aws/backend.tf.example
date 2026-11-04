@@ -1,0 +1,15 @@
+# Your state's backend. Without one Terraform keeps it in terraform.tfstate here (git-ignored):
+# fine for one person on one Mac, lost with the folder. To keep it in S3 instead, copy this to
+# backend.tf, make the bucket first (any name of yours, versioned), then `terraform init
+# -migrate-state`.
+
+terraform {
+  backend "s3" {
+    bucket       = "<your state bucket>"
+    key          = "abe/terraform.tfstate"
+    region       = "<region>"
+    profile      = "<profile>"
+    use_lockfile = true
+    encrypt      = true
+  }
+}

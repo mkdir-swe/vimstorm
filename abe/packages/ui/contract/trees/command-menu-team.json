@@ -1,0 +1,79 @@
+{
+  "kind": "PickLayer",
+  "id": "action-menu",
+  "props": {
+    "title": "#1253 Coupon field accepts spaces",
+    "filter": "",
+    "rows": [
+      {
+        "id": "launch",
+        "text": "Launch agent",
+        "dim": "where serve.target says · its workflow, a note",
+        "reason": "assigned to Sam Sample"
+      },
+      {
+        "id": "worktree",
+        "text": "Open worktree",
+        "dim": "from origin"
+      },
+      {
+        "id": "workspace",
+        "text": "Open workspace",
+        "dim": "local worktree",
+        "reason": "Sam Sample’s workspace"
+      },
+      {
+        "id": "reopen",
+        "text": "Reopen",
+        "reason": "assigned to Sam Sample"
+      },
+      {
+        "id": "stop",
+        "text": "Stop…",
+        "reason": "assigned to Sam Sample"
+      },
+      {
+        "id": "end",
+        "text": "End run…",
+        "dim": "done, not reproduced or abandoned, with why",
+        "reason": "assigned to Sam Sample"
+      },
+      {
+        "id": "assign",
+        "text": "Assign…",
+        "dim": "Sam Sample"
+      },
+      {
+        "id": "move",
+        "text": "Move…",
+        "dim": "now New"
+      },
+      {
+        "id": "comment",
+        "text": "Comment…",
+        "dim": "markdown, on the card"
+      },
+      {
+        "id": "keep",
+        "text": "Keep box awake",
+        "reason": "assigned to Sam Sample"
+      },
+      {
+        "id": "launch-local-sandbox",
+        "text": "Launch in Local sandbox",
+        "dim": "this machine · no cloud writes",
+        "reason": "assigned to Sam Sample",
+        "separator": true
+      },
+      {
+        "id": "prototype",
+        "text": "Prototype…",
+        "dim": "real code in a throwaway worktree, never shipped: its own chat"
+      }
+    ],
+    "scroll": {
+      "top": 0,
+      "total": 13
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "top": [
+    {
+      "id": "project",
+      "icon": "project",
+      "tooltip": "Project · ⌘1 · the code: tree and editor"
+    },
+    {
+      "id": "board",
+      "icon": "board",
+      "picked": true,
+      "dot": "needs-you",
+      "tooltip": "Board · ⌘⌥A · #1234 Cart total includes shipping needs you"
+    },
+    {
+      "id": "more",
+      "icon": "more",
+      "tooltip": "More tool windows"
+    }
+  ],
+  "bottom": [
+    {
+      "id": "sessions",
+      "icon": "history",
+      "dot": "needs-you",
+      "tooltip": "Sessions · ⌘5 · #1234 Cart total includes shipping needs you · 2 running"
+    },
+    {
+      "id": "boxes",
+      "icon": "archive",
+      "tooltip": "Boxes · ⌘6 · 3 boxes, 1 running"
+    },
+    {
+      "id": "pipelines",
+      "icon": "run",
+      "tooltip": "Pipelines · ⌘7"
+    }
+  ]
+}

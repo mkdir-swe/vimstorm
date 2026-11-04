@@ -1,0 +1,9 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "repo-moved",
+    "from": "/home/ann/shop",
+    "to": "/home/ann/shop-moved"
+  }
+}

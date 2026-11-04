@@ -1,0 +1,81 @@
+{
+  "kind": "Island",
+  "id": "col:selection",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "sizes": [
+          {
+            "flex": 1
+          },
+          "auto"
+        ]
+      },
+      "children": [
+        {
+          "kind": "Stack",
+          "props": {
+            "direction": "column",
+            "pad": [
+              12,
+              12,
+              8,
+              12
+            ]
+          },
+          "children": [
+            {
+              "kind": "Prose",
+              "id": "composer:prose",
+              "props": {
+                "markdown": "`cartTotal` added each line's price once, so a line with 3 of one item was charged as 1."
+              }
+            }
+          ]
+        },
+        {
+          "kind": "Stack",
+          "id": "composer:dock",
+          "props": {
+            "direction": "column",
+            "gap": 4,
+            "pad": [
+              4,
+              12,
+              12,
+              12
+            ]
+          },
+          "children": [
+            {
+              "kind": "Composer",
+              "id": "composer:composer",
+              "props": {
+                "text": "why not multiply here?",
+                "placeholder": "Ask or tell the agent…",
+                "focused": true,
+                "model": {
+                  "label": "opus · medium",
+                  "id": "composer:model"
+                }
+              },
+              "children": [
+                {
+                  "kind": "ContextChip",
+                  "id": "composer:chip",
+                  "props": {
+                    "text": "@api/src/cart.ts#L14-21 · selected",
+                    "drop": "⌫ drop"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

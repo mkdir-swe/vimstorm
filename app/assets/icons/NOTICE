@@ -1,0 +1,395 @@
+VimStorm app icons (app/assets/icons/)
+======================================
+
+Every SVG here is either an IntelliJ Platform icon from IntelliJ IDEA Community Edition (section 1)
+or VimStorm's own drawing (section 2). None comes from a closed-source JetBrains product or plugin.
+The file name -> icon mapping is in src/kit/icons/table.rs (completion/ and the symbol list:
+src/editor/floats/kinds.rs, src/search/symbol_icons.rs).
+
+JetBrains, IntelliJ IDEA and WebStorm are trademarks of JetBrains s.r.o.; VimStorm is not made or
+endorsed by JetBrains.
+
+
+1. IntelliJ Platform icons - Apache License 2.0
+-----------------------------------------------
+
+From https://github.com/JetBrains/intellij-community, Copyright 2000-2025 JetBrains s.r.o. and
+contributors, licensed under the Apache License 2.0 (a copy:
+app/assets/fonts/WebStormIcons-LICENSE-Apache-2.0.txt). Each file below is byte-identical to the
+path beside it at commit d8074d411dcaa249dc393948d37f29ff50abfd5d (`<name>_dark.svg` the dark
+theme's, `<name>.svg` the light theme's). Files named `@14x14` / `@12x12` keep JetBrains' size
+suffix (their viewBox is 14x14 / 12x12, not 16x16).
+
+  actions/addFile.svg                                 platform/icons/src/expui/actions/addFile.svg
+  actions/addFile_dark.svg                            platform/icons/src/expui/actions/addFile_dark.svg
+  actions/checked.svg                                 platform/icons/src/expui/actions/checked.svg
+  actions/checked_dark.svg                            platform/icons/src/expui/actions/checked_dark.svg
+  actions/findBackward.svg                            platform/icons/src/expui/actions/findBackward.svg
+  actions/findBackward_dark.svg                       platform/icons/src/expui/actions/findBackward_dark.svg
+  actions/findForward.svg                             platform/icons/src/expui/actions/findForward.svg
+  actions/findForward_dark.svg                        platform/icons/src/expui/actions/findForward_dark.svg
+  actions/groupByPackage.svg                          platform/icons/src/expui/actions/groupByPackage.svg
+  actions/groupByPackage_dark.svg                     platform/icons/src/expui/actions/groupByPackage_dark.svg
+  actions/newFolder.svg                               platform/icons/src/expui/actions/newFolder.svg
+  actions/newFolder_dark.svg                          platform/icons/src/expui/actions/newFolder_dark.svg
+  actions/replace.svg                                 platform/icons/src/expui/actions/replace.svg
+  actions/replace_dark.svg                            platform/icons/src/expui/actions/replace_dark.svg
+  actions/synchronizeScrolling.svg                    platform/icons/src/expui/actions/synchronizeScrolling.svg
+  actions/synchronizeScrolling_dark.svg               platform/icons/src/expui/actions/synchronizeScrolling_dark.svg
+  checkbox/checkBox.svg                               platform/jewel/int-ui/int-ui-standalone/src/main/resources/themes/expUI/icons/dark/checkBox.svg
+  checkbox/checkBoxDisabled.svg                       platform/jewel/int-ui/int-ui-standalone/src/main/resources/themes/expUI/icons/dark/checkBoxDisabled.svg
+  checkbox/checkBoxFocused.svg                        platform/jewel/int-ui/int-ui-standalone/src/main/resources/themes/expUI/icons/dark/checkBoxFocused.svg
+  checkbox/checkBoxIndeterminateSelected.svg          platform/jewel/int-ui/int-ui-standalone/src/main/resources/themes/expUI/icons/dark/checkBoxIndeterminateSelected.svg
+  checkbox/checkBoxIndeterminateSelectedDisabled.svg  platform/jewel/int-ui/int-ui-standalone/src/main/resources/themes/expUI/icons/dark/checkBoxIndeterminateSelectedDisabled.svg
+  checkbox/checkBoxIndeterminateSelectedFocused.svg   platform/jewel/int-ui/int-ui-standalone/src/main/resources/themes/expUI/icons/dark/checkBoxIndeterminateSelectedFocused.svg
+  checkbox/checkBoxSelected.svg                       platform/jewel/int-ui/int-ui-standalone/src/main/resources/themes/expUI/icons/dark/checkBoxSelected.svg
+  checkbox/checkBoxSelectedDisabled.svg               platform/jewel/int-ui/int-ui-standalone/src/main/resources/themes/expUI/icons/dark/checkBoxSelectedDisabled.svg
+  checkbox/checkBoxSelectedFocused.svg                platform/jewel/int-ui/int-ui-standalone/src/main/resources/themes/expUI/icons/dark/checkBoxSelectedFocused.svg
+  codeInsight/intentionBulb.svg                       platform/icons/src/expui/codeInsight/intentionBulb.svg
+  codeInsight/intentionBulb_dark.svg                  platform/icons/src/expui/codeInsight/intentionBulb_dark.svg
+  completion/alias.svg                                platform/icons/src/expui/nodes/alias.svg
+  completion/alias_dark.svg                           platform/icons/src/expui/nodes/alias_dark.svg
+  completion/anyType.svg                              platform/icons/src/expui/fileTypes/anyType.svg
+  completion/anyType_dark.svg                         platform/icons/src/expui/fileTypes/anyType_dark.svg
+  completion/class.svg                                platform/icons/src/expui/nodes/class.svg
+  completion/class_dark.svg                           platform/icons/src/expui/nodes/class_dark.svg
+  completion/constant.svg                             platform/icons/src/expui/nodes/constant.svg
+  completion/constant_dark.svg                        platform/icons/src/expui/nodes/constant_dark.svg
+  completion/constructor.svg                          platform/icons/src/expui/nodes/constructor.svg
+  completion/constructor_dark.svg                     platform/icons/src/expui/nodes/constructor_dark.svg
+  completion/enum.svg                                 platform/icons/src/expui/nodes/enum.svg
+  completion/enum_dark.svg                            platform/icons/src/expui/nodes/enum_dark.svg
+  completion/field.svg                                platform/icons/src/expui/nodes/field.svg
+  completion/field_dark.svg                           platform/icons/src/expui/nodes/field_dark.svg
+  completion/folder.svg                               platform/icons/src/expui/nodes/folder.svg
+  completion/folder_dark.svg                          platform/icons/src/expui/nodes/folder_dark.svg
+  completion/function.svg                             platform/icons/src/expui/nodes/function.svg
+  completion/function_dark.svg                        platform/icons/src/expui/nodes/function_dark.svg
+  completion/interface.svg                            platform/icons/src/expui/nodes/interface.svg
+  completion/interface_dark.svg                       platform/icons/src/expui/nodes/interface_dark.svg
+  completion/lambda.svg                               platform/icons/src/expui/nodes/lambda.svg
+  completion/lambda_dark.svg                          platform/icons/src/expui/nodes/lambda_dark.svg
+  completion/method.svg                               platform/icons/src/expui/nodes/method.svg
+  completion/method_dark.svg                          platform/icons/src/expui/nodes/method_dark.svg
+  completion/module.svg                               platform/icons/src/expui/nodes/module.svg
+  completion/module_dark.svg                          platform/icons/src/expui/nodes/module_dark.svg
+  completion/property.svg                             platform/icons/src/expui/nodes/property.svg
+  completion/property_dark.svg                        platform/icons/src/expui/nodes/property_dark.svg
+  completion/record.svg                               platform/icons/src/expui/nodes/record.svg
+  completion/record_dark.svg                          platform/icons/src/expui/nodes/record_dark.svg
+  completion/template.svg                             platform/icons/src/expui/nodes/template.svg
+  completion/template_dark.svg                        platform/icons/src/expui/nodes/template_dark.svg
+  completion/type.svg                                 platform/icons/src/expui/nodes/type.svg
+  completion/type_dark.svg                            platform/icons/src/expui/nodes/type_dark.svg
+  completion/variable.svg                             platform/icons/src/expui/nodes/variable.svg
+  completion/variable_dark.svg                        platform/icons/src/expui/nodes/variable_dark.svg
+  diff/applyNotConflicts.svg                          platform/icons/src/expui/diff/applyNotConflicts.svg
+  diff/applyNotConflictsLeft.svg                      platform/icons/src/expui/diff/applyNotConflictsLeft.svg
+  diff/applyNotConflictsLeft_dark.svg                 platform/icons/src/expui/diff/applyNotConflictsLeft_dark.svg
+  diff/applyNotConflictsRight.svg                     platform/icons/src/expui/diff/applyNotConflictsRight.svg
+  diff/applyNotConflictsRight_dark.svg                platform/icons/src/expui/diff/applyNotConflictsRight_dark.svg
+  diff/applyNotConflicts_dark.svg                     platform/icons/src/expui/diff/applyNotConflicts_dark.svg
+  diff/arrow@14x14.svg                                platform/icons/src/expui/diff/arrow@14x14.svg
+  diff/arrow@14x14_dark.svg                           platform/icons/src/expui/diff/arrow@14x14_dark.svg
+  diff/arrowLeftDown@14x14.svg                        platform/icons/src/expui/diff/arrowLeftDown@14x14.svg
+  diff/arrowLeftDown@14x14_dark.svg                   platform/icons/src/expui/diff/arrowLeftDown@14x14_dark.svg
+  diff/arrowRight@14x14.svg                           platform/icons/src/expui/diff/arrowRight@14x14.svg
+  diff/arrowRight@14x14_dark.svg                      platform/icons/src/expui/diff/arrowRight@14x14_dark.svg
+  diff/arrowRightDown@14x14.svg                       platform/icons/src/expui/diff/arrowRightDown@14x14.svg
+  diff/arrowRightDown@14x14_dark.svg                  platform/icons/src/expui/diff/arrowRightDown@14x14_dark.svg
+  diff/disableEditing.svg                             platform/icons/src/expui/diff/disableEditing.svg
+  diff/disableEditing_dark.svg                        platform/icons/src/expui/diff/disableEditing_dark.svg
+  diff/gutterCheckBox@14x14.svg                       platform/icons/src/expui/diff/gutterCheckBox@14x14.svg
+  diff/gutterCheckBox@14x14_dark.svg                  platform/icons/src/expui/diff/gutterCheckBox@14x14_dark.svg
+  diff/gutterCheckBoxIndeterminate@14x14.svg          platform/icons/src/expui/diff/gutterCheckBoxIndeterminate@14x14.svg
+  diff/gutterCheckBoxIndeterminate@14x14_dark.svg     platform/icons/src/expui/diff/gutterCheckBoxIndeterminate@14x14_dark.svg
+  diff/gutterCheckBoxSelected@14x14.svg               platform/icons/src/expui/diff/gutterCheckBoxSelected@14x14.svg
+  diff/gutterCheckBoxSelected@14x14_dark.svg          platform/icons/src/expui/diff/gutterCheckBoxSelected@14x14_dark.svg
+  diff/magicResolve@14x14.svg                         platform/icons/src/expui/diff/magicResolve@14x14.svg
+  diff/magicResolve@14x14_dark.svg                    platform/icons/src/expui/diff/magicResolve@14x14_dark.svg
+  diff/magicResolveToolbar.svg                        platform/icons/src/expui/diff/magicResolveToolbar.svg
+  diff/magicResolveToolbar_dark.svg                   platform/icons/src/expui/diff/magicResolveToolbar_dark.svg
+  diff/remove@14x14.svg                               platform/icons/src/expui/diff/remove@14x14.svg
+  diff/remove@14x14_dark.svg                          platform/icons/src/expui/diff/remove@14x14_dark.svg
+  diff/revert@14x14.svg                               platform/icons/src/expui/diff/revert@14x14.svg
+  diff/revert@14x14_dark.svg                          platform/icons/src/expui/diff/revert@14x14_dark.svg
+  dvcs/branchLabel.svg                                platform/dvcs-impl/shared/resources/icons/new/branchLabel.svg
+  dvcs/branchLabel_dark.svg                           platform/dvcs-impl/shared/resources/icons/new/branchLabel_dark.svg
+  dvcs/changesPush@12x12.svg                          platform/dvcs-impl/shared/resources/icons/new/changesPush@12x12.svg
+  dvcs/changesPush@12x12_dark.svg                     platform/dvcs-impl/shared/resources/icons/new/changesPush@12x12_dark.svg
+  dvcs/changesUpdate@12x12.svg                        platform/dvcs-impl/shared/resources/icons/new/changesUpdate@12x12.svg
+  dvcs/changesUpdate@12x12_dark.svg                   platform/dvcs-impl/shared/resources/icons/new/changesUpdate@12x12_dark.svg
+  dvcs/cherryPick.svg                                 platform/dvcs-impl/shared/resources/icons/new/cherryPick.svg
+  dvcs/cherryPick_dark.svg                            platform/dvcs-impl/shared/resources/icons/new/cherryPick_dark.svg
+  dvcs/currentBranchFavoriteLabel.svg                 platform/dvcs-impl/shared/resources/icons/new/currentBranchFavoriteLabel.svg
+  dvcs/currentBranchFavoriteLabel_dark.svg            platform/dvcs-impl/shared/resources/icons/new/currentBranchFavoriteLabel_dark.svg
+  dvcs/currentBranchLabel.svg                         platform/dvcs-impl/shared/resources/icons/new/currentBranchLabel.svg
+  dvcs/currentBranchLabel_dark.svg                    platform/dvcs-impl/shared/resources/icons/new/currentBranchLabel_dark.svg
+  dvcs/incomingUpdate.svg                             platform/dvcs-impl/shared/resources/icons/new/incomingUpdate.svg
+  dvcs/incomingUpdate_dark.svg                        platform/dvcs-impl/shared/resources/icons/new/incomingUpdate_dark.svg
+  dvcs/outgoingPush.svg                               platform/dvcs-impl/shared/resources/icons/new/outgoingPush.svg
+  dvcs/outgoingPush_dark.svg                          platform/dvcs-impl/shared/resources/icons/new/outgoingPush_dark.svg
+  fileTypes/anyType.svg                               platform/icons/src/expui/fileTypes/anyType.svg
+  fileTypes/anyType_dark.svg                          platform/icons/src/expui/fileTypes/anyType_dark.svg
+  fileTypes/archive.svg                               platform/icons/src/expui/fileTypes/archive.svg
+  fileTypes/archive_dark.svg                          platform/icons/src/expui/fileTypes/archive_dark.svg
+  fileTypes/css.svg                                   platform/icons/src/expui/fileTypes/css.svg
+  fileTypes/css_dark.svg                              platform/icons/src/expui/fileTypes/css_dark.svg
+  fileTypes/editorConfig.svg                          platform/icons/src/expui/fileTypes/editorConfig.svg
+  fileTypes/editorConfig_dark.svg                     platform/icons/src/expui/fileTypes/editorConfig_dark.svg
+  fileTypes/font.svg                                  platform/icons/src/expui/fileTypes/font.svg
+  fileTypes/font_dark.svg                             platform/icons/src/expui/fileTypes/font_dark.svg
+  fileTypes/html.svg                                  platform/icons/src/expui/fileTypes/html.svg
+  fileTypes/html_dark.svg                             platform/icons/src/expui/fileTypes/html_dark.svg
+  fileTypes/ignored.svg                               platform/icons/src/expui/fileTypes/ignored.svg
+  fileTypes/ignored_dark.svg                          platform/icons/src/expui/fileTypes/ignored_dark.svg
+  fileTypes/image.svg                                 platform/icons/src/expui/fileTypes/image.svg
+  fileTypes/image_dark.svg                            platform/icons/src/expui/fileTypes/image_dark.svg
+  fileTypes/javaScript.svg                            platform/icons/src/expui/fileTypes/javaScript.svg
+  fileTypes/javaScript_dark.svg                       platform/icons/src/expui/fileTypes/javaScript_dark.svg
+  fileTypes/json.svg                                  platform/icons/src/expui/fileTypes/json.svg
+  fileTypes/json_dark.svg                             platform/icons/src/expui/fileTypes/json_dark.svg
+  fileTypes/markdown.svg                              platform/icons/src/expui/fileTypes/markdown.svg
+  fileTypes/markdown_dark.svg                         platform/icons/src/expui/fileTypes/markdown_dark.svg
+  fileTypes/shell.svg                                 platform/icons/src/expui/fileTypes/shell.svg
+  fileTypes/shell_dark.svg                            platform/icons/src/expui/fileTypes/shell_dark.svg
+  fileTypes/sourceMap.svg                             platform/icons/src/expui/fileTypes/sourceMap.svg
+  fileTypes/sourceMap_dark.svg                        platform/icons/src/expui/fileTypes/sourceMap_dark.svg
+  fileTypes/sql.svg                                   platform/icons/src/expui/fileTypes/sql.svg
+  fileTypes/sql_dark.svg                              platform/icons/src/expui/fileTypes/sql_dark.svg
+  fileTypes/text.svg                                  platform/icons/src/expui/fileTypes/text.svg
+  fileTypes/text_dark.svg                             platform/icons/src/expui/fileTypes/text_dark.svg
+  fileTypes/typeScript.svg                            platform/icons/src/expui/fileTypes/typeScript.svg
+  fileTypes/typeScript_dark.svg                       platform/icons/src/expui/fileTypes/typeScript_dark.svg
+  fileTypes/xhtml.svg                                 platform/icons/src/expui/fileTypes/xhtml.svg
+  fileTypes/xhtml_dark.svg                            platform/icons/src/expui/fileTypes/xhtml_dark.svg
+  fileTypes/xml.svg                                   platform/icons/src/expui/fileTypes/xml.svg
+  fileTypes/xml_dark.svg                              platform/icons/src/expui/fileTypes/xml_dark.svg
+  fileTypes/yaml.svg                                  platform/icons/src/expui/fileTypes/yaml.svg
+  fileTypes/yaml_dark.svg                             platform/icons/src/expui/fileTypes/yaml_dark.svg
+  general/add.svg                                     platform/icons/src/expui/general/add.svg
+  general/add_dark.svg                                platform/icons/src/expui/general/add_dark.svg
+  general/chevronDown.svg                             platform/icons/src/expui/general/chevronDown.svg
+  general/chevronDownLarge.svg                        platform/icons/src/expui/general/chevronDownLarge.svg
+  general/chevronDownLarge_dark.svg                   platform/icons/src/expui/general/chevronDownLarge_dark.svg
+  general/chevronDown_dark.svg                        platform/icons/src/expui/general/chevronDown_dark.svg
+  general/chevronLeft.svg                             platform/icons/src/expui/general/chevronLeft.svg
+  general/chevronLeft_dark.svg                        platform/icons/src/expui/general/chevronLeft_dark.svg
+  general/chevronRight.svg                            platform/icons/src/expui/general/chevronRight.svg
+  general/chevronRight_dark.svg                       platform/icons/src/expui/general/chevronRight_dark.svg
+  general/chevronUp.svg                               platform/icons/src/expui/general/chevronUp.svg
+  general/chevronUpLarge.svg                          platform/icons/src/expui/general/chevronUpLarge.svg
+  general/chevronUpLarge_dark.svg                     platform/icons/src/expui/general/chevronUpLarge_dark.svg
+  general/chevronUp_dark.svg                          platform/icons/src/expui/general/chevronUp_dark.svg
+  general/close.svg                                   platform/icons/src/expui/general/close.svg
+  general/closeSmall.svg                              platform/icons/src/expui/general/closeSmall.svg
+  general/closeSmallHovered.svg                       platform/icons/src/expui/general/closeSmallHovered.svg
+  general/closeSmallHovered_dark.svg                  platform/icons/src/expui/general/closeSmallHovered_dark.svg
+  general/closeSmall_dark.svg                         platform/icons/src/expui/general/closeSmall_dark.svg
+  general/close_dark.svg                              platform/icons/src/expui/general/close_dark.svg
+  general/collapseAll.svg                             platform/icons/src/expui/general/collapseAll.svg
+  general/collapseAll_dark.svg                        platform/icons/src/expui/general/collapseAll_dark.svg
+  general/copy.svg                                    platform/icons/src/expui/general/copy.svg
+  general/copy_dark.svg                               platform/icons/src/expui/general/copy_dark.svg
+  general/cut.svg                                     platform/icons/src/expui/general/cut.svg
+  general/cut_dark.svg                                platform/icons/src/expui/general/cut_dark.svg
+  general/delete.svg                                  platform/icons/src/expui/general/delete.svg
+  general/delete_dark.svg                             platform/icons/src/expui/general/delete_dark.svg
+  general/down.svg                                    platform/icons/src/expui/general/down.svg
+  general/down_dark.svg                               platform/icons/src/expui/general/down_dark.svg
+  general/dropdown.svg                                platform/icons/src/expui/general/dropdown.svg
+  general/dropdown_dark.svg                           platform/icons/src/expui/general/dropdown_dark.svg
+  general/edit.svg                                    platform/icons/src/expui/general/edit.svg
+  general/edit_dark.svg                               platform/icons/src/expui/general/edit_dark.svg
+  general/editorOnly.svg                              platform/icons/src/expui/general/editorOnly.svg
+  general/editorOnly_dark.svg                         platform/icons/src/expui/general/editorOnly_dark.svg
+  general/editorPreview.svg                           platform/icons/src/expui/general/editorPreview.svg
+  general/editorPreview_dark.svg                      platform/icons/src/expui/general/editorPreview_dark.svg
+  general/expandAll.svg                               platform/icons/src/expui/general/expandAll.svg
+  general/expandAll_dark.svg                          platform/icons/src/expui/general/expandAll_dark.svg
+  general/filter.svg                                  platform/icons/src/expui/general/filter.svg
+  general/filter_dark.svg                             platform/icons/src/expui/general/filter_dark.svg
+  general/greenCheckmark.svg                          platform/icons/src/expui/general/greenCheckmark.svg
+  general/greenCheckmark_dark.svg                     platform/icons/src/expui/general/greenCheckmark_dark.svg
+  general/help.svg                                    platform/icons/src/expui/general/help.svg
+  general/help_dark.svg                               platform/icons/src/expui/general/help_dark.svg
+  general/hide.svg                                    platform/icons/src/expui/general/hide.svg
+  general/hide_dark.svg                               platform/icons/src/expui/general/hide_dark.svg
+  general/history.svg                                 platform/icons/src/expui/general/history.svg
+  general/history_dark.svg                            platform/icons/src/expui/general/history_dark.svg
+  general/inspections/inspectionsError.svg            platform/icons/src/expui/general/inspections/inspectionsError.svg
+  general/inspections/inspectionsEye.svg              platform/icons/src/expui/general/inspections/inspectionsEye.svg
+  general/inspections/inspectionsEye_dark.svg         platform/icons/src/expui/general/inspections/inspectionsEye_dark.svg
+  general/inspections/inspectionsOK.svg               platform/icons/src/expui/general/inspections/inspectionsOK.svg
+  general/inspections/inspectionsOK_dark.svg          platform/icons/src/expui/general/inspections/inspectionsOK_dark.svg
+  general/inspections/inspectionsWarning.svg          platform/icons/src/expui/general/inspections/inspectionsWarning.svg
+  general/left.svg                                    platform/icons/src/expui/general/left.svg
+  general/left_dark.svg                               platform/icons/src/expui/general/left_dark.svg
+  general/listFiles.svg                               platform/icons/src/expui/general/listFiles.svg
+  general/listFiles_dark.svg                          platform/icons/src/expui/general/listFiles_dark.svg
+  general/locate.svg                                  platform/icons/src/expui/general/locate.svg
+  general/locate_dark.svg                             platform/icons/src/expui/general/locate_dark.svg
+  general/locked.svg                                  platform/icons/src/expui/general/locked.svg
+  general/locked_dark.svg                             platform/icons/src/expui/general/locked_dark.svg
+  general/moreHorizontal.svg                          platform/icons/src/expui/general/moreHorizontal.svg
+  general/moreHorizontal_dark.svg                     platform/icons/src/expui/general/moreHorizontal_dark.svg
+  general/moreVertical.svg                            platform/icons/src/expui/general/moreVertical.svg
+  general/moreVertical_dark.svg                       platform/icons/src/expui/general/moreVertical_dark.svg
+  general/openNewTab.svg                              platform/icons/src/expui/general/openNewTab.svg
+  general/openNewTab_dark.svg                         platform/icons/src/expui/general/openNewTab_dark.svg
+  general/paste.svg                                   platform/icons/src/expui/general/paste.svg
+  general/paste_dark.svg                              platform/icons/src/expui/general/paste_dark.svg
+  general/pin.svg                                     platform/icons/src/expui/general/pin.svg
+  general/pin_dark.svg                                platform/icons/src/expui/general/pin_dark.svg
+  general/previewOnly.svg                             platform/icons/src/expui/general/previewOnly.svg
+  general/previewOnly_dark.svg                        platform/icons/src/expui/general/previewOnly_dark.svg
+  general/refresh.svg                                 platform/icons/src/expui/general/refresh.svg
+  general/refresh_dark.svg                            platform/icons/src/expui/general/refresh_dark.svg
+  general/right.svg                                   platform/icons/src/expui/general/right.svg
+  general/right_dark.svg                              platform/icons/src/expui/general/right_dark.svg
+  general/search.svg                                  platform/icons/src/expui/general/search.svg
+  general/search_dark.svg                             platform/icons/src/expui/general/search_dark.svg
+  general/settings.svg                                platform/icons/src/expui/general/settings.svg
+  general/settings_dark.svg                           platform/icons/src/expui/general/settings_dark.svg
+  general/show.svg                                    platform/icons/src/expui/general/show.svg
+  general/show_dark.svg                               platform/icons/src/expui/general/show_dark.svg
+  general/splitHorizontally.svg                       platform/icons/src/expui/general/splitHorizontally.svg
+  general/splitHorizontally_dark.svg                  platform/icons/src/expui/general/splitHorizontally_dark.svg
+  general/splitVertically.svg                         platform/icons/src/expui/general/splitVertically.svg
+  general/splitVertically_dark.svg                    platform/icons/src/expui/general/splitVertically_dark.svg
+  general/up.svg                                      platform/icons/src/expui/general/up.svg
+  general/up_dark.svg                                 platform/icons/src/expui/general/up_dark.svg
+  general/vcs.svg                                     platform/icons/src/expui/general/vcs.svg
+  general/vcs_dark.svg                                platform/icons/src/expui/general/vcs_dark.svg
+  ide/externalLink.svg                                platform/icons/src/expui/ide/externalLink.svg
+  ide/externalLink_dark.svg                           platform/icons/src/expui/ide/externalLink_dark.svg
+  inline/exactWords.svg                               platform/icons/src/expui/inline/exactWords.svg
+  inline/exactWords_dark.svg                          platform/icons/src/expui/inline/exactWords_dark.svg
+  inline/matchCase.svg                                platform/icons/src/expui/inline/matchCase.svg
+  inline/matchCase_dark.svg                           platform/icons/src/expui/inline/matchCase_dark.svg
+  inline/regex.svg                                    platform/icons/src/expui/inline/regex.svg
+  inline/regex_dark.svg                               platform/icons/src/expui/inline/regex_dark.svg
+  inline/searchHistory.svg                            platform/icons/src/expui/inline/searchHistory.svg
+  inline/searchHistory_dark.svg                       platform/icons/src/expui/inline/searchHistory_dark.svg
+  nodes/excludeRoot.svg                               platform/icons/src/expui/nodes/excludeRoot.svg
+  nodes/excludeRoot_dark.svg                          platform/icons/src/expui/nodes/excludeRoot_dark.svg
+  nodes/folder.svg                                    platform/icons/src/expui/nodes/folder.svg
+  nodes/folder_dark.svg                               platform/icons/src/expui/nodes/folder_dark.svg
+  nodes/library.svg                                   platform/icons/src/expui/nodes/library.svg
+  nodes/libraryFolder.svg                             platform/icons/src/expui/nodes/libraryFolder.svg
+  nodes/libraryFolder_dark.svg                        platform/icons/src/expui/nodes/libraryFolder_dark.svg
+  nodes/library_dark.svg                              platform/icons/src/expui/nodes/library_dark.svg
+  nodes/module.svg                                    platform/icons/src/expui/nodes/module.svg
+  nodes/moduleGroup.svg                               platform/icons/src/expui/nodes/moduleGroup.svg
+  nodes/moduleGroup_dark.svg                          platform/icons/src/expui/nodes/moduleGroup_dark.svg
+  nodes/module_dark.svg                               platform/icons/src/expui/nodes/module_dark.svg
+  nodes/resourcesRoot.svg                             platform/icons/src/expui/nodes/resourcesRoot.svg
+  nodes/resourcesRoot_dark.svg                        platform/icons/src/expui/nodes/resourcesRoot_dark.svg
+  nodes/sourceRoot.svg                                platform/icons/src/expui/nodes/sourceRoot.svg
+  nodes/sourceRoot_dark.svg                           platform/icons/src/expui/nodes/sourceRoot_dark.svg
+  nodes/star.svg                                      platform/icons/src/expui/nodes/star.svg
+  nodes/starEmpty.svg                                 platform/icons/src/expui/nodes/starEmpty.svg
+  nodes/starEmpty_dark.svg                            platform/icons/src/expui/nodes/starEmpty_dark.svg
+  nodes/star_dark.svg                                 platform/icons/src/expui/nodes/star_dark.svg
+  nodes/symlink.svg                                   platform/icons/src/expui/nodes/symlink.svg
+  nodes/symlink_dark.svg                              platform/icons/src/expui/nodes/symlink_dark.svg
+  nodes/tag.svg                                       platform/icons/src/expui/nodes/tag.svg
+  nodes/tag_dark.svg                                  platform/icons/src/expui/nodes/tag_dark.svg
+  nodes/testResourcesRoot.svg                         platform/icons/src/expui/nodes/testResourcesRoot.svg
+  nodes/testResourcesRoot_dark.svg                    platform/icons/src/expui/nodes/testResourcesRoot_dark.svg
+  nodes/testRoot.svg                                  platform/icons/src/expui/nodes/testRoot.svg
+  nodes/testRoot_dark.svg                             platform/icons/src/expui/nodes/testRoot_dark.svg
+  progress/resume.svg                                 platform/icons/src/expui/progress/resume.svg
+  progress/resume_dark.svg                            platform/icons/src/expui/progress/resume_dark.svg
+  review/comment.svg                                  platform/collaboration-tools/shared/resources/icons/expui/comment.svg
+  review/comment_dark.svg                             platform/collaboration-tools/shared/resources/icons/expui/comment_dark.svg
+  run/debug.svg                                       platform/icons/src/expui/run/debug.svg
+  run/debug_dark.svg                                  platform/icons/src/expui/run/debug_dark.svg
+  run/rerun.svg                                       platform/icons/src/expui/run/rerun.svg
+  run/rerun_dark.svg                                  platform/icons/src/expui/run/rerun_dark.svg
+  run/run.svg                                         platform/icons/src/expui/run/run.svg
+  run/run_dark.svg                                    platform/icons/src/expui/run/run_dark.svg
+  run/stop.svg                                        platform/icons/src/expui/run/stop.svg
+  run/stop_dark.svg                                   platform/icons/src/expui/run/stop_dark.svg
+  status/error.svg                                    platform/icons/src/expui/status/error.svg
+  status/error_dark.svg                               platform/icons/src/expui/status/error_dark.svg
+  status/info.svg                                     platform/icons/src/expui/status/info.svg
+  status/info_dark.svg                                platform/icons/src/expui/status/info_dark.svg
+  status/success.svg                                  platform/icons/src/expui/status/success.svg
+  status/success_dark.svg                             platform/icons/src/expui/status/success_dark.svg
+  status/warning.svg                                  platform/icons/src/expui/status/warning.svg
+  status/warning_dark.svg                             platform/icons/src/expui/status/warning_dark.svg
+  toolwindows/bookmarks.svg                           platform/icons/src/expui/toolwindows/bookmarks.svg
+  toolwindows/bookmarks_dark.svg                      platform/icons/src/expui/toolwindows/bookmarks_dark.svg
+  toolwindows/commit.svg                              platform/icons/src/expui/toolwindows/commit.svg
+  toolwindows/commit_dark.svg                         platform/icons/src/expui/toolwindows/commit_dark.svg
+  toolwindows/find.svg                                platform/icons/src/expui/toolwindows/find.svg
+  toolwindows/find_dark.svg                           platform/icons/src/expui/toolwindows/find_dark.svg
+  toolwindows/notifications.svg                       platform/icons/src/expui/toolwindows/notifications.svg
+  toolwindows/notifications_dark.svg                  platform/icons/src/expui/toolwindows/notifications_dark.svg
+  toolwindows/problems.svg                            platform/icons/src/expui/toolwindows/problems.svg
+  toolwindows/problems_dark.svg                       platform/icons/src/expui/toolwindows/problems_dark.svg
+  toolwindows/project.svg                             platform/icons/src/expui/toolwindows/project.svg
+  toolwindows/project_dark.svg                        platform/icons/src/expui/toolwindows/project_dark.svg
+  toolwindows/run.svg                                 platform/icons/src/expui/toolwindows/run.svg
+  toolwindows/run_dark.svg                            platform/icons/src/expui/toolwindows/run_dark.svg
+  toolwindows/structure.svg                           platform/icons/src/expui/toolwindows/structure.svg
+  toolwindows/structure_dark.svg                      platform/icons/src/expui/toolwindows/structure_dark.svg
+  toolwindows/terminal.svg                            platform/jewel/samples/showcase/src/main/resources/icons/terminal.svg
+  toolwindows/terminal_dark.svg                       platform/jewel/samples/showcase/src/main/resources/icons/terminal_dark.svg
+  toolwindows/vcs.svg                                 platform/icons/src/expui/general/vcs.svg
+  toolwindows/vcs_dark.svg                            platform/icons/src/expui/toolwindows/vcs_dark.svg
+  vcs/changelist.svg                                  platform/icons/src/expui/vcs/changelist.svg
+  vcs/changelist_dark.svg                             platform/icons/src/expui/vcs/changelist_dark.svg
+  vcs/changes.svg                                     platform/icons/src/expui/vcs/changes.svg
+  vcs/changes_dark.svg                                platform/icons/src/expui/vcs/changes_dark.svg
+  vcs/commit.svg                                      platform/icons/src/expui/vcs/commit.svg
+  vcs/commit_dark.svg                                 platform/icons/src/expui/vcs/commit_dark.svg
+  vcs/diff.svg                                        platform/icons/src/expui/vcs/diff.svg
+  vcs/diff_dark.svg                                   platform/icons/src/expui/vcs/diff_dark.svg
+  vcs/fetch.svg                                       platform/icons/src/expui/vcs/fetch.svg
+  vcs/fetch_dark.svg                                  platform/icons/src/expui/vcs/fetch_dark.svg
+  vcs/merge.svg                                       platform/icons/src/expui/vcs/merge.svg
+  vcs/merge_dark.svg                                  platform/icons/src/expui/vcs/merge_dark.svg
+  vcs/pullRequests.svg                                plugins/github/github-core/resources/org/jetbrains/plugins/github/expui/pullRequests.svg
+  vcs/pullRequests_dark.svg                           plugins/github/github-core/resources/org/jetbrains/plugins/github/expui/pullRequests_dark.svg
+  vcs/push.svg                                        platform/icons/src/expui/vcs/push.svg
+  vcs/push_dark.svg                                   platform/icons/src/expui/vcs/push_dark.svg
+  vcs/revert.svg                                      platform/icons/src/expui/vcs/revert.svg
+  vcs/revert_dark.svg                                 platform/icons/src/expui/vcs/revert_dark.svg
+  vcs/shelve.svg                                      platform/icons/src/expui/vcs/shelve.svg
+  vcs/shelve_dark.svg                                 platform/icons/src/expui/vcs/shelve_dark.svg
+  vcs/update.svg                                      platform/icons/src/expui/vcs/update.svg
+  vcs/update_dark.svg                                 platform/icons/src/expui/vcs/update_dark.svg
+  vcsLog/intelliSort.svg                              platform/vcs-log/impl/resources/icons/new/intelliSort.svg
+  vcsLog/intelliSort_dark.svg                         platform/vcs-log/impl/resources/icons/new/intelliSort_dark.svg
+
+- checkbox/light/checkBox*.svg (9 files): a modified version of checkbox/checkBox*.svg above (the
+  dark New UI checkboxes): the same shapes with the light New UI palette's colours
+  (Checkbox.Background.Default #FFFFFF, Checkbox.Border.Default #A8ADBD, ...), as the light theme
+  recolours them at runtime by each shape's id.
+
+intellij-community's NOTICE.txt:
+  This software includes code from IntelliJ IDEA
+  Copyright (C) JetBrains s.r.o.
+  https://www.jetbrains.com/idea/
+
+
+2. VimStorm's own icons
+-----------------------
+
+Drawn for VimStorm, under this repository's license (Apache License 2.0, LICENSE at the root):
+
+- general/maximize{,_dark}.svg
+- stripe/board{,_dark}.svg, stripe/runPath{,_dark}.svg (the stripe's Board and Run)
+- ai/chat{,_dark}.svg: a speech bubble (the switcher's chat rows)
+- fileTypes/tsx{,_dark}.svg: </> on a TypeScript-blue square
+- fileTypes/jsx{,_dark}.svg: </> on a JavaScript-yellow square
+- fileTypes/eslint{,_dark}.svg: a hexagon
+- fileTypes/prettier{,_dark}.svg: indented bars
+- fileTypes/less{,_dark}.svg: curly braces
+- fileTypes/sass.svg: an S on a pink disc (one SVG for both themes)
+- text/branchesVertical.svg: the word "Branches" as glyph outlines of Inter Regular at 11 px,
+  rotated to read bottom-to-top (GPUI can't rotate text; the VCS log's collapsed Branches strip
+  needs it), made with fontTools from app/assets/fonts/Inter-Regular.ttf. Inter is (c) The Inter
+  Project Authors, SIL Open Font License 1.1 (app/assets/fonts/Inter-OFL.txt).

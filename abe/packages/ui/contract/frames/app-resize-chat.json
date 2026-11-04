@@ -1,0 +1,9 @@
+{
+  "v": 2,
+  "type": "resize",
+  "size": {
+    "width": 420,
+    "height": 760
+  },
+  "slot": "chat"
+}

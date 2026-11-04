@@ -1,0 +1,95 @@
+{
+  "kind": "Island",
+  "id": "chat",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "sizes": [
+          "auto",
+          {
+            "flex": 1
+          },
+          "auto"
+        ]
+      },
+      "children": [
+        {
+          "kind": "ChatHeader",
+          "id": "chat-header",
+          "props": {
+            "title": "Chat",
+            "story": {
+              "id": "Prototype",
+              "title": "· #1234 Cart total includes shipping"
+            },
+            "hint": "⌘⏎",
+            "address": {
+              "id": "chat:prototype-page",
+              "text": "127.0.0.1:50321"
+            },
+            "rail": {
+              "segments": [],
+              "stage": "Local",
+              "state": "running",
+              "glyph": "●",
+              "word": "Running"
+            }
+          }
+        },
+        {
+          "kind": "Empty",
+          "props": {
+            "title": "",
+            "line": "Reading the transcript"
+          }
+        },
+        {
+          "kind": "Stack",
+          "id": "composer:dock",
+          "props": {
+            "direction": "column",
+            "gap": 4,
+            "pad": [
+              4,
+              12,
+              12,
+              12
+            ]
+          },
+          "children": [
+            {
+              "kind": "ChatStatus",
+              "id": "chat:status",
+              "props": {
+                "tone": "working",
+                "words": "Thinking",
+                "since": 1790845260000
+              }
+            },
+            {
+              "kind": "Composer",
+              "id": "composer:composer",
+              "props": {
+                "text": "",
+                "placeholder": "Message the prototype…"
+              },
+              "children": [
+                {
+                  "kind": "ContextChip",
+                  "id": "composer:chip",
+                  "props": {
+                    "text": "#1234 Cart total includes shipping · selected card",
+                    "drop": "⌫ drop"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "kind": "PromptLayer",
+  "id": "command-arg",
+  "props": {
+    "title": "Port on the box",
+    "text": "30",
+    "hint": "abe box forward demo-shop-1 <port>: 127.0.0.1 on this machine reaches it"
+  }
+}

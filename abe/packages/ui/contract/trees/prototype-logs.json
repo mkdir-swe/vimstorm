@@ -1,0 +1,19 @@
+{
+  "kind": "PrototypePage",
+  "id": "prototype-page",
+  "props": {
+    "page": "logs",
+    "body": {
+      "kind": "logs",
+      "log": [
+        "$ abe/scripts/prototype-start",
+        "  vite v5.4.2  dev server",
+        "  ready in 412 ms"
+      ],
+      "refused": [
+        "09:12:04  GET fonts.example.com · fonts.example.com is not the app"
+      ],
+      "note": "its start script · its last 3 lines"
+    }
+  }
+}

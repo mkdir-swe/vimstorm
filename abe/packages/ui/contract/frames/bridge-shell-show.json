@@ -1,0 +1,8 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "show",
+    "place": "pipelines"
+  }
+}

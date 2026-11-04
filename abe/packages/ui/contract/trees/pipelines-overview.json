@@ -1,0 +1,383 @@
+{
+  "kind": "Island",
+  "id": "pipelines",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "sizes": [
+          {
+            "fixed": 30
+          },
+          {
+            "flex": 1
+          }
+        ],
+        "align": "stretch"
+      },
+      "children": [
+        {
+          "kind": "PipelinesBar",
+          "id": "pipelines-bar",
+          "props": {
+            "scopes": [
+              {
+                "id": "scope:workspace",
+                "label": "This workspace",
+                "tooltip": "Runs on this workspace's branch"
+              },
+              {
+                "id": "scope:all",
+                "label": "All",
+                "tooltip": "The repository's runs"
+              },
+              {
+                "id": "scope:mine",
+                "label": "Mine",
+                "tooltip": "Runs I started"
+              }
+            ],
+            "selected": "scope:all",
+            "workflow": {
+              "label": "Workflow ▾",
+              "on": false
+            },
+            "count": "7 runs",
+            "source": "o/r · GitHub Actions"
+          }
+        },
+        {
+          "kind": "Stack",
+          "props": {
+            "direction": "row",
+            "sizes": [
+              {
+                "flex": 1
+              },
+              {
+                "fixed": 380
+              }
+            ],
+            "align": "stretch"
+          },
+          "children": [
+            {
+              "kind": "Table",
+              "id": "pipelines-table",
+              "props": {
+                "columns": [
+                  {
+                    "label": "State",
+                    "width": {
+                      "fixed": 128
+                    }
+                  },
+                  {
+                    "label": "Workflow",
+                    "width": {
+                      "fixed": 112
+                    }
+                  },
+                  {
+                    "label": "Run",
+                    "width": {
+                      "flex": 3
+                    }
+                  },
+                  {
+                    "label": "Branch · trigger",
+                    "width": {
+                      "flex": 2
+                    }
+                  },
+                  {
+                    "label": "Agent",
+                    "width": {
+                      "fixed": 200
+                    }
+                  },
+                  {
+                    "label": "Started",
+                    "width": {
+                      "fixed": 72
+                    },
+                    "align": "end"
+                  },
+                  {
+                    "label": "Duration",
+                    "width": {
+                      "fixed": 72
+                    },
+                    "align": "end"
+                  }
+                ],
+                "rows": [
+                  {
+                    "cells": [
+                      {
+                        "text": "NEEDS APPROVAL · 1",
+                        "hue": "dim"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "run:9007",
+                    "cells": [
+                      {
+                        "mark": "◆",
+                        "text": "Needs approval",
+                        "hue": "warn"
+                      },
+                      {
+                        "text": "Deploy Prod",
+                        "hue": "dim",
+                        "tooltip": "Deploy Prod"
+                      },
+                      {
+                        "accent": "#107",
+                        "text": "Release rc-213",
+                        "tooltip": "Deploy Prod · Release rc-213"
+                      },
+                      {
+                        "text": "main · manual",
+                        "hue": "dim",
+                        "tooltip": "main"
+                      },
+                      {
+                        "text": "—",
+                        "hue": "dim"
+                      },
+                      {
+                        "text": "08:20",
+                        "hue": "dim"
+                      },
+                      {
+                        "text": "40m 00s",
+                        "hue": "dim"
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "text": "RUNNING · 2",
+                        "hue": "dim"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "run:9006",
+                    "cells": [
+                      {
+                        "mark": "●",
+                        "text": "Running",
+                        "hue": "warn"
+                      },
+                      {
+                        "text": "PR checks",
+                        "hue": "dim",
+                        "tooltip": "PR checks"
+                      },
+                      {
+                        "accent": "#106",
+                        "text": "Checkout copy for Nordic markets",
+                        "tooltip": "PR checks · Checkout copy for Nordic markets"
+                      },
+                      {
+                        "text": "card/40-checkout-copy · PR #57",
+                        "hue": "dim",
+                        "tooltip": "card/40-checkout-copy"
+                      },
+                      {
+                        "text": "—",
+                        "hue": "dim"
+                      },
+                      {
+                        "text": "08:42",
+                        "hue": "dim"
+                      },
+                      {
+                        "text": "18m 00s",
+                        "hue": "dim"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "run:9005",
+                    "cells": [
+                      {
+                        "mark": "●",
+                        "text": "Running",
+                        "hue": "warn"
+                      },
+                      {
+                        "text": "Deploy Dev/Test",
+                        "hue": "dim",
+                        "tooltip": "Deploy Dev/Test"
+                      },
+                      {
+                        "accent": "#105",
+                        "text": "Order history paginates",
+                        "tooltip": "Deploy Dev/Test · Order history paginates"
+                      },
+                      {
+                        "text": "main · push",
+                        "hue": "dim",
+                        "tooltip": "main"
+                      },
+                      {
+                        "text": "—",
+                        "hue": "dim"
+                      },
+                      {
+                        "text": "08:38",
+                        "hue": "dim"
+                      },
+                      {
+                        "text": "22m 00s",
+                        "hue": "dim"
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "text": "FAILED · 1",
+                        "hue": "dim"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "run:9003",
+                    "cells": [
+                      {
+                        "mark": "✗",
+                        "text": "Failed",
+                        "hue": "bad"
+                      },
+                      {
+                        "text": "PR checks",
+                        "hue": "dim",
+                        "tooltip": "PR checks"
+                      },
+                      {
+                        "accent": "#103",
+                        "text": "Fix cart rounding",
+                        "tooltip": "PR checks · Fix cart rounding"
+                      },
+                      {
+                        "text": "fix/AB-7-rounding · PR #61",
+                        "hue": "dim",
+                        "tooltip": "fix/AB-7-rounding"
+                      },
+                      {
+                        "text": "—",
+                        "hue": "dim"
+                      },
+                      {
+                        "text": "08:00",
+                        "hue": "dim"
+                      },
+                      {
+                        "text": "7m 00s",
+                        "hue": "dim"
+                      }
+                    ]
+                  }
+                ],
+                "selected": "run:9003",
+                "note": "Read 09:00",
+                "foot": [
+                  {
+                    "keys": "⏎",
+                    "label": "inspect"
+                  },
+                  {
+                    "keys": "⌘⏎",
+                    "label": "actions"
+                  },
+                  {
+                    "keys": "Tab",
+                    "label": "scope"
+                  },
+                  {
+                    "keys": "w",
+                    "label": "workflow"
+                  },
+                  {
+                    "keys": "r",
+                    "label": "read again"
+                  }
+                ]
+              }
+            },
+            {
+              "kind": "RunSummary",
+              "id": "pipelines-summary",
+              "props": {
+                "identity": "PR checks · run #103 · attempt 1",
+                "state": {
+                  "glyph": "✗",
+                  "word": "Failed",
+                  "hue": "bad"
+                },
+                "title": "Fix cart rounding",
+                "meta": "fix/AB-7-rounding · PR #61 · 9003c7e · 08:00 · 7m 00s",
+                "jobs": [
+                  {
+                    "mark": "✓",
+                    "name": "install",
+                    "duration": "22s",
+                    "hue": "good"
+                  },
+                  {
+                    "mark": "✓",
+                    "name": "lint",
+                    "duration": "48s",
+                    "hue": "good"
+                  },
+                  {
+                    "mark": "✗",
+                    "name": "unit tests",
+                    "duration": "2m 10s",
+                    "hue": "bad"
+                  },
+                  {
+                    "mark": "✓",
+                    "name": "build",
+                    "duration": "1m 35s",
+                    "hue": "good"
+                  }
+                ],
+                "skipped": "e2e · Chromium, deploy preview · Skipped",
+                "facts": [
+                  {
+                    "label": "Evidence",
+                    "value": "rounds to two decimals · cart.test.ts:14"
+                  },
+                  {
+                    "label": "Agent",
+                    "value": "none on fix/AB-7-rounding"
+                  }
+                ],
+                "actions": [
+                  {
+                    "id": "act:fix",
+                    "label": "Fix with agent…",
+                    "primary": true
+                  },
+                  {
+                    "id": "act:rerun-failed",
+                    "label": "Rerun failed"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

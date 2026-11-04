@@ -1,0 +1,102 @@
+{
+  "kind": "ReviewPane",
+  "id": "review",
+  "props": {
+    "root": "/work/shop-pr-7",
+    "number": 7,
+    "title": "PR #7 · review",
+    "said": "Reading PR #7…",
+    "tone": "info",
+    "heat": false,
+    "since": false,
+    "lines": [],
+    "at": null,
+    "drafted": [],
+    "threads": [],
+    "threadsNote": "Loading discussions…",
+    "saved": null,
+    "strip": null,
+    "conversation": [],
+    "menu": [
+      {
+        "run": "⏎",
+        "key": "⏎",
+        "label": "Next Change",
+        "enabled": true
+      },
+      {
+        "run": "step-back",
+        "key": "",
+        "label": "Previous Change",
+        "enabled": true
+      },
+      {
+        "run": "next",
+        "key": "",
+        "label": "Next File by Heat",
+        "enabled": true
+      },
+      {
+        "run": "previous",
+        "key": "",
+        "label": "Previous File by Heat",
+        "enabled": true
+      },
+      {
+        "run": "select",
+        "key": "",
+        "label": "Mark Reviewed",
+        "enabled": true
+      },
+      {
+        "run": "with-copies",
+        "key": "",
+        "label": "Mark Reviewed with Copies",
+        "enabled": true
+      },
+      {
+        "run": "drop",
+        "key": "",
+        "label": "Drop Draft",
+        "enabled": false
+      },
+      {
+        "run": "toggle",
+        "key": "",
+        "label": "Tree / Areas / Heat",
+        "enabled": true
+      },
+      {
+        "run": "whole",
+        "key": "",
+        "label": "Show the Whole PR",
+        "enabled": false
+      },
+      {
+        "run": "earlier",
+        "key": "",
+        "label": "Previous Commit",
+        "enabled": false
+      },
+      {
+        "run": "later",
+        "key": "",
+        "label": "Next Commit",
+        "enabled": false
+      },
+      {
+        "run": "browser",
+        "key": "",
+        "label": "Open on GitHub",
+        "enabled": true
+      },
+      {
+        "run": "refresh",
+        "key": "",
+        "label": "Read Again",
+        "enabled": true
+      }
+    ],
+    "lifecycle": []
+  }
+}

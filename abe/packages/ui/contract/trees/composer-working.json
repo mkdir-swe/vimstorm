@@ -1,0 +1,140 @@
+{
+  "kind": "Island",
+  "id": "col:working",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "sizes": [
+          {
+            "flex": 1
+          },
+          "auto"
+        ]
+      },
+      "children": [
+        {
+          "kind": "Stack",
+          "props": {
+            "direction": "column",
+            "pad": [
+              12,
+              12,
+              8,
+              12
+            ]
+          },
+          "children": [
+            {
+              "kind": "Prose",
+              "id": "composer:prose",
+              "props": {
+                "markdown": "`cartTotal` added each line's price once, so a line with 3 of one item was charged as 1."
+              }
+            }
+          ]
+        },
+        {
+          "kind": "Stack",
+          "id": "composer:dock",
+          "props": {
+            "direction": "column",
+            "gap": 4,
+            "pad": [
+              4,
+              12,
+              12,
+              12
+            ]
+          },
+          "children": [
+            {
+              "kind": "ChatStatus",
+              "id": "chat:status",
+              "props": {
+                "tone": "working",
+                "words": "Waiting on 2 subagents",
+                "since": 1792897110000,
+                "agents": {
+                  "text": "2 subagents",
+                  "id": "chat:agents",
+                  "running": 2,
+                  "open": true
+                },
+                "list": [
+                  {
+                    "id": "chat:agent:a2",
+                    "name": "abe:writer",
+                    "task": "Multiply by quantity",
+                    "state": "running",
+                    "since": 1792897150000,
+                    "last": "Bash bun test api/test/cart.test.ts"
+                  },
+                  {
+                    "id": "chat:agent:a1",
+                    "name": "abe:reader",
+                    "task": "Find every caller of cartTotal",
+                    "state": "running",
+                    "since": 1792897120000,
+                    "last": "Grep cartTotal"
+                  },
+                  {
+                    "id": "chat:agent:a0",
+                    "name": "Explore",
+                    "task": "Read the story",
+                    "state": "done",
+                    "since": 1792897111000,
+                    "until": 1792897132000,
+                    "last": "The story asks for line totals of price × quantity."
+                  }
+                ],
+                "selected": 0
+              }
+            },
+            {
+              "kind": "Composer",
+              "id": "composer:composer",
+              "props": {
+                "text": "Look at these two:\nthe cart page and the total\nwhy do they differ?",
+                "placeholder": "Ask or tell the agent…",
+                "focused": true,
+                "model": {
+                  "label": "opus · medium",
+                  "id": "composer:model"
+                },
+                "seq": 1
+              },
+              "children": [
+                {
+                  "kind": "ContextChip",
+                  "id": "composer:chip",
+                  "props": {
+                    "text": "@api/src/cart.ts:16 · caret line",
+                    "drop": "⌫ drop"
+                  }
+                },
+                {
+                  "kind": "AttachChip",
+                  "id": "composer:detach:0",
+                  "props": {
+                    "name": "pasted-1761620000000.png",
+                    "image": true
+                  }
+                },
+                {
+                  "kind": "AttachChip",
+                  "id": "composer:detach:1",
+                  "props": {
+                    "name": "cart.ts"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "v": 2,
+  "type": "open",
+  "screen": "review",
+  "params": {
+    "pick": "/home/me/projects/demo-shop"
+  },
+  "slot": "review"
+}

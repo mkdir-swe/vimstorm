@@ -1,0 +1,320 @@
+{
+  "kind": "Island",
+  "id": "pipelines-run",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "sizes": [
+          {
+            "fixed": 64
+          },
+          {
+            "flex": 1
+          }
+        ],
+        "align": "stretch"
+      },
+      "children": [
+        {
+          "kind": "RunHead",
+          "id": "pipelines-head",
+          "props": {
+            "crumbs": [
+              {
+                "id": "crumb:workflow",
+                "text": "PR checks"
+              },
+              {
+                "id": "crumb:graph",
+                "text": "Run #103 · Fix cart rounding"
+              },
+              {
+                "id": "crumb:log",
+                "text": "unit tests"
+              }
+            ],
+            "title": "Fix cart rounding",
+            "state": {
+              "glyph": "✗",
+              "word": "Failed",
+              "hue": "bad"
+            },
+            "meta": "run #103 · attempt 1 · fix/AB-7-rounding · PR #61 · 9003c7e · started 08:00 · 7m 00s",
+            "actions": [
+              {
+                "id": "act:fix",
+                "label": "Fix with agent…",
+                "primary": true
+              },
+              {
+                "id": "act:rerun-failed",
+                "label": "Rerun failed",
+                "disabled": false
+              },
+              {
+                "id": "act:rerun",
+                "label": "Rerun",
+                "disabled": false
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Stack",
+          "props": {
+            "direction": "row",
+            "sizes": [
+              {
+                "flex": 1
+              },
+              {
+                "fixed": 380
+              }
+            ],
+            "align": "stretch"
+          },
+          "children": [
+            {
+              "kind": "RunGraph",
+              "id": "pipelines-graph",
+              "props": {
+                "jobs": [
+                  {
+                    "id": "job:90031",
+                    "name": "install",
+                    "state": {
+                      "glyph": "✓",
+                      "word": "Passed",
+                      "hue": "good"
+                    },
+                    "duration": "22s",
+                    "column": 0,
+                    "row": 0
+                  },
+                  {
+                    "id": "job:90032",
+                    "name": "lint",
+                    "state": {
+                      "glyph": "✓",
+                      "word": "Passed",
+                      "hue": "good"
+                    },
+                    "duration": "48s",
+                    "column": 1,
+                    "row": 0
+                  },
+                  {
+                    "id": "job:90033",
+                    "name": "unit tests",
+                    "state": {
+                      "glyph": "✗",
+                      "word": "Failed",
+                      "hue": "bad"
+                    },
+                    "duration": "2m 10s",
+                    "column": 1,
+                    "row": 1
+                  },
+                  {
+                    "id": "job:90034",
+                    "name": "build",
+                    "state": {
+                      "glyph": "✓",
+                      "word": "Passed",
+                      "hue": "good"
+                    },
+                    "duration": "1m 35s",
+                    "column": 1,
+                    "row": 2
+                  },
+                  {
+                    "id": "job:90035",
+                    "name": "e2e · Chromium",
+                    "state": {
+                      "glyph": "·",
+                      "word": "Skipped",
+                      "hue": "dim"
+                    },
+                    "duration": "",
+                    "column": 2,
+                    "row": 0
+                  },
+                  {
+                    "id": "job:90036",
+                    "name": "deploy preview",
+                    "state": {
+                      "glyph": "·",
+                      "word": "Skipped",
+                      "hue": "dim"
+                    },
+                    "duration": "",
+                    "column": 3,
+                    "row": 0
+                  }
+                ],
+                "edges": [
+                  [
+                    "job:90031",
+                    "job:90032"
+                  ],
+                  [
+                    "job:90031",
+                    "job:90033"
+                  ],
+                  [
+                    "job:90031",
+                    "job:90034"
+                  ],
+                  [
+                    "job:90033",
+                    "job:90035"
+                  ],
+                  [
+                    "job:90034",
+                    "job:90035"
+                  ],
+                  [
+                    "job:90035",
+                    "job:90036"
+                  ]
+                ],
+                "selected": "job:90033",
+                "legend": [
+                  {
+                    "glyph": "✓",
+                    "word": "Passed",
+                    "hue": "good"
+                  },
+                  {
+                    "glyph": "✗",
+                    "word": "Failed",
+                    "hue": "bad"
+                  },
+                  {
+                    "glyph": "●",
+                    "word": "Running",
+                    "hue": "warn"
+                  },
+                  {
+                    "glyph": "◆",
+                    "word": "Needs approval",
+                    "hue": "warn"
+                  },
+                  {
+                    "glyph": "○",
+                    "word": "Queued",
+                    "hue": "dim"
+                  },
+                  {
+                    "glyph": "·",
+                    "word": "Cancelled",
+                    "hue": "dim"
+                  },
+                  {
+                    "glyph": "·",
+                    "word": "Skipped",
+                    "hue": "dim"
+                  }
+                ]
+              }
+            },
+            {
+              "kind": "JobPanel",
+              "id": "pipelines-job",
+              "props": {
+                "name": "unit tests",
+                "state": {
+                  "glyph": "✗",
+                  "word": "Failed",
+                  "hue": "bad"
+                },
+                "words": "after 2m 10s · job 90033 · ubuntu-latest · step Run npm test",
+                "counters": [
+                  {
+                    "text": "✗ 1 failed",
+                    "hue": "bad"
+                  },
+                  {
+                    "text": "✓ 1 passed",
+                    "hue": "good"
+                  },
+                  {
+                    "text": "· 1 skipped",
+                    "hue": "dim"
+                  }
+                ],
+                "actions": [
+                  {
+                    "id": "act:fix",
+                    "label": "Fix with agent…",
+                    "primary": true
+                  },
+                  {
+                    "id": "act:log",
+                    "label": "Open log"
+                  }
+                ],
+                "steps": [
+                  {
+                    "state": {
+                      "glyph": "✓",
+                      "word": "Passed",
+                      "hue": "good"
+                    },
+                    "name": "Set up job",
+                    "duration": "–"
+                  },
+                  {
+                    "state": {
+                      "glyph": "✗",
+                      "word": "Failed",
+                      "hue": "bad"
+                    },
+                    "name": "Run npm test",
+                    "duration": "–",
+                    "current": true
+                  },
+                  {
+                    "state": {
+                      "glyph": "·",
+                      "word": "Skipped",
+                      "hue": "dim"
+                    },
+                    "name": "Upload coverage",
+                    "duration": "–"
+                  }
+                ],
+                "evidenceTitle": "ANNOTATIONS · 4",
+                "evidence": [
+                  {
+                    "title": "src/api/cart.test.ts > cartTotal > rounds to two decimals",
+                    "detail": "log line 4 · AssertionError: expected 10.000000000000002 to be 10",
+                    "file": "src/api/cart.test.ts:14"
+                  },
+                  {
+                    "title": "Process completed with exit code 1.",
+                    "detail": "log line 8 · ##[error]"
+                  },
+                  {
+                    "title": "e2e-report",
+                    "detail": "run #103 · job 90033 · attempt 1 · 9003c7e",
+                    "artifact": true
+                  },
+                  {
+                    "title": "playwright-trace",
+                    "detail": "run #103 · attempt 1 · 9003c7e · job unknown",
+                    "unavailable": "expired",
+                    "artifact": true
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

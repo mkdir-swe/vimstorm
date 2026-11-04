@@ -1,0 +1,295 @@
+{
+  "kind": "Island",
+  "id": "boxes",
+  "props": {},
+  "children": [
+    {
+      "kind": "Table",
+      "id": "boxes-table",
+      "props": {
+        "columns": [
+          {
+            "label": "Box",
+            "width": {
+              "fixed": 100
+            }
+          },
+          {
+            "label": "Story",
+            "width": {
+              "flex": 1
+            }
+          },
+          {
+            "label": "State",
+            "width": {
+              "fixed": 180
+            }
+          },
+          {
+            "label": "Size",
+            "width": {
+              "fixed": 72
+            }
+          },
+          {
+            "label": "Disk",
+            "width": {
+              "fixed": 76
+            }
+          },
+          {
+            "label": "Release",
+            "width": {
+              "fixed": 52
+            }
+          },
+          {
+            "label": "Up",
+            "width": {
+              "fixed": 70
+            }
+          },
+          {
+            "label": "Cost",
+            "width": {
+              "fixed": 80
+            }
+          },
+          {
+            "label": "Until",
+            "width": {
+              "fixed": 92
+            }
+          }
+        ],
+        "rows": [
+          {
+            "id": "box:demo-shop-2",
+            "cells": [
+              {
+                "text": "demo-shop-2"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "mark": "●",
+                "text": "starting · 6 min",
+                "hue": "bad",
+                "tooltip": "box demo-shop-2 is starting · 6 min · try again in a minute; abe box status demo-shop-2 says when it runs"
+              },
+              {
+                "text": "m8g.large",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "v11",
+                "hue": "dim"
+              },
+              {
+                "text": "6 min"
+              },
+              {
+                "text": "$0.01 today",
+                "tooltip": "today since 00:00 · on-demand estimate"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              }
+            ],
+            "hue": "bad"
+          },
+          {
+            "id": "box:demo-shop-4",
+            "cells": [
+              {
+                "text": "demo-shop-4"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "mark": "●",
+                "text": "running · serve not answering · 1 h 12 min",
+                "hue": "bad",
+                "tooltip": "box demo-shop-4 is running · serve not answering · 1 h 12 min · abe box attach demo-shop-4 -- journalctl -u abe-serve says why; abe box stop demo-shop-4, then abe box start demo-shop-4 boots it again"
+              },
+              {
+                "text": "m8g.large",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "v11",
+                "hue": "dim"
+              },
+              {
+                "text": "1 h 12 min"
+              },
+              {
+                "text": "$0.12 today",
+                "tooltip": "today since 00:00 · on-demand estimate"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              }
+            ],
+            "hue": "bad"
+          },
+          {
+            "id": "box:demo-shop-1",
+            "cells": [
+              {
+                "text": "demo-shop-1"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "mark": "●",
+                "text": "running",
+                "hue": "warn"
+              },
+              {
+                "text": "m8g.large",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "v11",
+                "hue": "dim"
+              },
+              {
+                "text": "1 h 12 min"
+              },
+              {
+                "text": "$0.12 today",
+                "tooltip": "today since 00:00 · on-demand estimate"
+              },
+              {
+                "text": "stops at 10:30",
+                "hue": "dim"
+              }
+            ]
+          },
+          {
+            "id": "box:demo-shop-5",
+            "cells": [
+              {
+                "text": "demo-shop-5",
+                "hue": "dim"
+              },
+              {
+                "accent": "#5",
+                "text": "show delivery dates",
+                "hue": "dim",
+                "tooltip": "Show delivery dates"
+              },
+              {
+                "text": "Queued",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              }
+            ]
+          },
+          {
+            "id": "box:demo-shop-3",
+            "cells": [
+              {
+                "text": "demo-shop-3"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "mark": "○",
+                "text": "asleep",
+                "hue": "dim"
+              },
+              {
+                "text": "m8g.large",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "v11",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "$0.84 today",
+                "tooltip": "today since 00:00 · on-demand estimate"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              }
+            ]
+          }
+        ],
+        "selected": "box:demo-shop-2",
+        "note": "Read 10:00",
+        "foot": [
+          {
+            "keys": "⏎",
+            "label": "box shell"
+          },
+          {
+            "keys": "⌘⏎",
+            "label": "actions"
+          },
+          {
+            "keys": "r",
+            "label": "read again"
+          }
+        ]
+      }
+    }
+  ]
+}

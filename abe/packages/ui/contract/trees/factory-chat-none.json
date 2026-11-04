@@ -1,0 +1,67 @@
+{
+  "kind": "Island",
+  "id": "chat",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "sizes": [
+          "auto",
+          {
+            "flex": 1
+          }
+        ]
+      },
+      "children": [
+        {
+          "kind": "ChatHeader",
+          "id": "chat-header",
+          "props": {
+            "title": "Chat",
+            "story": {
+              "id": "#1262",
+              "title": ""
+            },
+            "hint": "⌘⏎",
+            "rail": {
+              "segments": [
+                "todo",
+                "todo",
+                "todo",
+                "todo",
+                "todo"
+              ],
+              "stage": "New",
+              "state": "idle",
+              "glyph": "○",
+              "word": "no session"
+            }
+          }
+        },
+        {
+          "kind": "Empty",
+          "props": {
+            "title": "No session on #1262 yet",
+            "line": "",
+            "head": true,
+            "actions": [
+              {
+                "id": "chat:launch",
+                "label": "Launch agent",
+                "keys": "⏎",
+                "primary": true
+              },
+              {
+                "id": "chat:more",
+                "label": "more",
+                "keys": "⌘⏎"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

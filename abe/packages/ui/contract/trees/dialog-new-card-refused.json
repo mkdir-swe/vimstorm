@@ -1,0 +1,41 @@
+{
+  "kind": "CardDialog",
+  "id": "newcard:dialog",
+  "props": {
+    "kicker": "New card",
+    "card": 0,
+    "state": "Azure · draft",
+    "title": "Cart total ignores quantity▏",
+    "meta": [],
+    "sections": [
+      {
+        "title": "Type · Column · Assignee · Sprint",
+        "markdown": "Type Bug ▾ · Column Active ▾ · Assignee Me ▾ · Sprint Sprint 14 ▾"
+      },
+      {
+        "title": "Description",
+        "note": "Why and What",
+        "markdown": ""
+      },
+      {
+        "title": "Acceptance criteria",
+        "markdown": ""
+      }
+    ],
+    "scroll": 0,
+    "buttons": [
+      {
+        "id": "dialog:menu",
+        "label": "Draft with the agent",
+        "keys": "⌘⏎"
+      },
+      {
+        "id": "dialog:primary",
+        "label": "Create",
+        "keys": "⏎",
+        "primary": true
+      }
+    ],
+    "error": "'Active' is not a state of a Bug: New, Resolved, Closed (rejected)"
+  }
+}

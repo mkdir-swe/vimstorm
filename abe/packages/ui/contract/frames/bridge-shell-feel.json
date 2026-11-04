@@ -1,0 +1,50 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "feel",
+    "feel": {
+      "feel": "vscode",
+      "tree": {
+        "autoReveal": true,
+        "singleClick": true,
+        "decorations": "letters",
+        "compactFolders": true
+      },
+      "tabs": {
+        "limit": null,
+        "dirtyDot": true,
+        "preview": true
+      },
+      "files": {
+        "autoSave": "off"
+      },
+      "editor": {
+        "minimap": true,
+        "vim": false
+      },
+      "chat": {
+        "openByDefault": true,
+        "width": 420
+      },
+      "keys": [
+        {
+          "key": "⌘Y",
+          "action": "goToFile",
+          "lhs": [
+            "<D-y>"
+          ],
+          "does": "<D-o>"
+        },
+        {
+          "key": "⌃⌥→",
+          "action": "nextTab",
+          "lhs": [
+            "<C-M-Right>"
+          ],
+          "does": "<C-Right>"
+        }
+      ]
+    }
+  }
+}

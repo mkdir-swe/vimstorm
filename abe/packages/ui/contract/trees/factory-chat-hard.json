@@ -1,0 +1,86 @@
+{
+  "kind": "Island",
+  "id": "chat",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "sizes": [
+          "auto",
+          {
+            "flex": 1
+          },
+          "auto"
+        ]
+      },
+      "children": [
+        {
+          "kind": "ChatHeader",
+          "id": "chat-header",
+          "props": {
+            "title": "Chat",
+            "story": {
+              "id": "#1258",
+              "title": "Order history paginates"
+            },
+            "box": {
+              "name": "alex-2",
+              "state": "asleep"
+            },
+            "hint": "⌘⏎",
+            "rail": {
+              "segments": [
+                "done",
+                "done",
+                "done",
+                "done",
+                "done"
+              ],
+              "stage": "Done",
+              "state": "on-test",
+              "glyph": "✓",
+              "word": "On test"
+            }
+          }
+        },
+        {
+          "kind": "Empty",
+          "props": {
+            "title": "",
+            "line": "Reading the transcript"
+          }
+        },
+        {
+          "kind": "Stack",
+          "id": "composer:dock",
+          "props": {
+            "direction": "column",
+            "gap": 4,
+            "pad": [
+              4,
+              12,
+              12,
+              12
+            ]
+          },
+          "children": [
+            {
+              "kind": "Composer",
+              "id": "composer:composer",
+              "props": {
+                "text": "",
+                "placeholder": "Type a message…",
+                "model": {
+                  "label": "Session ended 09:01",
+                  "note": "· ⏎ Reopen · ⌘⏎ more"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

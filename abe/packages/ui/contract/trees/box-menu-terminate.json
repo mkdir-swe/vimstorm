@@ -1,0 +1,16 @@
+{
+  "kind": "ConfirmLayer",
+  "id": "command-confirm",
+  "props": {
+    "question": "Terminate demo-shop-3?",
+    "details": [
+      "Its disk and every workspace on it are deleted; work not pushed is lost."
+    ],
+    "risky": {
+      "label": "Terminate",
+      "letter": "y"
+    },
+    "no": "No",
+    "focus": "no"
+  }
+}

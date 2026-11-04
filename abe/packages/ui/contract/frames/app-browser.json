@@ -1,0 +1,9 @@
+{
+  "v": 2,
+  "type": "browser",
+  "key": "sheet:cart-totals-by-market-a1b2c3:yours:v1",
+  "event": {
+    "kind": "focus",
+    "focused": true
+  }
+}

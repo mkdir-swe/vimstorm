@@ -1,0 +1,73 @@
+{
+  "kind": "PickLayer",
+  "id": "command-mode",
+  "props": {
+    "title": "Command mode",
+    "filter": "",
+    "placeholder": "Ask anything, or a command",
+    "rows": [
+      {
+        "id": "subject:keep",
+        "text": "Keep awake",
+        "dim": "until you say",
+        "note": "⏎",
+        "section": "box demo-shop-1"
+      },
+      {
+        "id": "subject:stop",
+        "text": "Stop now"
+      },
+      {
+        "id": "subject:attach",
+        "text": "Attach"
+      },
+      {
+        "id": "subject:forward",
+        "text": "Forward port…"
+      },
+      {
+        "id": "subject:resize",
+        "text": "Resize…",
+        "dim": "now m8g.large"
+      },
+      {
+        "id": "subject:terminate",
+        "text": "Terminate…",
+        "note": "t",
+        "risky": true
+      },
+      {
+        "id": "subject:all",
+        "text": "All box demo-shop-1 actions…",
+        "note": "⌘⏎"
+      },
+      {
+        "id": "anywhere:search",
+        "text": "Search Everywhere",
+        "note": "⇧⇧",
+        "section": "Anywhere"
+      },
+      {
+        "id": "anywhere:settings",
+        "text": "Settings",
+        "note": "⌘,"
+      },
+      {
+        "id": "anywhere:recent",
+        "text": "Recent projects",
+        "note": "⌘⇧O"
+      },
+      {
+        "id": "anywhere:workflows",
+        "text": "Workflows",
+        "note": ":workflows"
+      },
+      {
+        "id": "anywhere:keys",
+        "text": "Keys",
+        "note": "?"
+      }
+    ],
+    "selected": "subject:keep"
+  }
+}

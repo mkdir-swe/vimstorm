@@ -1,0 +1,79 @@
+{
+  "kind": "PickLayer",
+  "id": "command-mode",
+  "props": {
+    "title": "Command mode",
+    "filter": "w",
+    "placeholder": "Ask anything, or a command",
+    "rows": [
+      {
+        "id": "here:ex",
+        "text": "Run in Neovim",
+        "dim": ":w"
+      },
+      {
+        "id": "here:ask",
+        "text": "Ask about cart.ts:42",
+        "dim": "the Abe chat"
+      },
+      {
+        "id": "view:board",
+        "text": "Board",
+        "dim": "the Abe view",
+        "note": "⌘⌥A",
+        "section": "Editor"
+      },
+      {
+        "id": "anywhere:workflows",
+        "text": "Workflows",
+        "note": ":workflows",
+        "section": "Anywhere"
+      },
+      {
+        "id": "anywhere:search",
+        "text": "Search Everywhere",
+        "note": "⇧⇧"
+      },
+      {
+        "id": "word:show",
+        "text": "show",
+        "dim": "open a Sheet as a tab: the current card's and session's first",
+        "note": "<name>",
+        "section": "More"
+      },
+      {
+        "id": "command:card show",
+        "text": "card show",
+        "dim": "one card in full",
+        "note": "<card>"
+      },
+      {
+        "id": "word:install",
+        "text": "install",
+        "dim": "set this repo up for Abe: the Abe chat follows /abe:install, checking each part, its parts beside it until the install is Done"
+      },
+      {
+        "id": "word:held",
+        "text": "held",
+        "dim": "Held writes: what local mode kept on this machine instead of sending (⏎ opens one)"
+      },
+      {
+        "id": "word:override",
+        "text": "override",
+        "dim": "lower one limit for the shown workspace's session, with a reason, tracked: db write <env>, aws write <env>, their read forms",
+        "note": "<what>"
+      },
+      {
+        "id": "word:boxes",
+        "text": "boxes",
+        "dim": "the bottom pane on Boxes: your boxes, what they cost today and when they stop"
+      },
+      {
+        "id": "command:status",
+        "text": "status",
+        "dim": "what this abe serve holds"
+      }
+    ],
+    "selected": "here:ex"
+  }
+}

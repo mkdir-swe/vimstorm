@@ -1,0 +1,65 @@
+{
+  "kind": "PickLayer",
+  "id": "action-menu",
+  "props": {
+    "title": "#101 Cart total rounds wrong",
+    "filter": "",
+    "rows": [
+      {
+        "id": "open",
+        "text": "Open demo-shop on this card",
+        "note": "⏎"
+      },
+      {
+        "id": "worktree",
+        "text": "Open worktree",
+        "dim": "local"
+      },
+      {
+        "id": "story",
+        "text": "Open story"
+      },
+      {
+        "id": "assign",
+        "text": "Assign…",
+        "dim": "Alex Example",
+        "reason": "already yours"
+      },
+      {
+        "id": "move",
+        "text": "Move…",
+        "dim": "now Active"
+      },
+      {
+        "id": "comment",
+        "text": "Comment…"
+      },
+      {
+        "id": "browser",
+        "text": "Open in browser"
+      },
+      {
+        "id": "new-card",
+        "text": "New card…",
+        "dim": "on the team’s board"
+      },
+      {
+        "id": "answer",
+        "text": "Answer",
+        "reason": "— open the project first",
+        "separator": true
+      },
+      {
+        "id": "stop",
+        "text": "Stop…",
+        "reason": "— open the project first"
+      },
+      {
+        "id": "launch",
+        "text": "Launch agent",
+        "reason": "— open the project first"
+      }
+    ],
+    "selected": "open"
+  }
+}

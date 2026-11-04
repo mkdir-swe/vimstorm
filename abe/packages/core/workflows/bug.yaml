@@ -1,0 +1,34 @@
+# Bug: reproduced first (Before, on the merge base). One that does not reproduce ends the run with
+# its report; one that does is fixed, and verify shows it gone (After). Bugs take it.
+name: Bug
+description: 'Reproduced first, then fixed and shown gone.'
+on: { type: Bug }
+branch: card/<card>
+steps:
+  - reproduce:
+      skill: reproduce
+      ends: { check: bug.reproduced == 0, then: report } # no repro: the run ends with the report
+  - build: { skill: implement, fresh: loop }
+  - checks # serve runs them
+  - review: { skill: code-review, fresh: true }
+  - verify: { skill: verify, fresh: true } # After, with the steps that reproduced it
+  - playbook:
+      skill: playbook
+      when: { judge: 'Does the diff need manual steps after merge?', sees: [diff] }
+  - pr: { skill: pr, fresh: true }
+loops:
+  - from: checks
+    to: build
+    when: { check: checks.failed > 0 }
+    carries: [checks.output]
+    max: 10
+  - from: review
+    to: build
+    when: { check: review.findings > 0 }
+    carries: [review.findings]
+    max: 2
+  - from: verify
+    to: build
+    when: { check: criteria.failed > 0 }
+    carries: [criterion, evidence]
+    max: 10

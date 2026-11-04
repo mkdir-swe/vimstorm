@@ -1,0 +1,311 @@
+{
+  "kind": "Island",
+  "id": "board",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "sizes": [
+          "auto",
+          {
+            "flex": 1
+          }
+        ]
+      },
+      "children": [
+        {
+          "kind": "BoardHeader",
+          "id": "board-head",
+          "props": {
+            "title": "Board",
+            "tabs": [
+              {
+                "id": "tab:mine",
+                "label": "Mine"
+              },
+              {
+                "id": "tab:team",
+                "label": "Team"
+              },
+              {
+                "id": "tab:sessions",
+                "label": "Sessions"
+              }
+            ],
+            "selected": "tab:sessions",
+            "active": true,
+            "counts": [
+              {
+                "text": "6 sessions",
+                "hue": "dim"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Table",
+          "id": "board-sessions",
+          "props": {
+            "columns": [
+              {
+                "label": "Story",
+                "width": {
+                  "flex": 1
+                }
+              },
+              {
+                "label": "Stage",
+                "width": {
+                  "fixed": 230
+                }
+              },
+              {
+                "label": "State",
+                "width": {
+                  "fixed": 160
+                }
+              },
+              {
+                "label": "Where",
+                "width": {
+                  "fixed": 90
+                }
+              },
+              {
+                "label": "Time",
+                "width": {
+                  "fixed": 100
+                }
+              },
+              {
+                "label": "Subagents",
+                "width": {
+                  "fixed": 100
+                }
+              }
+            ],
+            "rows": [
+              {
+                "id": "session:s1234",
+                "cells": [
+                  {
+                    "accent": "#1234",
+                    "text": "Cart total includes shipping"
+                  },
+                  {
+                    "rail": [
+                      "done",
+                      "need",
+                      "todo",
+                      "todo",
+                      "todo"
+                    ],
+                    "text": "Build"
+                  },
+                  {
+                    "mark": "◆",
+                    "text": "Needs you",
+                    "hue": "needs-you"
+                  },
+                  {
+                    "cloud": "running",
+                    "tooltip": "Box alex-1 · running"
+                  },
+                  {
+                    "text": "4 min"
+                  },
+                  {
+                    "text": "—",
+                    "hue": "dim"
+                  }
+                ]
+              },
+              {
+                "id": "session:s1263",
+                "cells": [
+                  {
+                    "accent": "#1263",
+                    "text": "Friendly greeting with no name"
+                  },
+                  {
+                    "rail": [
+                      "done",
+                      "done",
+                      "done",
+                      "ready",
+                      "todo"
+                    ],
+                    "text": "PR"
+                  },
+                  {
+                    "mark": "●",
+                    "text": "Ready for review",
+                    "hue": "good"
+                  },
+                  {
+                    "text": "—",
+                    "hue": "dim"
+                  },
+                  {
+                    "text": "25 min"
+                  },
+                  {
+                    "text": "—",
+                    "hue": "dim"
+                  }
+                ]
+              },
+              {
+                "id": "session:s1240",
+                "cells": [
+                  {
+                    "accent": "#1240",
+                    "text": "Checkout copy for Nordic markets"
+                  },
+                  {
+                    "rail": [
+                      "done",
+                      "done",
+                      "now",
+                      "todo",
+                      "todo"
+                    ],
+                    "text": "Verify"
+                  },
+                  {
+                    "mark": "●",
+                    "text": "Verifying",
+                    "hue": "warn"
+                  },
+                  {
+                    "text": "Local sandbox",
+                    "hue": "dim",
+                    "tooltip": "Local sandbox · this machine"
+                  },
+                  {
+                    "text": "3 min"
+                  },
+                  {
+                    "text": "3"
+                  }
+                ]
+              },
+              {
+                "id": "session:s1251",
+                "cells": [
+                  {
+                    "accent": "#1251",
+                    "text": "Saved carts survive sign-out"
+                  },
+                  {
+                    "rail": [
+                      "wait",
+                      "todo",
+                      "todo",
+                      "todo",
+                      "todo"
+                    ],
+                    "text": "Spec"
+                  },
+                  {
+                    "mark": "●",
+                    "text": "Starting",
+                    "hue": "dim"
+                  },
+                  {
+                    "cloud": "starting",
+                    "tooltip": "Box alex-3 · starting"
+                  },
+                  {
+                    "text": "1 min"
+                  },
+                  {
+                    "text": "—",
+                    "hue": "dim"
+                  }
+                ]
+              },
+              {
+                "id": "session:s1266",
+                "cells": [
+                  {
+                    "accent": "#1266",
+                    "text": "Greeted loudly with shout()"
+                  },
+                  {
+                    "text": "—",
+                    "hue": "dim"
+                  },
+                  {
+                    "mark": "○",
+                    "text": "Queued",
+                    "hue": "dim"
+                  },
+                  {
+                    "cloud": "asleep",
+                    "tooltip": "Box alex-4 · queued"
+                  },
+                  {
+                    "text": "1 min"
+                  },
+                  {
+                    "text": "—",
+                    "hue": "dim"
+                  }
+                ]
+              },
+              {
+                "id": "session:s1258",
+                "cells": [
+                  {
+                    "accent": "#1258",
+                    "text": "Order history paginates"
+                  },
+                  {
+                    "rail": [
+                      "done",
+                      "done",
+                      "done",
+                      "done",
+                      "done"
+                    ],
+                    "text": "Done"
+                  },
+                  {
+                    "mark": "✓",
+                    "text": "On test",
+                    "hue": "good"
+                  },
+                  {
+                    "text": "—",
+                    "hue": "dim"
+                  },
+                  {
+                    "text": "50 min"
+                  },
+                  {
+                    "text": "—",
+                    "hue": "dim"
+                  }
+                ]
+              }
+            ],
+            "selected": "session:s1263",
+            "foot": [
+              {
+                "keys": "⏎",
+                "label": "chat"
+              },
+              {
+                "keys": "⌘⏎",
+                "label": "actions"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

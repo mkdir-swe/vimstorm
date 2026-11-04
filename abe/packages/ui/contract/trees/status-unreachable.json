@@ -1,0 +1,37 @@
+{
+  "kind": "Island",
+  "id": "status",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "sizes": [
+          {
+            "flex": 1
+          },
+          "auto"
+        ]
+      },
+      "children": [
+        {
+          "kind": "Empty",
+          "props": {
+            "title": "abe serve is not answering",
+            "line": "no abe serve answers on /state/abe/serve.sock"
+          }
+        },
+        {
+          "kind": "KeyHint",
+          "id": "reload",
+          "props": {
+            "keys": "r",
+            "label": "reload",
+            "context": "footer"
+          }
+        }
+      ]
+    }
+  ]
+}

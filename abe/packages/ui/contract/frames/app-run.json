@@ -1,0 +1,11 @@
+{
+  "v": 2,
+  "type": "run",
+  "id": "draft-pr:1",
+  "argv": [
+    "pr",
+    "draft-plan",
+    "--path",
+    "/home/me/projects/demo-shop"
+  ]
+}

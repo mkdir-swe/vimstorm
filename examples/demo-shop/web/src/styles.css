@@ -1,0 +1,129 @@
+:root {
+  --bg: #faf7f2;
+  --card: #ffffff;
+  --ink: #2b2a27;
+  --muted: #6d685f;
+  --accent: #3f6b4f;
+  --line: #e6e0d6;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+body {
+  margin: 0;
+}
+
+.shop {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+header h1 {
+  margin: 0;
+  color: var(--accent);
+}
+
+header p {
+  margin: 4px 0 24px;
+  color: var(--muted);
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 760px) {
+  main {
+    grid-template-columns: 1fr;
+  }
+}
+
+.products {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.product,
+.cart {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.product h2,
+.cart h2 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+}
+
+.description {
+  color: var(--muted);
+  font-size: 0.9rem;
+  min-height: 2.6em;
+}
+
+.price {
+  font-weight: 600;
+}
+
+button {
+  font: inherit;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: white;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.cart ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.line {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.quantity {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.quantity button,
+.remove {
+  padding: 0 8px;
+  background: transparent;
+  color: var(--accent);
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  margin: 12px 0 0;
+}
+
+.empty {
+  color: var(--muted);
+}
+
+.error {
+  color: #9b2c2c;
+}

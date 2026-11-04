@@ -1,0 +1,38 @@
+{
+  "kind": "PickLayer",
+  "id": "command-mode",
+  "props": {
+    "title": "Command mode",
+    "filter": "",
+    "placeholder": "Ask anything, or a command",
+    "rows": [
+      {
+        "id": "anywhere:search",
+        "text": "Search Everywhere",
+        "note": "⇧⇧",
+        "section": "Anywhere"
+      },
+      {
+        "id": "anywhere:settings",
+        "text": "Settings",
+        "note": "⌘,"
+      },
+      {
+        "id": "anywhere:recent",
+        "text": "Recent projects",
+        "note": "⌘⇧O"
+      },
+      {
+        "id": "anywhere:workflows",
+        "text": "Workflows",
+        "note": ":workflows"
+      },
+      {
+        "id": "anywhere:keys",
+        "text": "Keys",
+        "note": "?"
+      }
+    ],
+    "selected": "anywhere:search"
+  }
+}

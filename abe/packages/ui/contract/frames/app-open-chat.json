@@ -1,0 +1,9 @@
+{
+  "v": 2,
+  "type": "open",
+  "screen": "chat",
+  "params": {
+    "root": "/home/me/projects/demo-shop-wt/1240-cart-total"
+  },
+  "slot": "chat"
+}

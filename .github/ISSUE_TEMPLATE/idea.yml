@@ -1,0 +1,18 @@
+name: Idea
+description: Something VimStorm or Abe could do.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What you were trying to do, and what got in the way.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would help
+      description: How you would like it to work. A sketch or the keys you would press are welcome.
+    validations:
+      required: true

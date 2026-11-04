@@ -1,0 +1,75 @@
+{
+  "kind": "CardDialog",
+  "id": "dialog:1253",
+  "props": {
+    "kicker": "Bug",
+    "card": 1253,
+    "state": "New",
+    "title": "Coupon field accepts spaces",
+    "meta": [
+      "Bug",
+      "New",
+      "SS",
+      "Sprint 14",
+      "tags coupon, checkout"
+    ],
+    "facts": [
+      {
+        "text": "Bug",
+        "tone": "bug"
+      },
+      {
+        "text": "New"
+      },
+      {
+        "text": "SS"
+      },
+      {
+        "text": "Sprint 14"
+      },
+      {
+        "text": "coupon, checkout",
+        "tone": "tags",
+        "label": "tags"
+      }
+    ],
+    "sections": [
+      {
+        "title": "Description",
+        "markdown": ""
+      },
+      {
+        "title": "Acceptance criteria",
+        "markdown": ""
+      }
+    ],
+    "scroll": 0,
+    "buttons": [],
+    "heading": "Story · demo-shop",
+    "linked": [
+      {
+        "id": "dialog:linked:session",
+        "label": "Session",
+        "words": "none yet",
+        "dim": true
+      },
+      {
+        "id": "dialog:linked:pr",
+        "label": "PR",
+        "words": "none yet",
+        "dim": true
+      },
+      {
+        "id": "dialog:linked:box",
+        "label": "Box",
+        "words": "none yet",
+        "dim": true
+      }
+    ],
+    "hint": "assigned to Sam Sample · ⌘⏎ more",
+    "comments": {
+      "state": "loading",
+      "comments": []
+    }
+  }
+}

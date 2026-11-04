@@ -1,0 +1,9 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "open-project",
+    "path": "/home/me/projects/demo-shop-wt/2-cart",
+    "chat": true
+  }
+}

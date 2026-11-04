@@ -1,0 +1,27 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "pr-pick",
+    "root": "/home/me/projects/demo-shop",
+    "repo": "acme/demo-shop",
+    "rows": [
+      {
+        "caption": "Mine"
+      },
+      {
+        "number": 9,
+        "label": "#9 Pay by card   feature/AB-12-pay",
+        "note": "Draft"
+      },
+      {
+        "caption": "Others"
+      },
+      {
+        "number": 7,
+        "label": "#7 Cart totals   bob",
+        "note": "Review requested"
+      }
+    ]
+  }
+}

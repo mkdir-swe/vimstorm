@@ -1,0 +1,103 @@
+{
+  "kind": "LinkedLayer",
+  "id": "linked",
+  "props": {
+    "story": "#2",
+    "keys": "⌃L",
+    "filter": "",
+    "rows": [
+      {
+        "id": "linked:row:story",
+        "label": "Story",
+        "value": [
+          {
+            "text": "Reading…"
+          }
+        ],
+        "dim": true
+      },
+      {
+        "id": "linked:row:prototype",
+        "label": "Prototype",
+        "value": [
+          {
+            "text": "Reading…"
+          }
+        ],
+        "dim": true
+      },
+      {
+        "id": "linked:row:spec",
+        "label": "Spec",
+        "value": [
+          {
+            "text": "Reading…"
+          }
+        ],
+        "dim": true
+      },
+      {
+        "id": "linked:row:sessions",
+        "label": "Sessions",
+        "value": [
+          {
+            "text": "Reading…"
+          }
+        ],
+        "dim": true
+      },
+      {
+        "id": "linked:row:pr",
+        "label": "Pull request",
+        "value": [
+          {
+            "text": "Reading…"
+          }
+        ],
+        "dim": true
+      },
+      {
+        "id": "linked:row:pipelines",
+        "label": "Pipelines",
+        "value": [
+          {
+            "text": "Reading…"
+          }
+        ],
+        "dim": true
+      },
+      {
+        "id": "linked:row:worktree",
+        "label": "Worktree",
+        "value": [
+          {
+            "text": "Reading…"
+          }
+        ],
+        "dim": true
+      },
+      {
+        "id": "linked:row:box",
+        "label": "Box",
+        "value": [
+          {
+            "text": "Reading…"
+          }
+        ],
+        "dim": true
+      },
+      {
+        "id": "linked:row:sheets",
+        "label": "Sheets",
+        "value": [
+          {
+            "text": "Reading…"
+          }
+        ],
+        "dim": true
+      }
+    ],
+    "selected": "linked:row:story",
+    "hint": "⏎ open · Esc close"
+  }
+}

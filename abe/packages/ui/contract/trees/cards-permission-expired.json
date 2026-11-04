@@ -1,0 +1,79 @@
+{
+  "kind": "Island",
+  "id": "cards:permission-expired",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "gap": 8,
+        "pad": [
+          12,
+          12,
+          8,
+          12
+        ],
+        "sizes": [
+          "auto",
+          "auto",
+          {
+            "flex": 1
+          },
+          "auto"
+        ]
+      },
+      "children": [
+        {
+          "kind": "Prose",
+          "id": "cards:prose",
+          "props": {
+            "markdown": "VAT can come from two places: the markets table in `markets.ts`, or a per-market value the story's comments ask for. That decides what the fix multiplies, so I'll wait for you before the pull request."
+          }
+        },
+        {
+          "kind": "QuestionCard",
+          "id": "card:p-1",
+          "props": {
+            "ask": "permission",
+            "title": "Allow Bash: npm ci?",
+            "mono": "npm ci",
+            "why": "Reach: writes only in the worktree",
+            "where": "Local sandbox · the command runs in Claude Code's sandbox",
+            "options": [
+              {
+                "n": 1,
+                "label": "Allow once",
+                "recommended": true
+              },
+              {
+                "n": 2,
+                "label": "Allow for this session"
+              },
+              {
+                "n": 3,
+                "label": "Deny"
+              }
+            ],
+            "own": "Tell it what to do instead…",
+            "expired": "Answer in Terminal mode · ⌃⌘→"
+          }
+        },
+        {
+          "kind": "Stack",
+          "props": {
+            "direction": "column"
+          },
+          "children": []
+        },
+        {
+          "kind": "Stack",
+          "props": {
+            "direction": "column"
+          },
+          "children": []
+        }
+      ]
+    }
+  ]
+}

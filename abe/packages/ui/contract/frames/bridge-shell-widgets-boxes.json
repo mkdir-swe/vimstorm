@@ -1,0 +1,16 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "widgets",
+    "widgets": [
+      {
+        "id": "boxes",
+        "text": "3 boxes · 1 running",
+        "cloud": "running",
+        "hue": "bad",
+        "tooltip": "demo-shop-2 starting · 6 min"
+      }
+    ]
+  }
+}

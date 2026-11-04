@@ -1,0 +1,173 @@
+{
+  "kind": "Island",
+  "id": "chat",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "sizes": [
+          "auto",
+          "auto",
+          {
+            "flex": 1
+          },
+          "auto"
+        ]
+      },
+      "children": [
+        {
+          "kind": "ChatHeader",
+          "id": "chat-header",
+          "props": {
+            "title": "Chat",
+            "env": "Local · no sandbox",
+            "note": "mkdir-swe/demo-shop",
+            "story": {
+              "id": "Abe",
+              "title": "· demo-shop"
+            },
+            "hint": "⌘⏎",
+            "face": true,
+            "tabs": [
+              {
+                "id": "chat:tab:abe-i1a2",
+                "label": "Abe",
+                "selected": true,
+                "mark": "needs-you",
+                "close": "chat:tab-close:abe-i1a2"
+              }
+            ],
+            "add": "chat:tab-new"
+          }
+        },
+        {
+          "kind": "InstallParts",
+          "id": "install-parts",
+          "props": {
+            "title": "Install",
+            "state": {
+              "text": "2 of 6",
+              "hue": "warn"
+            },
+            "join": {
+              "text": "Join",
+              "hue": "accent"
+            },
+            "parts": [
+              {
+                "id": "install:part:logins",
+                "glyph": "✓",
+                "hue": "good",
+                "name": "Logins"
+              },
+              {
+                "id": "install:part:board",
+                "glyph": "!",
+                "hue": "warn",
+                "name": "Board"
+              },
+              {
+                "id": "install:part:sources",
+                "glyph": "○",
+                "hue": "dim",
+                "name": "Sources"
+              },
+              {
+                "id": "install:part:env-files",
+                "glyph": "✗",
+                "hue": "bad",
+                "name": "Env files"
+              },
+              {
+                "id": "install:part:checks",
+                "glyph": "○",
+                "hue": "dim",
+                "name": "Checks"
+              },
+              {
+                "id": "install:part:done",
+                "glyph": "○",
+                "hue": "dim",
+                "name": "Done"
+              }
+            ],
+            "files": {
+              "id": "install:files",
+              "text": "Files 5",
+              "open": true
+            },
+            "unfolded": {
+              "kind": "files",
+              "files": [
+                {
+                  "id": "install:file:0",
+                  "label": "abe.yaml"
+                },
+                {
+                  "id": "install:file:1",
+                  "label": "CLAUDE.md"
+                },
+                {
+                  "id": "install:file:2",
+                  "label": ".claude/skills/demo-shop-testing/SKILL.md"
+                },
+                {
+                  "id": "install:file:3",
+                  "label": ".abe/abe.dev.env"
+                },
+                {
+                  "id": "install:file:4",
+                  "label": ".abe/settings.local.yaml"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "kind": "Transcript",
+          "id": "chat:transcript",
+          "props": {
+            "session": "abe-i1a2",
+            "mark": "abe"
+          },
+          "children": []
+        },
+        {
+          "kind": "Stack",
+          "id": "composer:dock",
+          "props": {
+            "direction": "column",
+            "gap": 4,
+            "pad": [
+              4,
+              12,
+              12,
+              12
+            ]
+          },
+          "children": [
+            {
+              "kind": "ChatStatus",
+              "id": "chat:status",
+              "props": {
+                "tone": "idle",
+                "words": "Idle · your turn"
+              }
+            },
+            {
+              "kind": "Composer",
+              "id": "composer:composer",
+              "props": {
+                "text": "",
+                "placeholder": "Ask Abe · make a card · /abe:…"
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

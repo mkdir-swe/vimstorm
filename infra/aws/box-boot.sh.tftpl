@@ -1,0 +1,399 @@
+#!/bin/bash
+# The box's boot: cloud-init user data (box.tf), the same for every box, run
+# on EVERY boot (first boot and every start), so it is idempotent. What makes a box its own comes
+# from its tags, read through the instance metadata (instance metadata tags on): abe:owner,
+# abe:team, abe:box (its name), abe:repo. A box is one person's for one repo and holds a workspace
+# per story (ADR 0022); a 2.2 box made for one card also has abe:card and
+# abe:title (an "old box"). On a start systemd has already started the units this script
+# made: a unit is restarted only when its file (or what it runs) changed, else just started.
+# Prints no secret; its log is /var/log/abe-box-boot.log.
+# A stop can cut any boot off (a stop request, `abe box stop`, the idle stop, Terraform): each step
+# is safe to run again, a dpkg run cut off is finished before anything else touches the packages.
+#   1. the host's tools once (Docker, gh, the aws CLI, claude, az);
+#   2. the abe release abe/current in the artifacts bucket names (release.sh writes it; read on
+#      every boot, so a stop and start picks up a new release) when the installed one differs;
+#      while it cannot be read the installed abe stays (none yet: the baked abe_version);
+#   3. abe-imds-block (containers never reach the instance metadata), abe-apparmor (the
+#      workspace container's AppArmor profile), abe serve (ABE_BOX=1; it
+#      shuts the box down when idle: the sudoers rule for exactly that) and
+#      abe-workspace (every workspace on the box back: `abe workspace up --all`, every start);
+#      abe serve may also grow the root disk (abe-grow-root) as the workspaces fill it.
+set -euo pipefail
+exec >>/var/log/abe-box-boot.log 2>&1
+echo "boot start $(date -Is)"
+export DEBIAN_FRONTEND=noninteractive HOME=/root
+user=${user}
+home=/home/$user
+state=$home/.local/state/abe
+changed=" "
+stop_after=
+
+# put <file> <unit>: stdin into <file> when it differs, <unit> then counted as changed.
+put() {
+  local new
+  new=$(mktemp)
+  cat >"$new"
+  if cmp -s "$new" "$1"; then
+    rm -f "$new"
+  else
+    install -m "$${MODE:-0644}" "$new" "$1"
+    rm -f "$new"
+    changed="$changed$2 "
+  fi
+}
+# up <unit>…: restart the changed ones, start the rest (a running one is left alone).
+up() {
+  systemctl daemon-reload
+  for unit in "$@"; do
+    systemctl enable "$unit"
+    case "$changed" in
+      *" $unit "*) systemctl restart "$unit" ;;
+      *) systemctl start "$unit" ;;
+    esac
+  done
+}
+
+# The box's own values: its tags (IMDSv2; a hop limit of 1 keeps containers out anyway).
+token=$(curl -fsS -X PUT -H "X-aws-ec2-metadata-token-ttl-seconds: 300" http://169.254.169.254/latest/api/token)
+tag() { curl -fsS -H "X-aws-ec2-metadata-token: $token" "http://169.254.169.254/latest/meta-data/tags/instance/$1" 2>/dev/null || true; }
+owner=$(tag abe:owner)
+team=$(tag abe:team)
+# Its own instance: serve grows its root volume as the workspaces fill it (abe-box-disk).
+instance=$(curl -fsS -H "X-aws-ec2-metadata-token: $token" http://169.254.169.254/latest/meta-data/instance-id)
+box=$(tag abe:box)
+repo=$(tag abe:repo)
+# An old box's card (2.2: one box per card), only for an abe from before `workspace up --all`.
+card=$(tag abe:card)
+# The title only names the card's branch: kept to plain characters (it goes into a unit's env).
+title=$(tag abe:title | tr -cd 'A-Za-z0-9 ._,:()/#+-')
+if [ -z "$owner" ] || [ -z "$box" ]; then
+  echo "no abe:owner or abe:box tag (are instance metadata tags on?)"
+  exit 1
+fi
+echo "box $box of $owner (team $${team:-none}, repo $${repo:-none}$${card:+, old box of card $card})"
+
+# The box's first boot (the marker is made at its start, so a first boot cut off by a stop is
+# not one again) powers it off once it is over, done or failed, when its abe:first-boot tag says
+# stop: a stop from outside would cut it off.
+# first_over: that power-off, from the script's EXIT trap.
+first_over() {
+  [ -n "$stop_after" ] || return 0
+  echo "first boot over: powering off in a minute (abe:first-boot=stop)"
+  sync
+  shutdown -h +1 || true
+}
+install -d -m 0755 /var/lib/abe
+if [ ! -e /var/lib/abe/first-boot ]; then
+  date -Is >/var/lib/abe/first-boot
+  if [ "$(tag abe:first-boot)" = stop ]; then stop_after=1; fi
+fi
+trap first_over EXIT
+hostnamectl set-hostname "$box"
+grep -q " $box\$" /etc/hosts || echo "127.0.1.1 $box" >>/etc/hosts
+
+# Chromium's sandbox in the workspace container needs user namespaces; Ubuntu 24.04 also
+# keeps unprivileged ones behind AppArmor, which Docker's default profile does not grant.
+cat >/etc/sysctl.d/90-abe.conf <<'CONF'
+user.max_user_namespaces=63359
+kernel.apparmor_restrict_unprivileged_userns=0
+CONF
+sysctl -q --system || true
+
+getent group docker >/dev/null || groupadd --system docker
+usermod -aG docker "$user"
+
+# The idle stop: abe serve (as $user) may power the box off, and nothing else as root.
+MODE=0440 put /etc/sudoers.d/90-abe-shutdown abe-shutdown <<SUDO
+$user ALL=(root) NOPASSWD: /usr/sbin/shutdown -h now
+SUDO
+visudo -cqf /etc/sudoers.d/90-abe-shutdown ||
+  { rm -f /etc/sudoers.d/90-abe-shutdown; echo "abe-shutdown: sudoers rule refused: the box never stops itself when idle" >&2; }
+
+# The root disk grown live: abe serve has EC2 make the root volume bigger
+# while the workspaces fill it (abe-box-disk), then its partition and filesystem take the room
+# with this, as root; serve (as $user) may run exactly it, nothing else.
+MODE=0755 put /usr/local/sbin/abe-grow-root abe-grow <<'GROW'
+#!/bin/bash
+# abe-grow-root: the root filesystem over all of its disk (growpart, then resize2fs); safe to run
+# again (growpart's NOCHANGE is no failure). Prints the root's size and room, in bytes.
+set -euo pipefail
+src=$(findmnt -no SOURCE /)
+disk=/dev/$(lsblk -no PKNAME "$src")
+part=$(cat "/sys/class/block/$(basename "$src")/partition")
+growpart "$disk" "$part" || [ $? -eq 1 ]
+resize2fs "$src" >&2
+df -B1 --output=size,avail / | tail -1
+GROW
+MODE=0440 put /etc/sudoers.d/90-abe-grow abe-grow <<SUDO
+$user ALL=(root) NOPASSWD: /usr/local/sbin/abe-grow-root
+SUDO
+visudo -cqf /etc/sudoers.d/90-abe-grow ||
+  { rm -f /etc/sudoers.d/90-abe-grow; echo "abe-grow: sudoers rule refused: the root disk is never grown" >&2; }
+
+# Packages: apt waits for another apt (a first boot's unattended-upgrades) instead of failing;
+# a dpkg run a stop cut off ("dpkg was interrupted") is finished, and a package left half
+# unpacked put back, before any apt-get. Stale lock files are harmless (dpkg's locks die with
+# their process): only a live holder is waited for, never a lock file removed.
+cat >/etc/apt/apt.conf.d/90abe-lock <<'APT'
+DPkg::Lock::Timeout "600";
+APT
+# dpkg_heal: dpkg --configure -a (retried while another dpkg holds the lock, 10 minutes at most),
+# then apt-get -f install while dpkg --audit still names a package.
+dpkg_heal() {
+  local i out
+  for i in $(seq 120); do
+    if out=$(dpkg --configure -a 2>&1); then
+      [ -z "$out" ] || printf '%s\n' "$out"
+      break
+    fi
+    case "$out" in
+      *lock*) [ "$i" -lt 120 ] || { printf '%s\n' "$out"; return 1; }; sleep 5 ;;
+      *) printf '%s\n' "$out"; return 1 ;;
+    esac
+  done
+  if [ -n "$(dpkg --audit 2>&1 || true)" ]; then
+    echo "dpkg --audit names packages left half done: apt-get -f install"
+    apt-get install -f -yq
+  fi
+}
+dpkg_heal
+
+# 1. Tools, once: done when dpkg has every package installed (a run cut off between packages
+# is not done) and buildx answers.
+tools="docker.io docker-buildx jq git tmux gh unzip"
+# installed <package>…: dpkg has each one fully installed.
+installed() {
+  local s
+  s=$(dpkg-query -W -f='$${db:Status-Abbrev}\n' "$@" 2>/dev/null) || return 1
+  ! grep -qv '^ii' <<<"$s"
+}
+# shellcheck disable=SC2086 # $tools is a word list
+if ! installed $tools || ! docker buildx version >/dev/null 2>&1; then
+  install -d -m 0755 /etc/apt/keyrings
+  curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+    -o /etc/apt/keyrings/githubcli-archive-keyring.gpg.new
+  mv /etc/apt/keyrings/githubcli-archive-keyring.gpg.new /etc/apt/keyrings/githubcli-archive-keyring.gpg
+  chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
+  echo "deb [arch=arm64 signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" \
+    >/etc/apt/sources.list.d/github-cli.list
+  apt-get update -q
+  # shellcheck disable=SC2086
+  apt-get install -yq $tools
+fi
+snap wait system seed.loaded
+# A snap install a stop cut off is undone or finished by snapd on its start: wait for it.
+snap watch --last=install >/dev/null 2>&1 || true
+snap list aws-cli >/dev/null 2>&1 || snap install aws-cli --classic
+aws=/snap/bin/aws
+# The login tools abe login checks and restores; a failure here leaves the box usable.
+[ -x "$home/.local/bin/claude" ] ||
+  sudo -u "$user" -H bash -c 'curl -fsSL https://claude.ai/install.sh | bash -s ${claude_version}' ||
+  echo "claude install failed"
+command -v az >/dev/null || curl -fsSL https://aka.ms/InstallAzureCLIDeb | bash || echo "az install failed"
+
+# 2. abe: the release abe/current names (one line, the version). While it cannot be read (missing,
+# refused, S3 not reachable yet: the aws error goes to this log) the installed abe stays; a box
+# with none yet takes the one baked in here. A newer release is never swapped for the baked one.
+baked=${abe_version}
+have=$(cat /opt/abe/version 2>/dev/null || true)
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp" /opt/abe.new; first_over' EXIT
+if want=$($aws s3 cp --region ${region} --only-show-errors "s3://${bucket}/abe/current" - | tr -d '[:space:]'); then
+  :
+else
+  want=
+fi
+case "$want" in
+  [A-Za-z0-9]*) case "$want" in *[!A-Za-z0-9._-]*) want= ;; esac ;;
+  *) want= ;;
+esac
+if [ -n "$want" ]; then
+  echo "abe/current names $want (installed $${have:-none}, baked $baked)"
+elif [ -n "$have" ]; then
+  echo "abe/current unreadable or invalid: keeping abe $have"
+  want=$have
+else
+  echo "abe/current unreadable or invalid and no abe installed: the baked abe_version $baked"
+  want=$baked
+fi
+# fetch <version>: the build into $tmp, its binary checked, its images unpacked as /opt/abe.new.
+fetch() {
+  rm -rf "$tmp" && mkdir -p "$tmp" &&
+    $aws s3 cp --region ${region} --only-show-errors --recursive "s3://${bucket}/abe/$1/" "$tmp/" &&
+    (cd "$tmp" && sha256sum -c --quiet abe-linux-arm64.sha256) &&
+    rm -rf /opt/abe.new && mkdir -p /opt/abe.new &&
+    tar -xzf "$tmp/images.tar.gz" -C /opt/abe.new --no-same-owner
+}
+if [ "$have" != "$want" ]; then
+  got=
+  if fetch "$want"; then
+    got=$want
+  else
+    # A release that cannot be fetched, checked or unpacked keeps the installed abe; with none
+    # yet, the baked.
+    echo "abe $want could not be fetched, checked or unpacked"
+    if [ -z "$have" ] && [ "$want" != "$baked" ]; then
+      fetch "$baked" && got=$baked
+    fi
+    if [ -z "$got" ] && [ -z "$have" ]; then
+      echo "no abe to run"
+      exit 1
+    fi
+    [ -n "$got" ] || echo "keeping abe $have"
+  fi
+  if [ -n "$got" ]; then
+    install -m 0755 "$tmp/abe-linux-arm64" /usr/local/bin/abe
+    echo "$got" >/opt/abe.new/version
+    # The binary and images on disk before the version that says they are there (a stop then
+    # loses nothing: an /opt/abe without the version is fetched again).
+    sync
+    rm -rf /opt/abe && mv /opt/abe.new /opt/abe
+    changed="$changed abe-serve abe-apparmor abe-imds-block "
+    echo "abe $got installed"
+  fi
+fi
+rm -rf "$tmp" /opt/abe.new
+trap first_over EXIT
+
+# 3. The metadata rule, serve and the workspace. The owner's logins secret (logins.tf).
+logins=${logins_secret}
+install -d -m 0755 /etc/abe
+# Each workspace on its own bridge network (ADR 0022): /24s from a large pool, so
+# a box holding many workspaces never runs out (Docker's default pools give about 31 networks).
+install -d -m 0755 /etc/docker
+put /etc/docker/daemon.json docker <<'JSON'
+{ "default-address-pools": [{ "base": "10.200.0.0/14", "size": 24 }] }
+JSON
+
+put /etc/abe/serve.env abe-serve <<ENV
+ABE_BOX=1
+ABE_OWNER=$owner
+ABE_BOX_NAME=$box
+ABE_INSTANCE_ID=$instance
+ABE_REACH_TARGET=cloud
+ABE_LOG_STORE=${log_store}
+ABE_ORG_STORE=${org_store}
+ABE_LOGINS_SECRET=$logins
+AWS_REGION=${region}
+AWS_DEFAULT_REGION=${region}
+PATH=$home/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+ENV
+
+# Before Docker, so no container (restart policy) comes up ahead of the rule; the script makes
+# DOCKER-USER itself and Docker keeps it.
+put /etc/systemd/system/abe-imds-block.service abe-imds-block <<'UNIT'
+[Unit]
+Description=Block the instance metadata service for containers
+Before=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/opt/abe/images/box/imds-block.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=docker.service multi-user.target
+UNIT
+
+# The workspace container's AppArmor profile (abe-workspace: docker-default with only Claude
+# Code's bubblewrap mounts), from the installed abe's images, before Docker starts a container.
+put /etc/systemd/system/abe-apparmor.service abe-apparmor <<'UNIT'
+[Unit]
+Description=The workspace container's AppArmor profile (abe-workspace)
+After=apparmor.service
+Before=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/opt/abe/images/box/apparmor.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=docker.service multi-user.target
+UNIT
+
+put /etc/systemd/system/abe-serve.service abe-serve <<UNIT
+[Unit]
+Description=abe serve (the box's workspace)
+After=docker.service abe-imds-block.service abe-apparmor.service network-online.target
+Requires=docker.service abe-imds-block.service
+Wants=abe-apparmor.service
+Wants=network-online.target
+
+[Service]
+User=$user
+SupplementaryGroups=docker
+Environment=HOME=$home
+EnvironmentFile=/etc/abe/serve.env
+WorkingDirectory=$home
+ExecStartPre=/bin/rm -f $state/serve.sock
+ExecStart=/usr/local/bin/abe serve
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
+UNIT
+
+# An old box's card (its tags) for the abe-workspaces fallback, one word each.
+put /etc/abe/workspace.env abe-workspace <<ENV
+ABE_WS_REPO=$repo
+ABE_WS_CARD=$card
+ABE_WS_TITLE=$title
+ENV
+
+# Every workspace on the box back: `abe workspace up --all` finds them by
+# their Docker labels (none yet: nothing to do). An abe from before it refuses --all as an unknown
+# flag: then an old box's one card, as its tags name it, as 2.2's boot did.
+MODE=0755 put /usr/local/bin/abe-workspaces abe-workspace <<'WS'
+#!/bin/bash
+set -uo pipefail
+if out=$(abe workspace up --all --json 2>&1); then
+  printf '%s\n' "$out"
+  exit 0
+fi
+printf '%s\n' "$out" >&2
+case "$out" in
+  *"unknown flag --all"*) ;;
+  *) exit 1 ;;
+esac
+if [ -z "$${ABE_WS_REPO:-}" ] || [ -z "$${ABE_WS_CARD:-}" ]; then
+  echo "abe-workspaces: this abe has no workspace up --all and the box names no card: none brought back"
+  exit 0
+fi
+exec abe workspace up --repo "$ABE_WS_REPO" --card "$ABE_WS_CARD" --title "$${ABE_WS_TITLE:-}" --json
+WS
+
+# Every workspace on every start: the base image when missing, then abe-workspaces
+# (idempotent; it brings each container back after a stop). An abe with ABE_BOX never starts a
+# serve of its own, so this waits for the abe-serve unit's.
+put /etc/systemd/system/abe-workspace.service abe-workspace <<UNIT
+[Unit]
+Description=Every workspace on this box (abe workspace up --all)
+After=abe-serve.service abe-apparmor.service
+Requires=abe-serve.service abe-apparmor.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+User=$user
+SupplementaryGroups=docker
+Environment=HOME=$home ABE_BOX=1
+EnvironmentFile=/etc/abe/serve.env
+EnvironmentFile=/etc/abe/workspace.env
+WorkingDirectory=$home
+TimeoutStartSec=30min
+ExecStartPre=/usr/bin/timeout 120 /bin/sh -c 'until abe status --json >/dev/null 2>&1; do sleep 1; done'
+ExecStartPre=/bin/sh -c 'docker image inspect abe-base:latest >/dev/null 2>&1 || ABE_BIN=/usr/local/bin/abe /opt/abe/images/build.sh'
+ExecStart=/usr/local/bin/abe-workspaces
+
+[Install]
+WantedBy=multi-user.target
+UNIT
+
+up abe-imds-block
+# A profile that fails to load keeps only the workspaces down (they Require it); serve still runs
+# and stops the box when idle.
+up abe-apparmor || echo "abe-apparmor failed: the workspaces stay down"
+up docker abe-serve abe-workspace
+echo "boot done $(date -Is)"

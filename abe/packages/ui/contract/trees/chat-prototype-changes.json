@@ -1,0 +1,160 @@
+{
+  "kind": "Island",
+  "id": "chat",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "sizes": [
+          "auto",
+          {
+            "flex": 1
+          },
+          "auto"
+        ]
+      },
+      "children": [
+        {
+          "kind": "ChatHeader",
+          "id": "chat-header",
+          "props": {
+            "title": "Chat",
+            "story": {
+              "id": "Prototype",
+              "title": "· #1234 Cart total includes shipping"
+            },
+            "hint": "⌘⏎",
+            "address": {
+              "id": "chat:prototype-page",
+              "text": "127.0.0.1:50321"
+            },
+            "rail": {
+              "segments": [],
+              "stage": "Local",
+              "state": "running",
+              "glyph": "●",
+              "word": "Running"
+            }
+          }
+        },
+        {
+          "kind": "Transcript",
+          "id": "chat:transcript",
+          "props": {
+            "reveal": "step:b1",
+            "session": "prototype-a1b2"
+          },
+          "children": [
+            {
+              "kind": "ChatMessage",
+              "id": "msg:u1",
+              "props": {
+                "text": "make the Buy button green"
+              }
+            },
+            {
+              "kind": "Turn",
+              "id": "turn:u1",
+              "props": {},
+              "children": [
+                {
+                  "kind": "StepRow",
+                  "id": "step:w1",
+                  "props": {
+                    "mark": "good",
+                    "verb": "Wrote",
+                    "object": "1.css",
+                    "objectKind": "path"
+                  }
+                },
+                {
+                  "kind": "StepRow",
+                  "id": "step:b1",
+                  "props": {
+                    "mark": "good",
+                    "verb": "Ran",
+                    "object": "abe prototype change add --kind css --file 1.css --what \"th…",
+                    "objectKind": "command",
+                    "selected": true
+                  }
+                },
+                {
+                  "kind": "StepRow",
+                  "id": "step:w2",
+                  "props": {
+                    "mark": "good",
+                    "verb": "Wrote",
+                    "object": "9.js",
+                    "objectKind": "path"
+                  }
+                },
+                {
+                  "kind": "StepRow",
+                  "id": "step:b2",
+                  "props": {
+                    "mark": "good",
+                    "verb": "Ran",
+                    "object": "abe prototype change add --kind js --file 9.js --what \"the…",
+                    "objectKind": "command"
+                  }
+                },
+                {
+                  "kind": "Prose",
+                  "id": "prose:u1",
+                  "props": {
+                    "markdown": "Change 1: the Buy button is green."
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "Stack",
+          "id": "composer:dock",
+          "props": {
+            "direction": "column",
+            "gap": 4,
+            "pad": [
+              4,
+              12,
+              12,
+              12
+            ]
+          },
+          "children": [
+            {
+              "kind": "ChatStatus",
+              "id": "chat:status",
+              "props": {
+                "tone": "working",
+                "words": "Thinking",
+                "since": 1790845260000
+              }
+            },
+            {
+              "kind": "Composer",
+              "id": "composer:composer",
+              "props": {
+                "text": "",
+                "placeholder": "Message the prototype…"
+              },
+              "children": [
+                {
+                  "kind": "ContextChip",
+                  "id": "composer:chip",
+                  "props": {
+                    "text": "#1234 Cart total includes shipping · selected card",
+                    "drop": "⌫ drop"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

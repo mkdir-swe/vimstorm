@@ -1,0 +1,105 @@
+{
+  "kind": "Island",
+  "id": "chat",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "sizes": [
+          "auto",
+          {
+            "flex": 1
+          },
+          "auto"
+        ]
+      },
+      "children": [
+        {
+          "kind": "ChatHeader",
+          "id": "chat-header",
+          "props": {
+            "title": "Chat",
+            "env": "Local sandbox",
+            "subagents": 3,
+            "story": {
+              "id": "#1240",
+              "title": "Checkout copy for Nordic markets"
+            },
+            "hint": "⌘⏎",
+            "rail": {
+              "segments": [
+                "done",
+                "done",
+                "now",
+                "todo",
+                "todo"
+              ],
+              "stage": "Verify",
+              "state": "running",
+              "glyph": "●",
+              "word": "Verifying"
+            }
+          }
+        },
+        {
+          "kind": "Empty",
+          "props": {
+            "title": "",
+            "line": "Reading the transcript"
+          }
+        },
+        {
+          "kind": "Stack",
+          "id": "composer:dock",
+          "props": {
+            "direction": "column",
+            "gap": 4,
+            "pad": [
+              4,
+              12,
+              12,
+              12
+            ]
+          },
+          "children": [
+            {
+              "kind": "ChatStatus",
+              "id": "chat:status",
+              "props": {
+                "tone": "working",
+                "words": "Waiting on 3 subagents",
+                "since": 1790845260000,
+                "agents": {
+                  "text": "3 subagents",
+                  "id": "chat:agents",
+                  "running": 3,
+                  "open": false
+                }
+              }
+            },
+            {
+              "kind": "Composer",
+              "id": "composer:composer",
+              "props": {
+                "text": "",
+                "placeholder": "Message #1240 Checkout copy for Nordic…"
+              },
+              "children": [
+                {
+                  "kind": "ContextChip",
+                  "id": "composer:chip",
+                  "props": {
+                    "text": "#1240 Card 1240 · selected card",
+                    "drop": "⌫ drop"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "kind": "PickLayer",
+  "id": "action-menu",
+  "props": {
+    "title": "#1262 Greeted by time of day",
+    "filter": "",
+    "rows": [
+      {
+        "id": "launch",
+        "text": "Launch agent",
+        "dim": "where serve.target says · its workflow, a note"
+      },
+      {
+        "id": "worktree",
+        "text": "Open worktree",
+        "dim": "from origin"
+      },
+      {
+        "id": "workspace",
+        "text": "Open workspace",
+        "dim": "local worktree",
+        "reason": "no workspace yet"
+      },
+      {
+        "id": "reopen",
+        "text": "Reopen",
+        "reason": "no session yet"
+      },
+      {
+        "id": "stop",
+        "text": "Stop…",
+        "reason": "no session running"
+      },
+      {
+        "id": "end",
+        "text": "End run…",
+        "dim": "done, not reproduced or abandoned, with why",
+        "reason": "no run yet"
+      },
+      {
+        "id": "assign",
+        "text": "Assign…",
+        "dim": "Alex Example",
+        "reason": "already yours"
+      },
+      {
+        "id": "move",
+        "text": "Move…",
+        "dim": "now New"
+      },
+      {
+        "id": "comment",
+        "text": "Comment…",
+        "dim": "markdown, on the card"
+      },
+      {
+        "id": "keep",
+        "text": "Keep box awake",
+        "reason": "no box yet"
+      },
+      {
+        "id": "launch-local-sandbox",
+        "text": "Launch in Local sandbox",
+        "dim": "this machine · no cloud writes",
+        "separator": true
+      },
+      {
+        "id": "prototype",
+        "text": "Prototype…",
+        "dim": "real code in a throwaway worktree, never shipped: its own chat"
+      }
+    ],
+    "selected": "launch",
+    "scroll": {
+      "top": 0,
+      "total": 13
+    }
+  }
+}

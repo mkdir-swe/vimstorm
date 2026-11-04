@@ -1,0 +1,76 @@
+# The workspace container's AppArmor profile (#67): Docker's docker-default (moby's
+# profiles/apparmor template) with its `deny mount` replaced by only the mounts Claude Code's
+# sandbox, bubblewrap, makes to build each command's root in a mount namespace of its own: `/`
+# made a slave, its tmpfs base at /tmp, the binds and read-only remounts of the new root, its
+# /dev (tmpfs, devpts) and /proc, and the pivot_roots between them. Nothing else mounts: no other
+# file system type, no mount at any other place. Loaded on the box host by images/box/apparmor.sh
+# (root, every boot); `abe workspace up` runs the container with --security-opt
+# apparmor=abe-workspace. Capabilities stay dropped, no new privileges, the seccomp profile holds;
+# bubblewrap mounts only inside the user namespace it makes. Beyond docker-default, /proc's
+# kallsyms, modules and keys are not read.
+abi <abi/3.0>,
+#include <tunables/global>
+
+profile abe-workspace flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+
+  network,
+  capability,
+  file,
+  umount,
+  # Host (privileged) processes may send signals to container processes.
+  signal (receive) peer=unconfined,
+  # runc may send signals to container processes (for "docker stop").
+  signal (receive) peer=runc,
+  # crun may send signals to container processes (for "docker stop" when used with crun OCI runtime).
+  signal (receive) peer=crun,
+  # dockerd may send signals to container processes (for "docker kill").
+  signal (receive) peer=dockerd,
+  # Container processes may send signals amongst themselves.
+  signal (send,receive) peer=abe-workspace,
+
+  deny @{PROC}/* w,   # deny write for all files directly in /proc (not in a subdir)
+  # deny write to files not in /proc/<number>/** or /proc/sys/**
+  deny @{PROC}/{[^1-9],[^1-9][^0-9],[^1-9s][^0-9y][^0-9s],[^1-9][^0-9][^0-9][^0-9/]*}/** w,
+  deny @{PROC}/sys/[^k]** w,  # deny /proc/sys except /proc/sys/k* (effectively /proc/sys/kernel)
+  deny @{PROC}/sys/kernel/{?,??,[^s][^h][^m]**} w,  # deny everything except shm* in /proc/sys/kernel/
+  deny @{PROC}/sysrq-trigger rwklx,
+  deny @{PROC}/kcore rwklx,
+  # the kernel's symbol names, its loaded modules and the keys it holds: nothing a session needs
+  deny @{PROC}/{kallsyms,modules,keys} r,
+
+  # bubblewrap's mounts, and no others (docker-default has `deny mount` here), each from the box's
+  # AppArmor audit line of a sandboxed command it refused. A propagation change, a bind, a remount
+  # and a new mount are each their own kind of rule, and every new mount names its file system type.
+  # bwrap: make / a slave (no mount it makes leaks back).
+  mount options in (rslave, silent) -> /,
+  # bwrap: its base, a tmpfs at /tmp, and the new root bound onto itself before the first pivot.
+  mount fstype=tmpfs options in (nosuid, nodev, silent) tmpfs -> /tmp/,
+  mount options in (bind, rbind) /tmp/newroot/ -> /tmp/newroot/,
+  pivot_root oldroot=/tmp/oldroot/ /tmp/,
+  # bwrap: the old root's /proc at its base's /proc (name=/proc/ srcname=/oldroot/proc/ rbind).
+  mount options in (bind, rbind) /oldroot/proc/ -> /proc/,
+  # bwrap: the new root, bound from the old one, then made read-only, nosuid … in place.
+  mount options in (bind, rbind) /oldroot/{,**} -> /newroot/{,**},
+  remount options in (ro, nosuid, nodev, noexec, noatime, nodiratime, relatime, strictatime, bind, silent) /newroot/{,**},
+  # bwrap: --tmpfs and --dev (a tmpfs, its devpts and mqueue), --proc under the new root.
+  mount fstype=tmpfs options in (nosuid, nodev, silent) tmpfs -> /newroot/{,**},
+  mount fstype=devpts options in (nosuid, noexec, silent) devpts -> /newroot/dev/pts/,
+  mount fstype=mqueue options in (nosuid, nodev, noexec, silent) mqueue -> /newroot/dev/mqueue/,
+  mount fstype=proc options in (nosuid, nodev, noexec, silent) proc -> /newroot/proc/,
+  # bwrap: the old root made private before it is let go, and the second pivot into the new root.
+  mount options in (rprivate, silent) -> /oldroot/,
+  pivot_root oldroot=/newroot/ /newroot/,
+
+  deny /sys/[^f]*/** wklx,
+  deny /sys/f[^s]*/** wklx,
+  deny /sys/fs/[^c]*/** wklx,
+  deny /sys/fs/c[^g]*/** wklx,
+  deny /sys/fs/cg[^r]*/** wklx,
+  deny /sys/firmware/** rwklx,
+  deny /sys/devices/virtual/powercap/** rwklx,
+  deny /sys/kernel/security/** rwklx,
+
+  # suppress ptrace denials when using 'docker ps' or using 'ps' inside a container
+  ptrace (trace,read,tracedby,readby) peer=abe-workspace,
+}

@@ -1,0 +1,8 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "open-url",
+    "url": "https://dev.azure.com/demo-org/Sandbox/_workitems/edit/1234"
+  }
+}

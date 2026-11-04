@@ -1,0 +1,71 @@
+{
+  "kind": "Island",
+  "id": "cards:override",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "gap": 8,
+        "pad": [
+          12,
+          12,
+          8,
+          12
+        ],
+        "sizes": [
+          "auto",
+          "auto",
+          {
+            "flex": 1
+          },
+          "auto"
+        ]
+      },
+      "children": [
+        {
+          "kind": "Prose",
+          "id": "cards:prose",
+          "props": {
+            "markdown": "VAT can come from two places: the markets table in `markets.ts`, or a per-market value the story's comments ask for. That decides what the fix multiplies, so I'll wait for you before the pull request."
+          }
+        },
+        {
+          "kind": "OverrideCard",
+          "id": "override",
+          "props": {
+            "title": "Override · Test DB write",
+            "line": "Reach lowered for this session only · tracked on #2 and the PR",
+            "reason": "Seed the shop for the Before check",
+            "facts": [
+              {
+                "label": "Reach",
+                "text": "Test DB · read → write"
+              },
+              {
+                "label": "Until",
+                "text": "this session ends"
+              }
+            ],
+            "foot": "⏎ override · Esc cancel"
+          }
+        },
+        {
+          "kind": "Stack",
+          "props": {
+            "direction": "column"
+          },
+          "children": []
+        },
+        {
+          "kind": "Stack",
+          "props": {
+            "direction": "column"
+          },
+          "children": []
+        }
+      ]
+    }
+  ]
+}

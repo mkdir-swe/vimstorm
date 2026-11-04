@@ -1,0 +1,66 @@
+{
+  "kind": "PickLayer",
+  "id": "action-menu",
+  "props": {
+    "title": "Stripe",
+    "filter": "",
+    "rows": [
+      {
+        "id": "widget:stripe-menu:toggle:project",
+        "text": "Project",
+        "dim": "shown"
+      },
+      {
+        "id": "widget:stripe-menu:toggle:board",
+        "text": "Board",
+        "dim": "shown"
+      },
+      {
+        "id": "widget:stripe-menu:toggle:sessions",
+        "text": "Sessions",
+        "dim": "shown",
+        "separator": true
+      },
+      {
+        "id": "widget:stripe-menu:toggle:boxes",
+        "text": "Boxes",
+        "dim": "shown"
+      },
+      {
+        "id": "widget:stripe-menu:toggle:run",
+        "text": "Run",
+        "dim": "shown",
+        "reason": "Only in a workspace",
+        "separator": true
+      },
+      {
+        "id": "widget:stripe-menu:toggle:terminal",
+        "text": "Terminal",
+        "dim": "shown",
+        "reason": "Only in a workspace"
+      },
+      {
+        "id": "widget:stripe-menu:toggle:pipelines",
+        "text": "Pipelines",
+        "dim": "shown",
+        "reason": "Only in a workspace"
+      },
+      {
+        "id": "widget:stripe-menu:toggle:git",
+        "text": "Git",
+        "dim": "shown",
+        "reason": "Only in a workspace"
+      },
+      {
+        "id": "widget:stripe-menu:bottom:board",
+        "text": "Move to Bottom Group",
+        "separator": true
+      },
+      {
+        "id": "widget:stripe-menu:reset",
+        "text": "Reset the Stripe"
+      }
+    ],
+    "selected": "widget:stripe-menu:toggle:project"
+  }
+}

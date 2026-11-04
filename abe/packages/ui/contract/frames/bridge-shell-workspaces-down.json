@@ -1,0 +1,19 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "workspaces",
+    "workspaces": [],
+    "factory": {
+      "line": [
+        {
+          "text": "demo-shop",
+          "hue": "accent"
+        }
+      ],
+      "label": "Abe, demo-shop",
+      "crumb": "demo-shop"
+    },
+    "answering": false
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "@abe/core",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./permission": "./src/session/permission.ts",
+    "./steps": "./src/session/steps.ts",
+    "./box-text": "./src/box/box-text.ts",
+    "./when": "./src/command/when.ts",
+    "./here": "./src/board/here.ts",
+    "./box-ports": "./src/box/box-ports.ts",
+    "./launch": "./src/box/launch.ts",
+    "./pipelines": "./src/board/pipelines.ts",
+    "./prototype-tag": "./src/board/prototype-tag.ts",
+    "./linked-keys": "./src/board/linked-keys.ts",
+    "./model-name": "./src/session/model-name.ts",
+    "./waits-on": "./src/session/waits-on.ts",
+    "./card-images": "./src/board/card-images.ts",
+    "./draft-fields": "./src/board/draft-fields.ts",
+    "./launch-words": "./src/factory/launch-words.ts",
+    "./local-names": "./src/local-mode/local-names.ts",
+    "./source-tools": "./src/install/source-tools.ts",
+    "./workflow-pick": "./src/skills/workflow/launch-pick.ts",
+    "./run-flow": "./src/factory/run-flow.ts"
+  },
+  "dependencies": {
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@abe/testing": "workspace:*"
+  }
+}

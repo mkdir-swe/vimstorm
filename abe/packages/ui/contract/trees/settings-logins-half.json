@@ -1,0 +1,312 @@
+{
+  "kind": "SettingsDialog",
+  "id": "settings",
+  "props": {
+    "title": "Settings",
+    "search": {
+      "text": ""
+    },
+    "note": "Each change saves as you make it; ⌘⏎ proposes one for the repo",
+    "focus": "page"
+  },
+  "children": [
+    {
+      "kind": "SettingsTree",
+      "id": "settings:tree",
+      "props": {
+        "nodes": [
+          {
+            "id": "settings:tree:problems",
+            "label": "Problems",
+            "depth": 0,
+            "count": {
+              "text": "· 3",
+              "tone": "warn"
+            },
+            "separator": true
+          },
+          {
+            "id": "settings:tree:appearance-behavior",
+            "label": "Appearance & Behavior",
+            "depth": 0,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:appearance",
+            "label": "Appearance",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:import-config",
+            "label": "Import config",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:editor",
+            "label": "Editor",
+            "depth": 0,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:editor-general",
+            "label": "General",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:editor-font",
+            "label": "Font",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:color-scheme",
+            "label": "Color scheme",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:vim",
+            "label": "Vim",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:abe",
+            "label": "Abe",
+            "depth": 0,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:agents",
+            "label": "Agents & models",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:board-team",
+            "label": "Board & you",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:boxes-cloud",
+            "label": "Boxes & cloud",
+            "depth": 1,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:browser-profiles",
+            "label": "Browser profiles",
+            "depth": 2
+          },
+          {
+            "id": "settings:tree:factory-policy",
+            "label": "Factory policy",
+            "depth": 1,
+            "count": {
+              "text": "1",
+              "tone": "dim"
+            }
+          },
+          {
+            "id": "settings:tree:local-mode",
+            "label": "Local mode",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:reach",
+            "label": "Reach",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:logins-tools",
+            "label": "Logins & tools",
+            "depth": 0,
+            "count": {
+              "text": "2",
+              "tone": "dim"
+            },
+            "selected": true
+          },
+          {
+            "id": "settings:tree:tools",
+            "label": "Tools check",
+            "depth": 0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "SettingsPage",
+      "id": "settings:page",
+      "props": {
+        "crumbs": [
+          "Logins & tools"
+        ],
+        "scope": "this machine · checking again…",
+        "reveal": "settings:checks:Logins"
+      },
+      "children": [
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:checks:Logins",
+          "props": {
+            "caption": "Logins"
+          },
+          "children": [
+            {
+              "kind": "CheckRow",
+              "id": "settings:line:0",
+              "props": {
+                "label": "GitHub",
+                "value": "octocat",
+                "check": "gh auth status",
+                "state": {
+                  "text": "✓ OK"
+                },
+                "focused": true
+              }
+            },
+            {
+              "kind": "CheckRow",
+              "id": "settings:line:1",
+              "props": {
+                "label": "Claude",
+                "value": "octo@example.com",
+                "check": "claude auth status",
+                "state": {
+                  "text": "✓ OK"
+                }
+              }
+            },
+            {
+              "kind": "CheckRow",
+              "id": "settings:line:2",
+              "props": {
+                "label": "Azure DevOps",
+                "check": "az account get-access-token",
+                "state": {
+                  "text": "⚠ sign in again: this checkout reads az's own folder (~/.azure)",
+                  "tone": "warn"
+                },
+                "way": "fix…"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:checks:Tools",
+          "props": {
+            "caption": "Tools"
+          },
+          "children": [
+            {
+              "kind": "CheckRow",
+              "id": "settings:line:3",
+              "props": {
+                "label": "node",
+                "check": "node --version",
+                "state": {
+                  "text": "checking…",
+                  "tone": "dim"
+                }
+              }
+            },
+            {
+              "kind": "CheckRow",
+              "id": "settings:line:4",
+              "props": {
+                "label": "tmux",
+                "check": "tmux -V",
+                "state": {
+                  "text": "checking…",
+                  "tone": "dim"
+                }
+              }
+            },
+            {
+              "kind": "CheckRow",
+              "id": "settings:line:5",
+              "props": {
+                "label": "Docker",
+                "check": "docker info --format {{.ServerVersion}}",
+                "state": {
+                  "text": "checking…",
+                  "tone": "dim"
+                }
+              }
+            },
+            {
+              "kind": "CheckRow",
+              "id": "settings:line:6",
+              "props": {
+                "label": "az",
+                "check": "az version --output json",
+                "state": {
+                  "text": "checking…",
+                  "tone": "dim"
+                }
+              }
+            },
+            {
+              "kind": "CheckRow",
+              "id": "settings:line:7",
+              "props": {
+                "label": "gh",
+                "check": "gh --version",
+                "state": {
+                  "text": "checking…",
+                  "tone": "dim"
+                }
+              }
+            },
+            {
+              "kind": "CheckRow",
+              "id": "settings:line:8",
+              "props": {
+                "label": "claude",
+                "check": "claude --version",
+                "state": {
+                  "text": "checking…",
+                  "tone": "dim"
+                }
+              }
+            },
+            {
+              "kind": "CheckRow",
+              "id": "settings:line:9",
+              "props": {
+                "label": "git",
+                "check": "git --version",
+                "state": {
+                  "text": "checking…",
+                  "tone": "dim"
+                }
+              }
+            },
+            {
+              "kind": "CheckRow",
+              "id": "settings:line:10",
+              "props": {
+                "label": "rg",
+                "check": "rg --version",
+                "state": {
+                  "text": "checking…",
+                  "tone": "dim"
+                }
+              }
+            },
+            {
+              "kind": "CheckRow",
+              "id": "settings:line:11",
+              "props": {
+                "label": "aws",
+                "check": "aws --version",
+                "state": {
+                  "text": "checking…",
+                  "tone": "dim"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+# Investigate: a question answered with a cited report on its Run page. It may push a throwaway spike
+# branch the report links; it never opens a pull request. Preselected for no card: pick it.
+name: Investigate
+description: 'A cited report on its Run page; no pull request.'
+branch: card/<card>
+steps:
+  - investigate:
+      skill: investigate
+      ends: { then: report } # the run ends with the step's report

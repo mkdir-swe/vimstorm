@@ -1,0 +1,79 @@
+{
+  "kind": "PickLayer",
+  "id": "command-mode",
+  "props": {
+    "title": "Command mode",
+    "filter": "",
+    "placeholder": "Ask anything, or a command",
+    "rows": [
+      {
+        "id": "subject:workspace",
+        "text": "Open workspace",
+        "dim": "alex-1",
+        "section": "#1234 Cart total includes shipping"
+      },
+      {
+        "id": "subject:worktree",
+        "text": "Open worktree",
+        "dim": "from origin"
+      },
+      {
+        "id": "subject:reopen",
+        "text": "Reopen",
+        "dim": "Chat on it"
+      },
+      {
+        "id": "subject:stop",
+        "text": "Stop…"
+      },
+      {
+        "id": "subject:end",
+        "text": "End run…",
+        "dim": "done, not reproduced or abandoned, with why"
+      },
+      {
+        "id": "subject:move",
+        "text": "Move…",
+        "dim": "now Active"
+      },
+      {
+        "id": "subject:all",
+        "text": "All #1234 actions…",
+        "note": "⌘⏎"
+      },
+      {
+        "id": "view:new-card",
+        "text": "New card…",
+        "dim": "in Sprint 14",
+        "section": "Board"
+      },
+      {
+        "id": "view:tab:team",
+        "text": "Team",
+        "dim": "the team's cards",
+        "note": "Tab"
+      },
+      {
+        "id": "view:tab:sessions",
+        "text": "Sessions",
+        "dim": "your sessions on the sprint and the Abe chats, to read"
+      },
+      {
+        "id": "anywhere:search",
+        "text": "Search Everywhere",
+        "note": "⇧⇧",
+        "section": "Anywhere"
+      },
+      {
+        "id": "anywhere:settings",
+        "text": "Settings",
+        "note": "⌘,"
+      }
+    ],
+    "selected": "subject:workspace",
+    "scroll": {
+      "top": 0,
+      "total": 15
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@abe/hooks",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@abe/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@abe/testing": "workspace:*"
+  }
+}

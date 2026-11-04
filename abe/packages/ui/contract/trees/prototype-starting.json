@@ -1,0 +1,69 @@
+{
+  "kind": "PrototypePage",
+  "id": "prototype-page",
+  "props": {
+    "page": "preview",
+    "bar": {
+      "host": "",
+      "path": "/",
+      "viewports": [
+        {
+          "id": "proto:viewport:fit",
+          "label": "Fit",
+          "on": true
+        },
+        {
+          "id": "proto:viewport:1280",
+          "label": "1280",
+          "on": false
+        },
+        {
+          "id": "proto:viewport:768",
+          "label": "768",
+          "on": false
+        },
+        {
+          "id": "proto:viewport:390",
+          "label": "390",
+          "on": false
+        }
+      ],
+      "reload": "proto:reload",
+      "open": "proto:open",
+      "actions": [
+        {
+          "id": "proto:make-card",
+          "label": "Make card",
+          "keys": "m"
+        }
+      ]
+    },
+    "body": {
+      "kind": "starting",
+      "title": "Starting the app…",
+      "steps": [
+        {
+          "mark": "✓",
+          "hue": "good",
+          "text": "worktree proto/p7-cart-badge"
+        },
+        {
+          "mark": "✓",
+          "hue": "good",
+          "text": "database abe_proto_9f2c, seeded"
+        },
+        {
+          "mark": "●",
+          "hue": "warn",
+          "text": "app starting · its start script"
+        },
+        {
+          "mark": "○",
+          "hue": "dim",
+          "text": "load the page"
+        }
+      ],
+      "note": "What you type in Chat waits for it."
+    }
+  }
+}

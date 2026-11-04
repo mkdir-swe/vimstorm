@@ -1,0 +1,81 @@
+{
+  "kind": "Island",
+  "id": "col:long",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "sizes": [
+          {
+            "flex": 1
+          },
+          "auto"
+        ]
+      },
+      "children": [
+        {
+          "kind": "Stack",
+          "props": {
+            "direction": "column",
+            "pad": [
+              12,
+              12,
+              8,
+              12
+            ]
+          },
+          "children": [
+            {
+              "kind": "Prose",
+              "id": "composer:prose",
+              "props": {
+                "markdown": "`cartTotal` added each line's price once, so a line with 3 of one item was charged as 1."
+              }
+            }
+          ]
+        },
+        {
+          "kind": "Stack",
+          "id": "composer:dock",
+          "props": {
+            "direction": "column",
+            "gap": 4,
+            "pad": [
+              4,
+              12,
+              12,
+              12
+            ]
+          },
+          "children": [
+            {
+              "kind": "Composer",
+              "id": "composer:composer",
+              "props": {
+                "text": "Keep the changes, then open the pull request\nwith the story's acceptance criteria in its description.\nMention the skipped rounding test,\nand that the market table is unchanged.\nAsk Ada to review it.\nThen move the card to Review.\nThen post the PR link on the story.\nThen wait for the checks.\nThen say when they pass.\nThen stop.",
+                "placeholder": "Ask or tell the agent…",
+                "focused": true,
+                "model": {
+                  "label": "opus · medium",
+                  "id": "composer:model"
+                }
+              },
+              "children": [
+                {
+                  "kind": "ContextChip",
+                  "id": "composer:chip",
+                  "props": {
+                    "text": "@api/src/cart.ts:16 · caret line",
+                    "drop": "⌫ drop"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

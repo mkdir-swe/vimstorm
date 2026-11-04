@@ -1,0 +1,8 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "status",
+    "text": "abe card move 7 --column Done: #7 moved to Done"
+  }
+}

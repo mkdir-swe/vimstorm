@@ -1,0 +1,235 @@
+{
+  "kind": "SettingsDialog",
+  "id": "settings",
+  "props": {
+    "title": "Settings",
+    "search": {
+      "text": ""
+    },
+    "note": "Each change saves as you make it; ⌘⏎ proposes one for the repo",
+    "focus": "page"
+  },
+  "children": [
+    {
+      "kind": "SettingsTree",
+      "id": "settings:tree",
+      "props": {
+        "nodes": [
+          {
+            "id": "settings:tree:appearance-behavior",
+            "label": "Appearance & Behavior",
+            "depth": 0,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:appearance",
+            "label": "Appearance",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:import-config",
+            "label": "Import config",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:editor",
+            "label": "Editor",
+            "depth": 0,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:editor-general",
+            "label": "General",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:editor-font",
+            "label": "Font",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:color-scheme",
+            "label": "Color scheme",
+            "depth": 1,
+            "selected": true
+          },
+          {
+            "id": "settings:tree:vim",
+            "label": "Vim",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:abe",
+            "label": "Abe",
+            "depth": 0,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:agents",
+            "label": "Agents & models",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:board-team",
+            "label": "Board & you",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:boxes-cloud",
+            "label": "Boxes & cloud",
+            "depth": 1,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:browser-profiles",
+            "label": "Browser profiles",
+            "depth": 2
+          },
+          {
+            "id": "settings:tree:factory-policy",
+            "label": "Factory policy",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:local-mode",
+            "label": "Local mode",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:reach",
+            "label": "Reach",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:logins-tools",
+            "label": "Logins & tools",
+            "depth": 0
+          },
+          {
+            "id": "settings:tree:tools",
+            "label": "Tools check",
+            "depth": 0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "SettingsPage",
+      "id": "settings:page",
+      "props": {
+        "crumbs": [
+          "Editor",
+          "Color scheme"
+        ],
+        "scope": "demo-shop",
+        "reveal": "settings:colours:abe"
+      },
+      "children": [
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:group:0",
+          "props": {},
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:0",
+              "props": {
+                "label": "Scheme",
+                "control": {
+                  "kind": "combo",
+                  "value": "Same as theme (Islands Dark)"
+                },
+                "help": "Same as theme follows Appearance › Theme; a named one stays when the theme changes",
+                "source": {
+                  "text": ""
+                },
+                "scope": "yours"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:colours",
+          "props": {
+            "caption": "Colours",
+            "note": "Islands Dark · a change saves your copy, never the built-in"
+          },
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:1",
+              "props": {
+                "label": "Reset colours",
+                "control": {
+                  "kind": "value",
+                  "text": "nothing changed"
+                },
+                "help": "back to Islands Dark’s own colours",
+                "source": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:2",
+              "props": {
+                "label": "Filter",
+                "control": {
+                  "kind": "field",
+                  "text": "needs"
+                },
+                "source": {
+                  "text": "1 token matches · 260 in 6 groups"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:colours:abe",
+          "props": {
+            "tight": true
+          },
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:3",
+              "props": {
+                "label": "▾ Abe status",
+                "control": {
+                  "kind": "value",
+                  "text": "7 tokens"
+                },
+                "source": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:4",
+              "props": {
+                "label": "abe-needs-you",
+                "control": {
+                  "kind": "colour",
+                  "hex": "#5ec8c0",
+                  "editing": true,
+                  "text": "#5ec8c0"
+                },
+                "help": "Needs you only: workspace dots, the overflow count, status words and badges. Never red, never shared with Running.",
+                "source": {
+                  "text": ""
+                },
+                "hint": "⏎ change",
+                "focused": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

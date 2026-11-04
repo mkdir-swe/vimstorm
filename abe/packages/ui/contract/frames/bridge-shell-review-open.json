@@ -1,0 +1,11 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "review-open",
+    "path": "/home/me/projects/demo-shop-pr-7",
+    "repo": "acme/demo-shop",
+    "number": 7,
+    "unchecked": null
+  }
+}

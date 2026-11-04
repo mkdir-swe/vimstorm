@@ -1,0 +1,175 @@
+{
+  "v": 2,
+  "type": "tree",
+  "screen": "status",
+  "rev": 1,
+  "tree": {
+    "kind": "Stack",
+    "props": {
+      "direction": "column",
+      "gap": 3,
+      "sizes": [
+        "auto",
+        {
+          "flex": 1
+        },
+        "auto"
+      ]
+    },
+    "children": [
+      {
+        "kind": "Island",
+        "id": "serve",
+        "props": {},
+        "children": [
+          {
+            "kind": "Stack",
+            "props": {
+              "direction": "column"
+            },
+            "children": [
+              {
+                "kind": "ToolWindowHeader",
+                "props": {
+                  "title": "abe serve"
+                }
+              },
+              {
+                "kind": "ListRow",
+                "props": {
+                  "text": "Version",
+                  "note": "2.0.0"
+                },
+                "children": [
+                  {
+                    "kind": "Badge",
+                    "props": {
+                      "text": "✓ answering",
+                      "hue": "good"
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "ListRow",
+                "props": {
+                  "text": "Process",
+                  "note": "pid 4242"
+                }
+              },
+              {
+                "kind": "ListRow",
+                "props": {
+                  "text": "Started",
+                  "note": "2026-10-01T09:00:00.000Z"
+                }
+              },
+              {
+                "kind": "ListRow",
+                "props": {
+                  "text": "Holds",
+                  "note": "3 sessions, 0 workspaces"
+                }
+              },
+              {
+                "kind": "ListRow",
+                "props": {
+                  "text": "Socket",
+                  "dim": "/state/abe/serve.sock"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Island",
+        "id": "sessions",
+        "props": {},
+        "children": [
+          {
+            "kind": "Stack",
+            "props": {
+              "direction": "column",
+              "sizes": [
+                "auto"
+              ]
+            },
+            "children": [
+              {
+                "kind": "ToolWindowHeader",
+                "props": {
+                  "title": "Sessions",
+                  "count": 3
+                }
+              },
+              {
+                "kind": "ListRow",
+                "id": "session:s1",
+                "props": {
+                  "text": "#12 Card 12",
+                  "dim": "mkdir-swe/demo-shop",
+                  "note": "card/12-x"
+                },
+                "children": [
+                  {
+                    "kind": "AgentStatus",
+                    "props": {
+                      "state": "needs-you",
+                      "word": "Needs you"
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "ListRow",
+                "id": "session:s2",
+                "props": {
+                  "text": "#14 Card 14",
+                  "dim": "mkdir-swe/demo-shop",
+                  "note": "card/14-x"
+                },
+                "children": [
+                  {
+                    "kind": "AgentStatus",
+                    "props": {
+                      "state": "running",
+                      "word": "Running"
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "ListRow",
+                "id": "session:s3",
+                "props": {
+                  "text": "#9 Card 9",
+                  "dim": "mkdir-swe/demo-shop",
+                  "note": "card/9-x"
+                },
+                "children": [
+                  {
+                    "kind": "AgentStatus",
+                    "props": {
+                      "state": "ended",
+                      "word": "Ended"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "KeyHint",
+        "id": "reload",
+        "props": {
+          "keys": "r",
+          "label": "reload",
+          "context": "footer"
+        }
+      }
+    ]
+  }
+}

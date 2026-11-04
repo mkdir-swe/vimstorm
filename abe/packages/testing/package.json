@@ -1,0 +1,17 @@
+{
+  "name": "@abe/testing",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@abe/core": "workspace:*",
+    "@abe/hooks": "workspace:*",
+    "@abe/ports": "workspace:*",
+    "@abe/serve": "workspace:*",
+    "@abe/ui": "workspace:*",
+    "zod": "4.4.3",
+    "typescript": "npm:@typescript/typescript6@6.0.2"
+  }
+}

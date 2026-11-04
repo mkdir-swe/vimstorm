@@ -1,0 +1,11 @@
+node_modules
+dist
+bun.lock
+# Written by packages/ui/src/contract.test.ts; read byte for byte by the shell's cargo tests.
+packages/ui/contract
+.scratch
+# The bytes Abe 1.x and GitHub wrote: the review port reads and writes them back byte for byte.
+packages/ports/src/github/fixtures/review
+# Written by packages/core/src/skills/workflow/schema.test.ts (ABE_WRITE_SCHEMA=1).
+packages/core/schema
+images/base/workflow.schema.json

@@ -1,0 +1,183 @@
+{
+  "kind": "Stack",
+  "props": {
+    "direction": "column",
+    "sizes": [
+      {
+        "fixed": 34
+      },
+      {
+        "flex": 1
+      }
+    ]
+  },
+  "children": [
+    {
+      "kind": "RunBar",
+      "id": "run-bar",
+      "props": {
+        "card": "#9",
+        "title": "Why is the cart total slow on the first visit?",
+        "on": false,
+        "context": "demo-shop · Investigate run · 17 min",
+        "linked": false
+      }
+    },
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "row",
+        "gap": 0,
+        "sizes": [
+          {
+            "fixed": 240
+          },
+          {
+            "flex": 1
+          }
+        ],
+        "align": "stretch"
+      },
+      "children": [
+        {
+          "kind": "RunSteps",
+          "id": "run-steps",
+          "props": {
+            "rows": [
+              {
+                "id": "step:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "investigate",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "reported",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "report",
+                "outcome": "reported",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              }
+            ],
+            "selected": "step:1"
+          }
+        },
+        {
+          "kind": "RunFocus",
+          "id": "run-focus",
+          "props": {
+            "step": "step:1",
+            "name": "investigate",
+            "skill": "investigate",
+            "meta": "09:00 · 17 min",
+            "state": {
+              "text": "✓ done",
+              "hue": "good"
+            },
+            "fresh": false,
+            "round": "",
+            "back": "",
+            "chat": false,
+            "did": "Answered with 2 cited findings and 2 costed options; a spike showed a cache cuts the first view from 2.1 s to 140 ms.",
+            "pending": false,
+            "actions": [],
+            "read": {
+              "note": "the question, what an answer must say",
+              "blocks": [
+                {
+                  "title": "",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "card",
+                      "ref": "AB#9 · task · Done",
+                      "title": "Why is the cart total slow on the first visit?",
+                      "text": "The first cart view takes about 2 s; later views 100 ms. Why, and what would it take to fix?"
+                    }
+                  ]
+                },
+                {
+                  "title": "An answer must say",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "list",
+                      "numbered": true,
+                      "rows": [
+                        {
+                          "text": "The cause, cited.",
+                          "note": ""
+                        },
+                        {
+                          "text": "Options with cost and risk, one recommended.",
+                          "note": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "made": {
+              "note": ".scratch/9/report.md · spike card/9-cart-slow · 2 commits",
+              "blocks": [
+                {
+                  "title": "",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "doc",
+                      "eyebrow": "Report · .scratch/9/report.md",
+                      "title": "Why is the cart total slow on the first visit?",
+                      "meta": ".scratch/9/report.md",
+                      "markdown": "**Answer:** The first view calls the carrier’s rate API with no cache and no timeout; later views read the rate from the session. A one-day cache per country and weight band removes the wait.\n\n## Findings\n\n- The first view computes shipping by calling the carrier’s rate API (cart/shipping.ts:31).\n- The call has no timeout and no cache; p95 1.8 s (logs/web, 412 calls).\n\n## Options\n\n1. Cache the rate per country and band for a day. Recommended: small, half a day.\n2. Compute shipping at add-to-cart time. Medium: two days; the same call.\n\n## Spike\n\ncard/9 showed 2.1 s → 140 ms on the first view. Evidence, never merged."
+                    }
+                  ]
+                },
+                {
+                  "title": "Spike · card/9-cart-slow",
+                  "boxed": true,
+                  "parts": [
+                    {
+                      "kind": "commits",
+                      "rows": [
+                        {
+                          "sha": "3e9f0a1",
+                          "subject": "spike: cache carrier rates per band",
+                          "note": ""
+                        },
+                        {
+                          "sha": "5d2b7c4",
+                          "subject": "spike: time the first view with and without",
+                          "note": ""
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "text",
+                      "text": "Evidence, never merged; serve pushed the branch and the card’s comment links it.",
+                      "tone": "dim"
+                    }
+                  ]
+                }
+              ]
+            },
+            "details": []
+          }
+        }
+      ]
+    }
+  ]
+}

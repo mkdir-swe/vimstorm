@@ -1,0 +1,97 @@
+{
+  "kind": "CardPage",
+  "id": "card-page:1262",
+  "props": {
+    "kicker": "User Story",
+    "card": 1262,
+    "state": "New",
+    "title": "Greeted by time of day",
+    "meta": [
+      "US",
+      "New",
+      "AE",
+      "tags greet"
+    ],
+    "facts": [
+      {
+        "text": "US",
+        "tone": "story"
+      },
+      {
+        "text": "New"
+      },
+      {
+        "text": "AE"
+      },
+      {
+        "text": "greet",
+        "tone": "tags",
+        "label": "tags"
+      }
+    ],
+    "sections": [
+      {
+        "title": "Description",
+        "markdown": ""
+      },
+      {
+        "title": "Acceptance criteria",
+        "markdown": ""
+      }
+    ],
+    "scroll": 0,
+    "buttons": [
+      {
+        "id": "card:comment",
+        "label": "Comment",
+        "keys": "⏎",
+        "primary": true
+      },
+      {
+        "id": "card:move",
+        "label": "Move…"
+      },
+      {
+        "id": "card:assign",
+        "label": "Assign…"
+      },
+      {
+        "id": "card:launch",
+        "label": "Launch agent…"
+      }
+    ],
+    "heading": "Card",
+    "linked": [
+      {
+        "id": "dialog:linked:session",
+        "label": "Session",
+        "words": "none yet",
+        "dim": true
+      },
+      {
+        "id": "dialog:linked:pr",
+        "label": "PR",
+        "words": "none yet",
+        "dim": true
+      },
+      {
+        "id": "dialog:linked:box",
+        "label": "Box",
+        "words": "none yet",
+        "dim": true
+      }
+    ],
+    "hint": "⌘⏎ actions · ? keys",
+    "comments": {
+      "state": "ready",
+      "comments": []
+    },
+    "focus": "card:move",
+    "composer": {
+      "text": "",
+      "placeholder": "Comment on #1262… · ⏎ comment · ⌘⏎ actions",
+      "focused": false,
+      "state": "writing"
+    }
+  }
+}

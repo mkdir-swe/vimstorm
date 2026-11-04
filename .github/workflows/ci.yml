@@ -1,0 +1,80 @@
+# The offline suites, on every pull request and push to main.
+#
+# Left out, because they need a real editor or tools a runner does not have:
+# - app/tests (the `app`, `perf` and `theme` test binaries) and tests/run.sh: a real nvim with
+#   the app's plugins, treesitter parsers and language servers installed (app/scripts/warmup.sh).
+# - abe's Docker suites skip themselves when no Docker answers, as on a macOS runner.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  abe:
+    name: abe (typecheck, lint, tests)
+    runs-on: macos-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: abe
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.4
+      - name: Tools the tests run for real
+        run: brew install tmux
+      - run: bun install --frozen-lockfile
+      - run: bun run check
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
+
+  app:
+    name: app (fmt, clippy, unit tests)
+    runs-on: macos-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: app
+    env:
+      CARGO_TERM_COLOR: always
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: app
+      - run: cargo fmt --check
+      - run: cargo clippy --all-targets --all-features -- -D warnings
+      - name: Tools the unit tests run (ripgrep)
+        run: brew install ripgrep
+      - name: Unit tests (no nvim needed)
+        run: cargo test --lib --bins
+
+  gitleaks:
+    name: gitleaks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GITLEAKS_VERSION: 8.30.1
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install gitleaks
+        run: |
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
+            | tar -xz -C "$RUNNER_TEMP" gitleaks
+      - name: Scan the history
+        run: '"$RUNNER_TEMP/gitleaks" git --redact --verbose .'

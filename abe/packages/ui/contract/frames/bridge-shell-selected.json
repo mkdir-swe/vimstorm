@@ -1,0 +1,10 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "selected",
+    "card": 4,
+    "owner": null,
+    "title": "Cart total includes shipping"
+  }
+}

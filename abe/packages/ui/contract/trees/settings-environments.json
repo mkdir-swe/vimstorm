@@ -1,0 +1,253 @@
+{
+  "kind": "SettingsDialog",
+  "id": "settings",
+  "props": {
+    "title": "Settings",
+    "search": {
+      "text": ""
+    },
+    "note": "Each change saves as you make it; ⌘⏎ proposes one for the repo",
+    "focus": "page"
+  },
+  "children": [
+    {
+      "kind": "SettingsTree",
+      "id": "settings:tree",
+      "props": {
+        "nodes": [
+          {
+            "id": "settings:tree:problems",
+            "label": "Problems",
+            "depth": 0,
+            "count": {
+              "text": "· 2",
+              "tone": "warn"
+            },
+            "separator": true
+          },
+          {
+            "id": "settings:tree:appearance-behavior",
+            "label": "Appearance & Behavior",
+            "depth": 0,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:appearance",
+            "label": "Appearance",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:import-config",
+            "label": "Import config",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:editor",
+            "label": "Editor",
+            "depth": 0,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:editor-general",
+            "label": "General",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:editor-font",
+            "label": "Font",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:color-scheme",
+            "label": "Color scheme",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:vim",
+            "label": "Vim",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:abe",
+            "label": "Abe",
+            "depth": 0,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:agents",
+            "label": "Agents & models",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:board-team",
+            "label": "Board & you",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:boxes-cloud",
+            "label": "Boxes & cloud",
+            "depth": 1,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:browser-profiles",
+            "label": "Browser profiles",
+            "depth": 2
+          },
+          {
+            "id": "settings:tree:factory-policy",
+            "label": "Factory policy",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:local-mode",
+            "label": "Local mode",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:reach",
+            "label": "Reach",
+            "depth": 1,
+            "selected": true
+          },
+          {
+            "id": "settings:tree:logins-tools",
+            "label": "Logins & tools",
+            "depth": 0,
+            "count": {
+              "text": "2",
+              "tone": "dim"
+            }
+          },
+          {
+            "id": "settings:tree:tools",
+            "label": "Tools check",
+            "depth": 0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "SettingsPage",
+      "id": "settings:page",
+      "props": {
+        "crumbs": [
+          "Abe",
+          "Reach"
+        ],
+        "scope": "demo-shop",
+        "reveal": "settings:group:0"
+      },
+      "children": [
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:group:0",
+          "props": {
+            "caption": "Reaches"
+          },
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:0",
+              "props": {
+                "label": "Reaches",
+                "control": {
+                  "kind": "list",
+                  "items": []
+                },
+                "help": "write credentials an agent may get",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:1",
+              "props": {
+                "label": "Environments",
+                "control": {
+                  "kind": "records",
+                  "columns": [
+                    {
+                      "label": "Name",
+                      "size": 2
+                    },
+                    {
+                      "label": "AWS account",
+                      "size": 3
+                    },
+                    {
+                      "label": "Region",
+                      "size": 2
+                    },
+                    {
+                      "label": "Write policy",
+                      "size": 3
+                    },
+                    {
+                      "label": "DB read secret",
+                      "size": 3
+                    },
+                    {
+                      "label": "DB write secret",
+                      "size": 3
+                    }
+                  ],
+                  "rows": [
+                    [
+                      "test",
+                      "111111111111",
+                      "eu-north-1",
+                      "",
+                      "demo/test-read",
+                      ""
+                    ],
+                    [
+                      "prod",
+                      "222222222222",
+                      "",
+                      "policies/prod-write.json",
+                      "",
+                      ""
+                    ]
+                  ]
+                },
+                "help": "the repo's: each environment's AWS account, write policy and databases",
+                "source": {
+                  "text": "Repo"
+                },
+                "scope": "local",
+                "default": "none",
+                "hint": "⏎ edit the rows · ⌘⏎ propose for the repo",
+                "focused": true
+              }
+            }
+          ]
+        },
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:group:1",
+          "props": {},
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:2",
+              "props": {
+                "label": "Agents read",
+                "control": {
+                  "kind": "value",
+                  "text": "only the environments on for them"
+                },
+                "source": {
+                  "text": "fixed · off: not reached at all, reads included · Agents & models › Environments"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

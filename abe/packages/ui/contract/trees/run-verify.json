@@ -1,0 +1,504 @@
+{
+  "kind": "Stack",
+  "props": {
+    "direction": "column",
+    "sizes": [
+      {
+        "fixed": 34
+      },
+      {
+        "flex": 1
+      }
+    ]
+  },
+  "children": [
+    {
+      "kind": "RunBar",
+      "id": "run-bar",
+      "props": {
+        "card": "#2",
+        "title": "The cart total ignores quantity",
+        "on": false,
+        "context": "demo-shop · Feature run · 39 min",
+        "linked": false
+      }
+    },
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "row",
+        "gap": 0,
+        "sizes": [
+          {
+            "fixed": 240
+          },
+          {
+            "flex": 1
+          }
+        ],
+        "align": "stretch"
+      },
+      "children": [
+        {
+          "kind": "RunSteps",
+          "id": "run-steps",
+          "props": {
+            "rows": [
+              {
+                "id": "spec:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "create-specification",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "build:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "build",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "checks:1",
+                "mark": {
+                  "glyph": "●",
+                  "hue": "warn"
+                },
+                "name": "checks",
+                "outcome": "failed",
+                "back": true,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "build:2",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "build",
+                "outcome": "round 2",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "checks:2",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "checks",
+                "outcome": "round 2",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "review:1",
+                "mark": {
+                  "glyph": "●",
+                  "hue": "warn"
+                },
+                "name": "review",
+                "outcome": "1 finding",
+                "back": true,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "build:3",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "build",
+                "outcome": "round 3",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "checks:3",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "checks",
+                "outcome": "round 3",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "review:2",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "review",
+                "outcome": "no findings",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "verify:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "verify",
+                "outcome": "3 of 3",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "pr:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "pr",
+                "outcome": "#57 merged",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "merge",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "merge",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              }
+            ],
+            "selected": "verify:1"
+          }
+        },
+        {
+          "kind": "RunFocus",
+          "id": "run-focus",
+          "props": {
+            "step": "verify:1",
+            "name": "verify",
+            "skill": "verify",
+            "meta": "09:29 · 5 min · subagent",
+            "state": {
+              "text": "✓ done",
+              "hue": "good"
+            },
+            "fresh": true,
+            "round": "",
+            "back": "",
+            "chat": true,
+            "did": "3 of 3 criteria pass on the local app; recording 0:42.",
+            "pending": false,
+            "actions": [],
+            "read": {
+              "note": "the criteria, the pack, the diff",
+              "blocks": [
+                {
+                  "title": "Acceptance criteria",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "criteria",
+                      "rows": [
+                        {
+                          "n": 1,
+                          "mark": {
+                            "glyph": "✓",
+                            "hue": "good"
+                          },
+                          "text": "A line's total is its price × quantity",
+                          "proof": true
+                        },
+                        {
+                          "n": 2,
+                          "mark": {
+                            "glyph": "✓",
+                            "hue": "good"
+                          },
+                          "text": "Changing a quantity updates the total at once",
+                          "proof": true
+                        },
+                        {
+                          "n": 3,
+                          "mark": {
+                            "glyph": "✓",
+                            "hue": "good"
+                          },
+                          "text": "A line set to quantity 0 leaves the cart",
+                          "proof": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Verification pack",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "list",
+                      "numbered": false,
+                      "rows": [
+                        {
+                          "text": "Feature map · 3 features",
+                          "note": "cart, checkout · driven · search · not driven"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Level it picked",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "text",
+                      "text": "After.",
+                      "tone": "dim"
+                    }
+                  ]
+                }
+              ]
+            },
+            "made": {
+              "note": "pass · 3 of 3 · evidence per feature",
+              "blocks": [
+                {
+                  "title": "",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "text",
+                      "text": "Result: pass · card/2-the-cart-total-ignores-quantity",
+                      "tone": "plain"
+                    }
+                  ]
+                },
+                {
+                  "title": "",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "kit",
+                      "features": [
+                        {
+                          "feature": "cart",
+                          "title": "Cart total follows quantity",
+                          "mark": {
+                            "glyph": "✓",
+                            "hue": "good"
+                          },
+                          "verdict": "Pass",
+                          "file": "features/cart.md",
+                          "env": "local",
+                          "parts": [
+                            {
+                              "kind": "pair",
+                              "before": {
+                                "id": "run:shot:verify:1:0:0:0",
+                                "path": "/home/me/projects/demo-shop-wt/2-the-cart-total-ignores-quantity/.scratch/2/verify/evidence/cart/before.png",
+                                "alt": "The cart on main",
+                                "caption": "Before, on main: three mugs, the total counts one.",
+                                "url": "http://localhost:5173/cart",
+                                "urlId": "run:url:verify:1:0:0:0",
+                                "account": "buyer"
+                              },
+                              "after": {
+                                "id": "run:shot:verify:1:0:0:1",
+                                "path": "/home/me/projects/demo-shop-wt/2-the-cart-total-ignores-quantity/.scratch/2/verify/evidence/cart/after.png",
+                                "alt": "The cart on this branch",
+                                "caption": "After, this branch: 86.97.",
+                                "url": "http://localhost:5173/cart",
+                                "urlId": "run:url:verify:1:0:0:1",
+                                "account": "buyer"
+                              }
+                            },
+                            {
+                              "kind": "recording",
+                              "id": "run:recording:verify:1:0:1",
+                              "gif": "/home/me/projects/demo-shop-wt/2-the-cart-total-ignores-quantity/.scratch/2/verify/evidence/cart/drive.gif",
+                              "still": "/home/me/projects/demo-shop-wt/2-the-cart-total-ignores-quantity/.scratch/2/verify/evidence/cart/after.png",
+                              "path": "/home/me/projects/demo-shop-wt/2-the-cart-total-ignores-quantity/.scratch/2/verify/evidence/cart/drive.webm",
+                              "playing": true,
+                              "control": "❚❚ Pause",
+                              "videoId": "run:shot:verify:1:0:1:0",
+                              "openVideo": true,
+                              "caption": "Playwright raises the quantity 1 → 3; the total follows.",
+                              "url": "http://localhost:5173/cart",
+                              "urlId": "run:url:verify:1:0:1:0",
+                              "account": "buyer"
+                            },
+                            {
+                              "kind": "judged",
+                              "head": "How it was judged",
+                              "text": "Read the total from the page after each change: 86.97 equals price × quantity + shipping."
+                            }
+                          ]
+                        },
+                        {
+                          "feature": "checkout",
+                          "title": "Shipping added once",
+                          "mark": {
+                            "glyph": "✓",
+                            "hue": "good"
+                          },
+                          "verdict": "Pass",
+                          "file": "features/checkout.md",
+                          "env": "local",
+                          "parts": [
+                            {
+                              "kind": "shot",
+                              "shot": {
+                                "id": "run:shot:verify:1:1:0:0",
+                                "path": "/home/me/projects/demo-shop-wt/2-the-cart-total-ignores-quantity/.scratch/2/verify/evidence/checkout/summary.png",
+                                "alt": "The order summary",
+                                "caption": "",
+                                "url": "http://localhost:5173/checkout",
+                                "urlId": "run:url:verify:1:1:0:0",
+                                "account": "buyer"
+                              }
+                            },
+                            {
+                              "kind": "recording",
+                              "id": "run:recording:verify:1:1:1",
+                              "gif": "",
+                              "still": "",
+                              "path": "/home/me/projects/demo-shop-wt/2-the-cart-total-ignores-quantity/.scratch/2/verify/evidence/checkout/drive.webm",
+                              "playing": false,
+                              "control": "▶ Open in player",
+                              "videoId": "run:shot:verify:1:1:1:0",
+                              "openVideo": false,
+                              "caption": "",
+                              "url": "http://localhost:5173/checkout",
+                              "urlId": "run:url:verify:1:1:1:0",
+                              "account": "buyer"
+                            },
+                            {
+                              "kind": "judged",
+                              "head": "How it was judged",
+                              "text": "Checkout with two products: shipping shows once."
+                            }
+                          ]
+                        },
+                        {
+                          "feature": "search",
+                          "title": "Search",
+                          "mark": {
+                            "glyph": "○",
+                            "hue": "dim"
+                          },
+                          "verdict": "Not driven",
+                          "file": "features/search.md",
+                          "env": "",
+                          "parts": [
+                            {
+                              "kind": "not-driven",
+                              "head": "Not driven",
+                              "text": "The diff touches no search code."
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "text",
+                      "text": "Stripped from the agent’s HTML: <script>; onerror on <img>",
+                      "tone": "dim"
+                    }
+                  ]
+                },
+                {
+                  "title": "For the pull request",
+                  "boxed": true,
+                  "parts": [
+                    {
+                      "kind": "text",
+                      "text": "Verified: After: cart and checkout driven on the local app; 3 of 3 criteria seen.",
+                      "tone": "plain"
+                    }
+                  ]
+                }
+              ]
+            },
+            "details": [
+              {
+                "kind": "paths",
+                "id": "run:detail:verify:1:scratch",
+                "label": "Scratch files",
+                "note": "4",
+                "open": false,
+                "rows": [
+                  {
+                    "id": "run:scratch:verify:1:0",
+                    "path": ".scratch/2/verify/1-after.md"
+                  },
+                  {
+                    "id": "run:scratch:verify:1:1",
+                    "path": "verify/evidence/after-2.png"
+                  },
+                  {
+                    "id": "run:scratch:verify:1:2",
+                    "path": "verify/evidence/after-3.png"
+                  },
+                  {
+                    "id": "run:scratch:verify:1:3",
+                    "path": "verify/evidence/after.webm"
+                  }
+                ]
+              },
+              {
+                "kind": "skills",
+                "id": "run:detail:verify:1:skills",
+                "label": "Skills it pulled in",
+                "note": "1",
+                "open": false,
+                "names": [
+                  "verify-demo-shop"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

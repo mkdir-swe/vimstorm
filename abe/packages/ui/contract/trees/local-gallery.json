@@ -1,0 +1,196 @@
+{
+  "kind": "Island",
+  "id": "local-gallery",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "gap": 6,
+        "sizes": [
+          "auto",
+          {
+            "fixed": 140
+          },
+          "auto",
+          "auto"
+        ]
+      },
+      "children": [
+        {
+          "kind": "LocalBand",
+          "id": "local-band",
+          "props": {
+            "lead": "Local mode",
+            "text": "the board, issues and CI are read from GitHub; writes stay on this machine, agents run here.",
+            "links": [
+              {
+                "id": "local:held",
+                "label": "7 held writes"
+              },
+              {
+                "id": "local:settings",
+                "label": "Settings"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "BoardColumns",
+          "id": "columns",
+          "props": {},
+          "children": [
+            {
+              "kind": "BoardColumn",
+              "id": "col:Active",
+              "props": {
+                "name": "Active",
+                "count": 1
+              },
+              "children": [
+                {
+                  "kind": "BoardCard",
+                  "id": "card:1240",
+                  "props": {
+                    "card": 1240,
+                    "type": "US",
+                    "initials": "AE",
+                    "title": "Checkout copy for Nordic markets",
+                    "rail": {
+                      "segments": [
+                        "done",
+                        "done",
+                        "now",
+                        "todo",
+                        "todo"
+                      ],
+                      "stage": "Review",
+                      "glyph": "●",
+                      "word": "Verifying",
+                      "state": "running",
+                      "time": "3 min"
+                    },
+                    "local": "Resolved here · GitHub: Active",
+                    "selection": "selected",
+                    "tooltip": "#1240 Checkout copy for Nordic markets · Resolved here; GitHub still says Active"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "LocalPullRequest",
+          "id": "local-pr",
+          "props": {
+            "name": "#L3",
+            "line": "local · card/1240-checkout-copy → main · not pushed",
+            "title": "Checkout copy for Nordic markets",
+            "about": "The Factory's PR stage wrote it here instead of on GitHub: same title, body, checks and evidence. Merge stays local too (main on this machine), or throw it away.",
+            "checks": [
+              {
+                "name": "tests",
+                "glyph": "✓",
+                "hue": "good"
+              },
+              {
+                "name": "types",
+                "glyph": "✓",
+                "hue": "good"
+              },
+              {
+                "name": "lint",
+                "glyph": "✗",
+                "hue": "bad"
+              },
+              {
+                "name": "verify 3/3",
+                "glyph": "●",
+                "hue": "warn"
+              }
+            ],
+            "files": [
+              {
+                "path": "src/checkout/copy.ts",
+                "status": "M",
+                "added": 24,
+                "removed": 3
+              },
+              {
+                "path": "src/checkout/copy.nordic.ts",
+                "status": "A",
+                "added": 58,
+                "removed": 0
+              },
+              {
+                "path": "src/checkout/legacy-copy.ts",
+                "status": "D",
+                "added": 0,
+                "removed": 17
+              }
+            ],
+            "diff": true,
+            "commits": [
+              {
+                "sha": "b1c2d3e",
+                "subject": "Checkout copy per Nordic market"
+              },
+              {
+                "sha": "a1b2c3d",
+                "subject": "Drop the old copy table"
+              }
+            ],
+            "body": "Checkout shows its copy in Swedish, Norwegian, Danish and Finnish by market.\n\nCloses #1240 (would). Verified on localhost: 3 of 3 criteria, recording attached.",
+            "actions": {
+              "focus": "merge"
+            },
+            "note": "would open on github.com/mkdir-swe/demo-shop"
+          }
+        },
+        {
+          "kind": "LocalPullRequest",
+          "id": "local-pr-merged",
+          "props": {
+            "name": "#L2",
+            "line": "local · card/1238-cart → main · not pushed",
+            "title": "Cart total includes shipping",
+            "about": "Merged on this machine.",
+            "body": "",
+            "done": {
+              "text": "✓ Merged into main · 3f2a1b9",
+              "hue": "good"
+            },
+            "away": true
+          }
+        }
+      ]
+    },
+    {
+      "kind": "PickLayer",
+      "id": "action-menu",
+      "props": {
+        "title": "Held writes · 7",
+        "caption": "demo-shop · nothing left this machine",
+        "wide": true,
+        "local": true,
+        "rows": [
+          {
+            "id": "held:7",
+            "lead": "09:41",
+            "text": "Move card #1240 to Resolved",
+            "note": "would go to GitHub Projects · Storefront"
+          },
+          {
+            "id": "held:6",
+            "lead": "09:38",
+            "text": "Open pull request L3 \"Checkout copy for Nordic markets\"",
+            "note": "would go to mkdir-swe/demo-shop on GitHub"
+          }
+        ],
+        "selected": "held:6",
+        "hint": "⏎ opens it · turning local mode off keeps them here as a record; nothing is ever sent"
+      }
+    }
+  ]
+}

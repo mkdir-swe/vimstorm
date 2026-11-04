@@ -1,0 +1,511 @@
+{
+  "kind": "SettingsDialog",
+  "id": "settings",
+  "props": {
+    "title": "Settings",
+    "search": {
+      "text": ""
+    },
+    "note": "Each change saves as you make it; ⌘⏎ proposes one for the repo",
+    "focus": "page"
+  },
+  "children": [
+    {
+      "kind": "SettingsTree",
+      "id": "settings:tree",
+      "props": {
+        "nodes": [
+          {
+            "id": "settings:tree:problems",
+            "label": "Problems",
+            "depth": 0,
+            "count": {
+              "text": "· 3",
+              "tone": "warn"
+            },
+            "separator": true
+          },
+          {
+            "id": "settings:tree:appearance-behavior",
+            "label": "Appearance & Behavior",
+            "depth": 0,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:appearance",
+            "label": "Appearance",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:import-config",
+            "label": "Import config",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:editor",
+            "label": "Editor",
+            "depth": 0,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:editor-general",
+            "label": "General",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:editor-font",
+            "label": "Font",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:color-scheme",
+            "label": "Color scheme",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:vim",
+            "label": "Vim",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:abe",
+            "label": "Abe",
+            "depth": 0,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:agents",
+            "label": "Agents & models",
+            "depth": 1,
+            "selected": true
+          },
+          {
+            "id": "settings:tree:board-team",
+            "label": "Board & you",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:boxes-cloud",
+            "label": "Boxes & cloud",
+            "depth": 1,
+            "fold": "open"
+          },
+          {
+            "id": "settings:tree:browser-profiles",
+            "label": "Browser profiles",
+            "depth": 2
+          },
+          {
+            "id": "settings:tree:factory-policy",
+            "label": "Factory policy",
+            "depth": 1,
+            "count": {
+              "text": "1",
+              "tone": "dim"
+            }
+          },
+          {
+            "id": "settings:tree:local-mode",
+            "label": "Local mode",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:reach",
+            "label": "Reach",
+            "depth": 1
+          },
+          {
+            "id": "settings:tree:logins-tools",
+            "label": "Logins & tools",
+            "depth": 0,
+            "count": {
+              "text": "2",
+              "tone": "dim"
+            }
+          },
+          {
+            "id": "settings:tree:tools",
+            "label": "Tools check",
+            "depth": 0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "SettingsPage",
+      "id": "settings:page",
+      "props": {
+        "crumbs": [
+          "Abe",
+          "Agents & models"
+        ],
+        "scope": "demo-shop",
+        "reveal": "settings:group:0"
+      },
+      "children": [
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:group:0",
+          "props": {
+            "caption": "Models"
+          },
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:0",
+              "props": {
+                "label": "Coordinator",
+                "control": {
+                  "kind": "combo",
+                  "value": "opus"
+                },
+                "help": "runs the session and decides",
+                "source": {
+                  "text": "built-in · haiku greyed, not in the repo's allowedModels"
+                },
+                "scope": "local"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:1",
+              "props": {
+                "label": "Reader",
+                "control": {
+                  "kind": "combo",
+                  "value": "sonnet",
+                  "open": {
+                    "choices": [
+                      {
+                        "id": "settings:choice:0",
+                        "text": "opus"
+                      },
+                      {
+                        "id": "settings:choice:1",
+                        "text": "sonnet"
+                      },
+                      {
+                        "id": "settings:choice:2",
+                        "text": "haiku",
+                        "greyed": "not in the repo's allowedModels"
+                      }
+                    ],
+                    "cursor": 1,
+                    "filter": ""
+                  }
+                },
+                "help": "subagents that only read",
+                "source": {
+                  "text": "built-in · haiku greyed, not in the repo's allowedModels"
+                },
+                "scope": "local",
+                "hint": "⏎ choose · ⌘⏎ propose for the repo",
+                "focused": true
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:2",
+              "props": {
+                "label": "Writer",
+                "control": {
+                  "kind": "combo",
+                  "value": "opus"
+                },
+                "help": "subagents that change files",
+                "source": {
+                  "text": "built-in · haiku greyed, not in the repo's allowedModels"
+                },
+                "scope": "local"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:3",
+              "props": {
+                "label": "Allowed models",
+                "control": {
+                  "kind": "list",
+                  "items": [
+                    {
+                      "text": "opus"
+                    },
+                    {
+                      "text": "sonnet"
+                    }
+                  ]
+                },
+                "help": "the repo's · yours may only narrow it",
+                "source": {
+                  "text": "Repo"
+                },
+                "scope": "local",
+                "default": "opus, sonnet, haiku"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:group:1",
+          "props": {},
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:4",
+              "props": {
+                "label": "New sessions",
+                "control": {
+                  "kind": "segmented",
+                  "choices": [
+                    "Low",
+                    "Medium",
+                    "High"
+                  ],
+                  "on": "Medium"
+                },
+                "help": "a resumed session keeps its own",
+                "source": {
+                  "text": "Repo"
+                },
+                "scope": "local",
+                "default": "medium"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:group:2",
+          "props": {
+            "caption": "Prototypes"
+          },
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:5",
+              "props": {
+                "label": "Model",
+                "control": {
+                  "kind": "combo",
+                  "value": "haiku"
+                },
+                "help": "a prototype session · /model in one switches that prototype only",
+                "source": {
+                  "text": "built-in · haiku greyed, not in the repo's allowedModels"
+                },
+                "scope": "local"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:6",
+              "props": {
+                "label": "Effort",
+                "control": {
+                  "kind": "segmented",
+                  "choices": [
+                    "Low",
+                    "Medium",
+                    "High"
+                  ],
+                  "on": "Low"
+                },
+                "help": "a new prototype session",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:group:3",
+          "props": {},
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:7",
+              "props": {
+                "label": "At most",
+                "control": {
+                  "kind": "field",
+                  "text": "4",
+                  "size": "number"
+                },
+                "help": "at once per session",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:group:4",
+          "props": {},
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:8",
+              "props": {
+                "label": "Every launch",
+                "control": {
+                  "kind": "list",
+                  "items": []
+                },
+                "help": "read after the card, as a Launch note; each Layer adds to the ones above",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:group:5",
+          "props": {},
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:9",
+              "props": {
+                "label": "My skills on top",
+                "control": {
+                  "kind": "checkbox",
+                  "on": false
+                },
+                "help": "yours load after repo's, locally and on boxes",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:group:6",
+          "props": {
+            "caption": "Sandbox"
+          },
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:10",
+              "props": {
+                "label": "Local sessions",
+                "control": {
+                  "kind": "value",
+                  "text": "Local sandbox · auto mode · always"
+                },
+                "source": {
+                  "text": "fixed · no setting"
+                }
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:11",
+              "props": {
+                "label": "Your MCP servers, never a repo's",
+                "control": {
+                  "kind": "segmented",
+                  "choices": [
+                    "Yours too",
+                    "Abe's only"
+                  ],
+                  "on": "Yours too"
+                },
+                "help": "a repo's own never load, in any session · MCP tools run outside the sandbox and aren't checked by Abe's fence",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:12",
+              "props": {
+                "label": "Overrides require a reason",
+                "control": {
+                  "kind": "checkbox",
+                  "on": true,
+                  "fixed": true
+                },
+                "source": {
+                  "text": "fixed · an Override always needs its reason"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "kind": "SettingsGroup",
+          "id": "settings:group:7",
+          "props": {
+            "caption": "Environments"
+          },
+          "children": [
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:13",
+              "props": {
+                "label": "dev",
+                "control": {
+                  "kind": "checkbox",
+                  "on": true
+                },
+                "help": "this repo's agents reach dev, read and write · applies to the next session",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:14",
+              "props": {
+                "label": "test",
+                "control": {
+                  "kind": "checkbox",
+                  "on": true
+                },
+                "help": "this repo's agents reach test, read and write · applies to the next session",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local"
+              }
+            },
+            {
+              "kind": "SettingRow",
+              "id": "settings:line:15",
+              "props": {
+                "label": "prod",
+                "control": {
+                  "kind": "checkbox",
+                  "on": false
+                },
+                "help": "Warning: on, this repo's agents read and write prod: its data, aws account and keys · from the next session",
+                "source": {
+                  "text": "built-in"
+                },
+                "scope": "local"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

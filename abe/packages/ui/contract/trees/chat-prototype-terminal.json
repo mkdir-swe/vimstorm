@@ -1,0 +1,54 @@
+{
+  "kind": "Island",
+  "id": "chat",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "sizes": [
+          "auto",
+          {
+            "flex": 1
+          }
+        ]
+      },
+      "children": [
+        {
+          "kind": "ChatHeader",
+          "id": "chat-header",
+          "props": {
+            "title": "Chat",
+            "story": {
+              "id": "Prototype",
+              "title": "· #1234"
+            },
+            "hint": "⌘⏎",
+            "rail": {
+              "segments": [],
+              "stage": "Local",
+              "state": "running",
+              "glyph": "●",
+              "word": "Running"
+            }
+          }
+        },
+        {
+          "kind": "Terminal",
+          "id": "chat-terminal",
+          "props": {
+            "key": "attach:prototype-a1b2:0",
+            "argv": [
+              "abe",
+              "session",
+              "attach",
+              "prototype-a1b2"
+            ],
+            "focused": false
+          }
+        }
+      ]
+    }
+  ]
+}

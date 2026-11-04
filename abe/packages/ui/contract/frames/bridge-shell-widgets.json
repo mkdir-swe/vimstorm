@@ -1,0 +1,30 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "widgets",
+    "widgets": [
+      {
+        "id": "factory",
+        "text": "Factory ◆ 1",
+        "hue": "needs-you",
+        "tooltip": "#1234 Cart total includes shipping needs you · ⌘⌥A",
+        "view": "editor",
+        "place": "start"
+      },
+      {
+        "id": "needs-you",
+        "text": "◆ 1 needs you",
+        "hue": "needs-you",
+        "tooltip": "#1234 Cart total includes shipping needs you",
+        "view": "factory"
+      },
+      {
+        "id": "running",
+        "text": "● 1 running",
+        "hue": "warn",
+        "view": "factory"
+      }
+    ]
+  }
+}

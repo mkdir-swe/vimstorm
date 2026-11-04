@@ -1,0 +1,201 @@
+{
+  "kind": "Island",
+  "id": "gallery",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "gap": 4,
+        "sizes": [
+          {
+            "fixed": 31
+          },
+          "auto",
+          "auto",
+          "auto",
+          {
+            "flex": 1
+          },
+          {
+            "fixed": 160
+          }
+        ]
+      },
+      "children": [
+        {
+          "kind": "ToolWindowHeader",
+          "props": {
+            "title": "Git",
+            "count": 2,
+            "tabs": [
+              {
+                "id": "tab:log",
+                "label": "Log"
+              },
+              {
+                "id": "tab:changes",
+                "label": "Local Changes"
+              }
+            ],
+            "selected": "tab:log",
+            "note": "⌘⏎ more"
+          }
+        },
+        {
+          "kind": "ListRow",
+          "id": "row:selected",
+          "props": {
+            "text": "selected",
+            "dim": "dim text",
+            "note": "note",
+            "icon": "folder",
+            "state": "selected",
+            "key": "⏎"
+          }
+        },
+        {
+          "kind": "ListRow",
+          "id": "row:inactive",
+          "props": {
+            "text": "selected, inactive",
+            "state": "selected-inactive"
+          }
+        },
+        {
+          "kind": "ListRow",
+          "id": "row:disabled",
+          "props": {
+            "text": "disabled",
+            "state": "disabled",
+            "reason": "why it is"
+          }
+        },
+        {
+          "kind": "Stack",
+          "props": {
+            "direction": "row",
+            "gap": 8
+          },
+          "children": [
+            {
+              "kind": "Badge",
+              "props": {
+                "text": "good",
+                "hue": "good"
+              }
+            },
+            {
+              "kind": "Badge",
+              "props": {
+                "text": "warn",
+                "hue": "warn"
+              }
+            },
+            {
+              "kind": "Badge",
+              "props": {
+                "text": "needs-you",
+                "hue": "needs-you"
+              }
+            },
+            {
+              "kind": "Badge",
+              "props": {
+                "text": "bad",
+                "hue": "bad"
+              }
+            },
+            {
+              "kind": "Badge",
+              "props": {
+                "text": "accent",
+                "hue": "accent"
+              }
+            },
+            {
+              "kind": "Badge",
+              "props": {
+                "text": "dim",
+                "hue": "dim"
+              }
+            },
+            {
+              "kind": "AgentStatus",
+              "props": {
+                "state": "running",
+                "word": "Verifying",
+                "connection": "Connecting",
+                "env": "Local"
+              }
+            },
+            {
+              "kind": "AgentStatus",
+              "props": {
+                "state": "starting",
+                "word": "Starting",
+                "dot": true
+              }
+            },
+            {
+              "kind": "AgentStatus",
+              "props": {
+                "state": "failed",
+                "word": "Failed",
+                "reason": "checks failed"
+              }
+            },
+            {
+              "kind": "KeyHint",
+              "props": {
+                "keys": "⏎",
+                "label": "drop",
+                "context": "row"
+              }
+            },
+            {
+              "kind": "KeyHint",
+              "props": {
+                "keys": "Esc",
+                "label": "put back",
+                "context": "button",
+                "dim": true
+              }
+            },
+            {
+              "kind": "Empty",
+              "props": {
+                "title": "Nothing here",
+                "line": "One line under it."
+              }
+            }
+          ]
+        },
+        {
+          "kind": "BrowserView",
+          "id": "gallery-browser",
+          "props": {
+            "key": "gallery:sheet",
+            "url": "http://127.0.0.1:50123/s/9f2c4e1a",
+            "title": "Sheet",
+            "sub": "Cart totals by market",
+            "address": "sheet://1234/cart-totals-by-market-a1b2c3",
+            "version": 2,
+            "badges": [
+              "yours",
+              "sandboxed",
+              "no network",
+              "attached"
+            ],
+            "action": {
+              "keys": "⌘⏎",
+              "label": "Attach to card"
+            },
+            "focused": true
+          }
+        }
+      ]
+    }
+  ]
+}

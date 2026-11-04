@@ -1,0 +1,168 @@
+{
+  "kind": "Island",
+  "id": "boxes",
+  "props": {},
+  "children": [
+    {
+      "kind": "Table",
+      "id": "boxes-table",
+      "props": {
+        "columns": [
+          {
+            "label": "Box",
+            "width": {
+              "fixed": 100
+            }
+          },
+          {
+            "label": "Story",
+            "width": {
+              "flex": 1
+            }
+          },
+          {
+            "label": "State",
+            "width": {
+              "fixed": 180
+            }
+          },
+          {
+            "label": "Size",
+            "width": {
+              "fixed": 72
+            }
+          },
+          {
+            "label": "Disk",
+            "width": {
+              "fixed": 76
+            }
+          },
+          {
+            "label": "Release",
+            "width": {
+              "fixed": 52
+            }
+          },
+          {
+            "label": "Up",
+            "width": {
+              "fixed": 70
+            }
+          },
+          {
+            "label": "Cost",
+            "width": {
+              "fixed": 80
+            }
+          },
+          {
+            "label": "Until",
+            "width": {
+              "fixed": 92
+            }
+          }
+        ],
+        "rows": [
+          {
+            "id": "box:demo-shop-1",
+            "cells": [
+              {
+                "text": "demo-shop-1"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "mark": "●",
+                "text": "running",
+                "hue": "warn"
+              },
+              {
+                "text": "m8g.large",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "v11",
+                "hue": "dim"
+              },
+              {
+                "text": "1 h 12 min"
+              },
+              {
+                "text": "$0.12 today",
+                "tooltip": "today since 00:00 · on-demand estimate"
+              },
+              {
+                "text": "stops at 10:30",
+                "hue": "dim"
+              }
+            ]
+          },
+          {
+            "id": "box:demo-shop-3",
+            "cells": [
+              {
+                "text": "demo-shop-3"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "mark": "○",
+                "text": "asleep",
+                "hue": "dim"
+              },
+              {
+                "text": "m8g.large",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "v11",
+                "hue": "dim"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              },
+              {
+                "text": "$0.84 today",
+                "tooltip": "today since 00:00 · on-demand estimate"
+              },
+              {
+                "text": "—",
+                "hue": "dim"
+              }
+            ]
+          }
+        ],
+        "selected": "box:demo-shop-1",
+        "note": "Read 10:00",
+        "foot": [
+          {
+            "keys": "⏎",
+            "label": "box shell"
+          },
+          {
+            "keys": "⌘⏎",
+            "label": "actions"
+          },
+          {
+            "keys": "r",
+            "label": "read again"
+          }
+        ]
+      }
+    }
+  ]
+}

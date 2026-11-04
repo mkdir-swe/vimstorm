@@ -1,0 +1,14 @@
+# gitleaks' default rules, less the made-up secrets the tests use on purpose.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "fake secrets in tests and fixtures"
+regexes = [
+  '''sk_live_abc123''',
+  '''sk_live_abcdef123456''',
+  '''sk-live-0123456789abcdefXYZ''',
+  '''ghp_FAKEfakeFAKEfakeFAKEfakeFAKEfake0001''',
+  '''eyJ0eXAiOiJKV1QifakeAZ\.eyJzdWIiOiJmYWtlIn0fakeAZ\.c2lnZmFrZQ''',
+  '''ObscureKeystrokeTiming''',
+]

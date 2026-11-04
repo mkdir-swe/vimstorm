@@ -1,0 +1,10 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "workspace-page",
+    "path": "/home/me/projects/demo-shop-wt/2-cart",
+    "card": 2,
+    "page": "card"
+  }
+}

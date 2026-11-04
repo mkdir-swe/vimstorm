@@ -1,0 +1,453 @@
+{
+  "kind": "Stack",
+  "props": {
+    "direction": "column",
+    "sizes": [
+      {
+        "fixed": 34
+      },
+      {
+        "flex": 1
+      }
+    ]
+  },
+  "children": [
+    {
+      "kind": "RunBar",
+      "id": "run-bar",
+      "props": {
+        "card": "#2",
+        "title": "The cart total ignores quantity",
+        "on": false,
+        "context": "demo-shop · Feature run · 34 min so far",
+        "linked": false
+      }
+    },
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "row",
+        "gap": 0,
+        "sizes": [
+          {
+            "fixed": 240
+          },
+          {
+            "flex": 1
+          }
+        ],
+        "align": "stretch"
+      },
+      "children": [
+        {
+          "kind": "RunSteps",
+          "id": "run-steps",
+          "props": {
+            "rows": [
+              {
+                "id": "spec:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "create-specification",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "build:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "build",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "checks:1",
+                "mark": {
+                  "glyph": "●",
+                  "hue": "warn"
+                },
+                "name": "checks",
+                "outcome": "failed",
+                "back": true,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "build:2",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "build",
+                "outcome": "round 2",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "checks:2",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "checks",
+                "outcome": "round 2",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "review:1",
+                "mark": {
+                  "glyph": "●",
+                  "hue": "warn"
+                },
+                "name": "review",
+                "outcome": "1 finding",
+                "back": true,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "build:3",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "build",
+                "outcome": "round 3",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "checks:3",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "checks",
+                "outcome": "round 3",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "review:2",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "review",
+                "outcome": "no findings",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "verify:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "verify",
+                "outcome": "3 of 3",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "pr:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "pr",
+                "outcome": "#57 open",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              }
+            ],
+            "selected": "pr:1"
+          }
+        },
+        {
+          "kind": "RunFocus",
+          "id": "run-focus",
+          "props": {
+            "step": "pr:1",
+            "name": "pr",
+            "skill": "pr",
+            "meta": "09:34 · 7 min",
+            "state": {
+              "text": "✓ done",
+              "hue": "good"
+            },
+            "fresh": true,
+            "round": "",
+            "back": "",
+            "chat": true,
+            "did": "Pull request #57 with the proof in its body.",
+            "pending": false,
+            "actions": [
+              {
+                "id": "run:review",
+                "label": "Review changes",
+                "primary": true
+              },
+              {
+                "id": "run:pr",
+                "label": "Open PR #57",
+                "primary": false
+              }
+            ],
+            "read": {
+              "note": "the branch, the commits, the review and verify notes",
+              "blocks": [
+                {
+                  "title": "Branch",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "facts",
+                      "rows": [
+                        {
+                          "label": "Head",
+                          "value": "card/2-the-cart-total-ignores-quantity · 4 commits ahead"
+                        },
+                        {
+                          "label": "Base",
+                          "value": "main"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Commits · 4",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "commits",
+                      "rows": [
+                        {
+                          "sha": "7b1c0de",
+                          "subject": "Cart: a line’s total is price × quantity",
+                          "note": "build #1"
+                        },
+                        {
+                          "sha": "8c2d1ef",
+                          "subject": "Cart: drop a line set to 0",
+                          "note": "build #1"
+                        },
+                        {
+                          "sha": "9c4d1e2",
+                          "subject": "Cart page: drop the unused formatPrice",
+                          "note": "build #2"
+                        },
+                        {
+                          "sha": "f6b2d09",
+                          "subject": "Cart: sum in cents",
+                          "note": "build #3"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Review notes",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "list",
+                      "numbered": false,
+                      "rows": [
+                        {
+                          "text": "2 rounds · 1 finding, fixed",
+                          "note": ".scratch/2/review/1.md · .scratch/2/review/2.md"
+                        },
+                        {
+                          "text": "Risky · money: the cart total",
+                          "note": ""
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Verify · for the pull request",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "text",
+                      "text": "Verified: After: cart and checkout driven on the local app; 3 of 3 criteria seen.",
+                      "tone": "plain"
+                    }
+                  ]
+                }
+              ]
+            },
+            "made": {
+              "note": "PR #57 · open · ready for review",
+              "blocks": [
+                {
+                  "title": "",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "facts",
+                      "rows": [
+                        {
+                          "label": "Result",
+                          "value": "Ready for review: 3 of 3 criteria verified."
+                        },
+                        {
+                          "label": "Changed",
+                          "value": "3 files · +37 −9"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "ladder",
+                      "rungs": [
+                        {
+                          "mark": {
+                            "glyph": "✓",
+                            "hue": "good"
+                          },
+                          "label": "Pushed",
+                          "note": "card/2-the-cart-total-ignores-quantity → origin",
+                          "on": false
+                        },
+                        {
+                          "mark": {
+                            "glyph": "✓",
+                            "hue": "good"
+                          },
+                          "label": "Opened",
+                          "note": "#57 · 09:35 · linked from AB#2",
+                          "on": false
+                        },
+                        {
+                          "mark": {
+                            "glyph": "✓",
+                            "hue": "good"
+                          },
+                          "label": "Checks",
+                          "note": "success",
+                          "on": false
+                        },
+                        {
+                          "mark": {
+                            "glyph": "●",
+                            "hue": "accent"
+                          },
+                          "label": "Review",
+                          "note": "a person merges · reviewers: demo-reviewer approved",
+                          "on": true
+                        },
+                        {
+                          "mark": {
+                            "glyph": "○",
+                            "hue": "dim"
+                          },
+                          "label": "Merge",
+                          "note": "auto merge off · mergeable",
+                          "on": false
+                        },
+                        {
+                          "mark": {
+                            "glyph": "○",
+                            "hue": "dim"
+                          },
+                          "label": "Done",
+                          "note": "deployed to test",
+                          "on": false
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "AB#2 Count each line’s quantity in the cart total",
+                  "verdict": {
+                    "text": "● open",
+                    "hue": "good"
+                  },
+                  "boxed": true,
+                  "parts": [
+                    {
+                      "kind": "facts",
+                      "rows": [
+                        {
+                          "label": "Link",
+                          "value": "https://github.com/mkdir-swe/demo-shop/pull/57"
+                        },
+                        {
+                          "label": "Head → base",
+                          "value": "card/2-the-cart-total-ignores-quantity → main · head f6b2d09 · mergeable"
+                        },
+                        {
+                          "label": "Checks",
+                          "value": "success"
+                        },
+                        {
+                          "label": "Reviewers",
+                          "value": "demo-reviewer approved"
+                        },
+                        {
+                          "label": "Merge",
+                          "value": "by a person · done = deployed to test"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "doc",
+                      "eyebrow": "Pull request #57 · its body as sent",
+                      "title": "AB#2 Count each line’s quantity in the cart total",
+                      "meta": "",
+                      "markdown": "Card: AB#2\n\n## Summary\n\nThe cart total counts each line's quantity; a line at 0 leaves the cart.\n\n**Verified:** After: cart and checkout driven on the local app; 3 of 3 criteria seen.\n\n## Notes\n\n- Summed in cents: floats drift at three items.\n- Each line rounds to two decimals, then the lines sum.\n\nCloses #41"
+                    }
+                  ]
+                }
+              ]
+            },
+            "details": []
+          }
+        }
+      ]
+    }
+  ]
+}

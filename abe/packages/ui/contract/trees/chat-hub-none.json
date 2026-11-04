@@ -1,0 +1,23 @@
+{
+  "kind": "Island",
+  "id": "chat",
+  "props": {},
+  "children": [
+    {
+      "kind": "Empty",
+      "props": {
+        "title": "Abe chat",
+        "line": "Ask about cards, make cards, start runs; /abe:install sets the repo up.",
+        "head": true,
+        "actions": [
+          {
+            "id": "chat:hub-start",
+            "label": "Start the Abe chat",
+            "keys": "⏎",
+            "primary": true
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,382 @@
+{
+  "kind": "Island",
+  "id": "pipelines",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "sizes": [
+          {
+            "fixed": 30
+          },
+          {
+            "flex": 1
+          }
+        ],
+        "align": "stretch"
+      },
+      "children": [
+        {
+          "kind": "PipelinesBar",
+          "id": "pipelines-bar",
+          "props": {
+            "scopes": [
+              {
+                "id": "scope:workspace",
+                "label": "This workspace",
+                "tooltip": "Runs on this workspace's branch"
+              },
+              {
+                "id": "scope:all",
+                "label": "All",
+                "tooltip": "The repository's runs"
+              },
+              {
+                "id": "scope:mine",
+                "label": "Mine",
+                "tooltip": "Runs I started"
+              }
+            ],
+            "selected": "scope:all",
+            "workflow": {
+              "label": "Workflow ▾",
+              "on": false
+            },
+            "count": "8 runs",
+            "source": "o/r · GitHub Actions"
+          }
+        },
+        {
+          "kind": "Stack",
+          "props": {
+            "direction": "row",
+            "sizes": [
+              {
+                "flex": 1
+              },
+              {
+                "fixed": 380
+              }
+            ],
+            "align": "stretch"
+          },
+          "children": [
+            {
+              "kind": "Table",
+              "id": "pipelines-table",
+              "props": {
+                "columns": [
+                  {
+                    "label": "State",
+                    "width": {
+                      "fixed": 128
+                    }
+                  },
+                  {
+                    "label": "Workflow",
+                    "width": {
+                      "fixed": 112
+                    }
+                  },
+                  {
+                    "label": "Run",
+                    "width": {
+                      "flex": 3
+                    }
+                  },
+                  {
+                    "label": "Branch · trigger",
+                    "width": {
+                      "flex": 2
+                    }
+                  },
+                  {
+                    "label": "Agent",
+                    "width": {
+                      "fixed": 200
+                    }
+                  },
+                  {
+                    "label": "Started",
+                    "width": {
+                      "fixed": 72
+                    },
+                    "align": "end"
+                  },
+                  {
+                    "label": "Duration",
+                    "width": {
+                      "fixed": 72
+                    },
+                    "align": "end"
+                  }
+                ],
+                "rows": [
+                  {
+                    "cells": [
+                      {
+                        "text": "DEPLOYS · 4",
+                        "hue": "dim"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "run:9005",
+                    "cells": [
+                      {
+                        "mark": "●",
+                        "text": "Running",
+                        "hue": "warn"
+                      },
+                      {
+                        "text": "Deploy Dev/Test",
+                        "hue": "dim",
+                        "tooltip": "Deploy Dev/Test · deploys dev, test"
+                      },
+                      {
+                        "accent": "#105",
+                        "text": "Order history paginates",
+                        "tooltip": "Deploy Dev/Test · Order history paginates"
+                      },
+                      {
+                        "text": "main · 9005c7e · bob",
+                        "hue": "dim",
+                        "tooltip": "main"
+                      },
+                      {
+                        "text": "—",
+                        "hue": "dim"
+                      },
+                      {
+                        "text": "08:38",
+                        "hue": "dim"
+                      },
+                      {
+                        "text": "22m 00s",
+                        "hue": "dim"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "deploy:Deploy QA",
+                    "cells": [
+                      {
+                        "mark": "·",
+                        "text": "Never run",
+                        "hue": "dim"
+                      },
+                      {
+                        "text": "Deploy QA",
+                        "hue": "dim",
+                        "tooltip": "Deploy QA · deploys qa"
+                      },
+                      {
+                        "text": "deploys qa",
+                        "hue": "dim"
+                      },
+                      {
+                        "text": "—",
+                        "hue": "dim"
+                      },
+                      {
+                        "text": "—",
+                        "hue": "dim"
+                      },
+                      {
+                        "text": "—",
+                        "hue": "dim"
+                      },
+                      {
+                        "text": "—",
+                        "hue": "dim"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "run:8601",
+                    "cells": [
+                      {
+                        "mark": "✓",
+                        "text": "Passed",
+                        "hue": "good"
+                      },
+                      {
+                        "text": "Terraform apply",
+                        "hue": "dim",
+                        "tooltip": "Terraform apply · deploys staging"
+                      },
+                      {
+                        "accent": "#701",
+                        "text": "Queue for order exports",
+                        "tooltip": "Terraform apply · Queue for order exports"
+                      },
+                      {
+                        "text": "main · 8601c7e · bob",
+                        "hue": "dim",
+                        "tooltip": "main"
+                      },
+                      {
+                        "text": "—",
+                        "hue": "dim"
+                      },
+                      {
+                        "text": "11d",
+                        "hue": "dim"
+                      },
+                      {
+                        "text": "4m 00s",
+                        "hue": "dim"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "run:9007",
+                    "cells": [
+                      {
+                        "mark": "◆",
+                        "text": "Needs approval",
+                        "hue": "warn"
+                      },
+                      {
+                        "text": "Deploy Prod",
+                        "hue": "dim",
+                        "tooltip": "Deploy Prod · deploys production"
+                      },
+                      {
+                        "accent": "#107",
+                        "text": "Release rc-213",
+                        "tooltip": "Deploy Prod · Release rc-213"
+                      },
+                      {
+                        "text": "main · 9007c7e · ann",
+                        "hue": "dim",
+                        "tooltip": "main"
+                      },
+                      {
+                        "text": "—",
+                        "hue": "dim"
+                      },
+                      {
+                        "text": "08:20",
+                        "hue": "dim"
+                      },
+                      {
+                        "text": "40m 00s",
+                        "hue": "dim"
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "text": "RUNNING · 1",
+                        "hue": "dim"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "run:9006",
+                    "cells": [
+                      {
+                        "mark": "●",
+                        "text": "Running",
+                        "hue": "warn"
+                      },
+                      {
+                        "text": "PR checks",
+                        "hue": "dim",
+                        "tooltip": "PR checks"
+                      },
+                      {
+                        "accent": "#106",
+                        "text": "Checkout copy for Nordic markets",
+                        "tooltip": "PR checks · Checkout copy for Nordic markets"
+                      },
+                      {
+                        "text": "card/40-checkout-copy · PR #57",
+                        "hue": "dim",
+                        "tooltip": "card/40-checkout-copy"
+                      },
+                      {
+                        "text": "—",
+                        "hue": "dim"
+                      },
+                      {
+                        "text": "08:42",
+                        "hue": "dim"
+                      },
+                      {
+                        "text": "18m 00s",
+                        "hue": "dim"
+                      }
+                    ]
+                  }
+                ],
+                "selected": "run:9005",
+                "note": "Read 09:00",
+                "foot": [
+                  {
+                    "keys": "⏎",
+                    "label": "inspect"
+                  },
+                  {
+                    "keys": "⌘⏎",
+                    "label": "actions"
+                  },
+                  {
+                    "keys": "Tab",
+                    "label": "scope"
+                  },
+                  {
+                    "keys": "w",
+                    "label": "workflow"
+                  },
+                  {
+                    "keys": "r",
+                    "label": "read again"
+                  }
+                ]
+              }
+            },
+            {
+              "kind": "RunSummary",
+              "id": "pipelines-summary",
+              "props": {
+                "identity": "Deploy Dev/Test · run #105 · attempt 1",
+                "state": {
+                  "glyph": "●",
+                  "word": "Running",
+                  "hue": "warn"
+                },
+                "title": "Order history paginates",
+                "meta": "main · 9005c7e · 08:38 · 22m 00s so far",
+                "jobs": [
+                  {
+                    "mark": "●",
+                    "name": "build",
+                    "duration": "",
+                    "hue": "warn"
+                  }
+                ],
+                "facts": [
+                  {
+                    "label": "Agent",
+                    "value": "none on main"
+                  }
+                ],
+                "actions": [
+                  {
+                    "id": "act:cancel",
+                    "label": "Cancel run…"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

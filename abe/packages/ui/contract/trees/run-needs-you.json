@@ -1,0 +1,337 @@
+{
+  "kind": "Stack",
+  "props": {
+    "direction": "column",
+    "sizes": [
+      {
+        "fixed": 34
+      },
+      {
+        "flex": 1
+      }
+    ]
+  },
+  "children": [
+    {
+      "kind": "RunBar",
+      "id": "run-bar",
+      "props": {
+        "card": "#2",
+        "title": "The cart total ignores quantity",
+        "on": false,
+        "context": "demo-shop · Feature run · Local sandbox · 36 min so far",
+        "linked": false
+      }
+    },
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "row",
+        "gap": 0,
+        "sizes": [
+          {
+            "fixed": 240
+          },
+          {
+            "flex": 1
+          }
+        ],
+        "align": "stretch"
+      },
+      "children": [
+        {
+          "kind": "RunSteps",
+          "id": "run-steps",
+          "props": {
+            "rows": [
+              {
+                "id": "spec:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "create-specification",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "build:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "build",
+                "outcome": "",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "checks:1",
+                "mark": {
+                  "glyph": "●",
+                  "hue": "warn"
+                },
+                "name": "checks",
+                "outcome": "failed",
+                "back": true,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "build:2",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "build",
+                "outcome": "round 2",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "checks:2",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "checks",
+                "outcome": "round 2",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "review:1",
+                "mark": {
+                  "glyph": "●",
+                  "hue": "warn"
+                },
+                "name": "review",
+                "outcome": "1 finding",
+                "back": true,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "build:3",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "build",
+                "outcome": "round 3",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "checks:3",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "checks",
+                "outcome": "round 3",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "review:2",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "review",
+                "outcome": "no findings",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "verify:1",
+                "mark": {
+                  "glyph": "✓",
+                  "hue": "good"
+                },
+                "name": "verify",
+                "outcome": "3 of 3",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "skipped:playbook:0",
+                "mark": {
+                  "glyph": "–",
+                  "hue": "dim"
+                },
+                "name": "playbook",
+                "outcome": "skipped",
+                "back": false,
+                "dim": true,
+                "todo": false,
+                "needsYou": false
+              },
+              {
+                "id": "pr:1",
+                "mark": {
+                  "glyph": "◆",
+                  "hue": "needs-you"
+                },
+                "name": "pr",
+                "outcome": "needs you",
+                "back": false,
+                "dim": false,
+                "todo": false,
+                "needsYou": true
+              }
+            ],
+            "selected": "pr:1"
+          }
+        },
+        {
+          "kind": "RunFocus",
+          "id": "run-focus",
+          "props": {
+            "step": "pr:1",
+            "name": "pr",
+            "skill": "pr",
+            "meta": "09:34 · waiting 2 min",
+            "state": {
+              "text": "◆ needs you",
+              "hue": "needs-you"
+            },
+            "fresh": true,
+            "round": "",
+            "back": "",
+            "chat": false,
+            "ask": {
+              "question": "The branch can't be pushed from the sandbox: GitHub refuses its SSH key. Push it from your machine, then I open the pull request.",
+              "options": [
+                "Pushed, go on"
+              ],
+              "hint": "The run waits here until you answer in Chat."
+            },
+            "did": "",
+            "pending": false,
+            "actions": [
+              {
+                "id": "run:chat:pr:1",
+                "label": "Answer in Chat",
+                "primary": true
+              }
+            ],
+            "read": {
+              "note": "the branch, the commits, the review and verify notes",
+              "blocks": [
+                {
+                  "title": "Branch",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "facts",
+                      "rows": [
+                        {
+                          "label": "Head",
+                          "value": "card/2-the-cart-total-ignores-quantity · 2 commits ahead"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Commits · 2",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "commits",
+                      "rows": [
+                        {
+                          "sha": "7b1c0de",
+                          "subject": "Cart: a line’s total is price × quantity",
+                          "note": "build #1"
+                        },
+                        {
+                          "sha": "8c2d1ef",
+                          "subject": "Cart: drop a line set to 0",
+                          "note": "build #1"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Review notes",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "list",
+                      "numbered": false,
+                      "rows": [
+                        {
+                          "text": "2 rounds · 1 finding, fixed",
+                          "note": ".scratch/2/review/1.md · .scratch/2/review/2.md"
+                        },
+                        {
+                          "text": "Risky · money: the cart total",
+                          "note": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "made": {
+              "note": "no pull request yet",
+              "blocks": [
+                {
+                  "title": "",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "facts",
+                      "rows": [
+                        {
+                          "label": "Changed",
+                          "value": "3 files · +37 −9"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "",
+                  "boxed": false,
+                  "parts": [
+                    {
+                      "kind": "text",
+                      "text": "Serve opens it once the pr skill hands it the title and body.",
+                      "tone": "dim"
+                    }
+                  ]
+                }
+              ]
+            },
+            "details": []
+          }
+        }
+      ]
+    }
+  ]
+}

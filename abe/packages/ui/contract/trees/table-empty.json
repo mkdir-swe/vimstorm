@@ -1,0 +1,18 @@
+{
+  "kind": "Table",
+  "props": {
+    "columns": [
+      {
+        "label": "Box",
+        "width": {
+          "flex": 1
+        }
+      }
+    ],
+    "rows": [],
+    "empty": {
+      "title": "No boxes",
+      "line": "a story launched on a box makes one"
+    }
+  }
+}

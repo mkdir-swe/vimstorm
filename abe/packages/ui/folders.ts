@@ -1,0 +1,76 @@
+// ui's folders and the folders each may import (ADR 0024).
+import type { FolderTable } from '../testing/src/graph';
+
+export default {
+  folders: {
+    '.': {
+      imports: [
+        'board',
+        'boxes',
+        'chat',
+        'command',
+        'linked',
+        'live',
+        'pipelines',
+        'prototype',
+        'review',
+        'run',
+        'runtime',
+        'sessions',
+        'settings',
+        'shell',
+        'welcome',
+      ],
+    },
+    // the cards' facts and actions, the Board, its Sessions tab's rows, the rail's workspaces and
+    // the jumps along a story; the folders above it (Sessions, Chat, Linked, Command mode) import it
+    board: { imports: ['live', 'prototype', 'runtime', 'settings', 'shell'] },
+    boxes: { imports: ['runtime'] },
+    chat: { imports: ['runtime'] },
+    command: { imports: ['runtime'] },
+    linked: { imports: ['runtime'] },
+    live: { imports: ['runtime'] },
+    pipelines: { imports: ['runtime'] },
+    prototype: { imports: ['runtime'] },
+    review: { imports: ['runtime'] },
+    run: { imports: ['runtime'] },
+    // its interface the screen runtime's types; the rest of the folder unswept yet
+    runtime: { imports: [], interface: 'runtime.ts' },
+    sessions: { imports: ['runtime'] },
+    settings: { imports: ['runtime'] },
+    shell: { imports: ['runtime'] },
+    welcome: { imports: ['runtime'] },
+  },
+  unswept: {
+    imports: [
+      '.',
+      'boxes',
+      'chat',
+      'command',
+      'linked',
+      'pipelines',
+      'prototype',
+      'review',
+      'run',
+      'runtime',
+      'sessions',
+      'settings',
+      'shell',
+      'welcome',
+    ],
+    prose: [
+      '.',
+      'boxes',
+      'chat',
+      'command',
+      'linked',
+      'pipelines',
+      'run',
+      'runtime',
+      'sessions',
+      'settings',
+      'shell',
+      'welcome',
+    ],
+  },
+} satisfies FolderTable;

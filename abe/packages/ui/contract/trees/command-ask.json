@@ -1,0 +1,28 @@
+{
+  "kind": "PickLayer",
+  "id": "command-mode",
+  "props": {
+    "title": "Command mode",
+    "filter": "why does the cart total ignore quantity",
+    "placeholder": "Ask anything, or a command",
+    "rows": [
+      {
+        "id": "here:ask",
+        "text": "Ask about #1234",
+        "dim": "the Abe chat"
+      },
+      {
+        "id": "here:new",
+        "text": "New card “why does the cart total ignore…”",
+        "note": "⌘⏎"
+      },
+      {
+        "id": "here:tell",
+        "text": "Tell #1234’s session",
+        "dim": "it waits on you"
+      }
+    ],
+    "selected": "here:ask",
+    "hint": "⌘⏎ new card"
+  }
+}

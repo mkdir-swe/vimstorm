@@ -1,0 +1,82 @@
+[
+  {
+    "kind": "toggle",
+    "id": "project",
+    "label": "Project",
+    "on": true,
+    "enabled": true
+  },
+  {
+    "kind": "toggle",
+    "id": "board",
+    "label": "Board",
+    "on": true,
+    "enabled": true
+  },
+  {
+    "kind": "separator"
+  },
+  {
+    "kind": "toggle",
+    "id": "sessions",
+    "label": "Sessions",
+    "on": true,
+    "enabled": true
+  },
+  {
+    "kind": "toggle",
+    "id": "boxes",
+    "label": "Boxes",
+    "on": true,
+    "enabled": true
+  },
+  {
+    "kind": "toggle",
+    "id": "pipelines",
+    "label": "Pipelines",
+    "on": true,
+    "enabled": true
+  },
+  {
+    "kind": "separator"
+  },
+  {
+    "kind": "info",
+    "text": "In a workspace"
+  },
+  {
+    "kind": "toggle",
+    "id": "run",
+    "label": "Run",
+    "on": true,
+    "enabled": true
+  },
+  {
+    "kind": "toggle",
+    "id": "terminal",
+    "label": "Terminal",
+    "on": true,
+    "enabled": true
+  },
+  {
+    "kind": "toggle",
+    "id": "git",
+    "label": "Git",
+    "on": true,
+    "enabled": true
+  },
+  {
+    "kind": "separator"
+  },
+  {
+    "kind": "action",
+    "action": "top",
+    "label": "Move to Top Group",
+    "id": "pipelines"
+  },
+  {
+    "kind": "action",
+    "action": "reset",
+    "label": "Reset the Stripe"
+  }
+]

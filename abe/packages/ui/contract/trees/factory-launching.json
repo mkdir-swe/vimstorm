@@ -1,0 +1,52 @@
+{
+  "kind": "Island",
+  "id": "chat",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "sizes": [
+          "auto",
+          {
+            "flex": 1
+          }
+        ]
+      },
+      "children": [
+        {
+          "kind": "ChatHeader",
+          "id": "chat-header",
+          "props": {
+            "title": "Chat",
+            "story": {
+              "id": "#1262",
+              "title": ""
+            },
+            "rail": {
+              "segments": [
+                "todo",
+                "todo",
+                "todo",
+                "todo",
+                "todo"
+              ],
+              "stage": "New",
+              "state": "starting",
+              "glyph": "●",
+              "word": "Launching…"
+            }
+          }
+        },
+        {
+          "kind": "Empty",
+          "props": {
+            "title": "Launching…",
+            "line": "Chat attaches once its Claude Code runs."
+          }
+        }
+      ]
+    }
+  ]
+}

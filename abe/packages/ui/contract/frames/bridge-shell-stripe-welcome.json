@@ -1,0 +1,80 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "stripe",
+    "items": [
+      {
+        "id": "project",
+        "label": "Project",
+        "icon": "project",
+        "group": "top",
+        "key": "⌘1",
+        "tooltip": "Project · ⌘⇧O · your recent projects"
+      },
+      {
+        "id": "board",
+        "label": "Board",
+        "icon": "board",
+        "group": "top",
+        "key": "⌘⌥A",
+        "dot": "needs-you",
+        "tooltip": "Board · ⌘⌥A · #101 Cart total rounds wrong needs you"
+      },
+      {
+        "id": "run",
+        "label": "Run",
+        "icon": "run-path",
+        "group": "top",
+        "workspaceOnly": true,
+        "tooltip": "Run · the path the agent took"
+      },
+      {
+        "id": "terminal",
+        "label": "Terminal",
+        "icon": "terminal",
+        "group": "bottom",
+        "workspaceOnly": true,
+        "key": "⌃`",
+        "tooltip": "Terminal · ⌃`"
+      },
+      {
+        "id": "sessions",
+        "label": "Sessions",
+        "icon": "history",
+        "group": "bottom",
+        "key": "⌘5",
+        "dot": "needs-you",
+        "tooltip": "Sessions · ⌘5 · 2 need you · 1 running"
+      },
+      {
+        "id": "boxes",
+        "label": "Boxes",
+        "icon": "archive",
+        "group": "bottom",
+        "key": "⌘6",
+        "tooltip": "Boxes · ⌘6"
+      },
+      {
+        "id": "pipelines",
+        "label": "Pipelines",
+        "icon": "run",
+        "group": "bottom",
+        "key": "⌘7",
+        "tooltip": "Pipelines · ⌘7",
+        "workspaceOnly": true
+      },
+      {
+        "id": "git",
+        "label": "Git",
+        "icon": "vcs",
+        "group": "bottom",
+        "workspaceOnly": true,
+        "tooltip": "Git"
+      }
+    ],
+    "gear": {
+      "tooltip": "Settings · ⌘,"
+    }
+  }
+}

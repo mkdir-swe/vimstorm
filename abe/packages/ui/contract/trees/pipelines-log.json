@@ -1,0 +1,229 @@
+{
+  "kind": "Island",
+  "id": "pipelines-run",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "sizes": [
+          {
+            "fixed": 64
+          },
+          {
+            "flex": 1
+          }
+        ],
+        "align": "stretch"
+      },
+      "children": [
+        {
+          "kind": "RunHead",
+          "id": "pipelines-head",
+          "props": {
+            "crumbs": [
+              {
+                "id": "crumb:workflow",
+                "text": "PR checks"
+              },
+              {
+                "id": "crumb:graph",
+                "text": "Run #103 · Fix cart rounding"
+              },
+              {
+                "id": "crumb:log",
+                "text": "unit tests"
+              }
+            ],
+            "title": "Fix cart rounding",
+            "state": {
+              "glyph": "✗",
+              "word": "Failed",
+              "hue": "bad"
+            },
+            "meta": "run #103 · attempt 1 · fix/AB-7-rounding · PR #61 · 9003c7e · started 08:00 · 7m 00s",
+            "actions": [
+              {
+                "id": "act:fix",
+                "label": "Fix with agent…",
+                "primary": true
+              },
+              {
+                "id": "act:rerun-failed",
+                "label": "Rerun failed",
+                "disabled": false
+              },
+              {
+                "id": "act:rerun",
+                "label": "Rerun",
+                "disabled": false
+              }
+            ]
+          }
+        },
+        {
+          "kind": "Stack",
+          "props": {
+            "direction": "row",
+            "sizes": [
+              {
+                "fixed": 380
+              },
+              {
+                "flex": 1
+              }
+            ],
+            "align": "stretch"
+          },
+          "children": [
+            {
+              "kind": "JobPanel",
+              "id": "pipelines-job",
+              "props": {
+                "name": "unit tests",
+                "state": {
+                  "glyph": "✗",
+                  "word": "Failed",
+                  "hue": "bad"
+                },
+                "words": "after 2m 10s · job 90033 · ubuntu-latest · step Run npm test",
+                "counters": [
+                  {
+                    "text": "✗ 1 failed",
+                    "hue": "bad"
+                  },
+                  {
+                    "text": "✓ 1 passed",
+                    "hue": "good"
+                  },
+                  {
+                    "text": "· 1 skipped",
+                    "hue": "dim"
+                  }
+                ],
+                "actions": [
+                  {
+                    "id": "act:fix",
+                    "label": "Fix with agent…",
+                    "primary": true
+                  }
+                ],
+                "steps": [
+                  {
+                    "state": {
+                      "glyph": "✓",
+                      "word": "Passed",
+                      "hue": "good"
+                    },
+                    "name": "Set up job",
+                    "duration": "–"
+                  },
+                  {
+                    "state": {
+                      "glyph": "✗",
+                      "word": "Failed",
+                      "hue": "bad"
+                    },
+                    "name": "Run npm test",
+                    "duration": "–",
+                    "current": true
+                  },
+                  {
+                    "state": {
+                      "glyph": "·",
+                      "word": "Skipped",
+                      "hue": "dim"
+                    },
+                    "name": "Upload coverage",
+                    "duration": "–"
+                  }
+                ],
+                "evidenceTitle": "EVIDENCE · 4",
+                "evidence": [
+                  {
+                    "title": "src/api/cart.test.ts > cartTotal > rounds to two decimals",
+                    "detail": "log line 4 · AssertionError: expected 10.000000000000002 to be 10",
+                    "file": "src/api/cart.test.ts:14"
+                  },
+                  {
+                    "title": "Process completed with exit code 1.",
+                    "detail": "log line 8 · ##[error]"
+                  },
+                  {
+                    "title": "e2e-report",
+                    "detail": "run #103 · job 90033 · attempt 1 · 9003c7e",
+                    "artifact": true
+                  },
+                  {
+                    "title": "playwright-trace",
+                    "detail": "run #103 · attempt 1 · 9003c7e · job unknown",
+                    "unavailable": "expired",
+                    "artifact": true
+                  }
+                ],
+                "selected": 0
+              }
+            },
+            {
+              "kind": "JobLog",
+              "id": "pipelines-log",
+              "props": {
+                "title": "LOG · RUN NPM TEST",
+                "range": "lines 1–8 of 8",
+                "lines": [
+                  {
+                    "n": 1,
+                    "time": "08:01:01",
+                    "text": "▾ Run npm test"
+                  },
+                  {
+                    "n": 2,
+                    "time": "08:01:02",
+                    "text": "> vitest run --reporter=dot"
+                  },
+                  {
+                    "n": 3,
+                    "time": "08:01:06",
+                    "text": " ✓ src/api/price.test.ts (3 tests) 12ms"
+                  },
+                  {
+                    "n": 4,
+                    "time": "08:01:06",
+                    "text": " ✗ src/api/cart.test.ts > cartTotal > rounds to two decimals",
+                    "error": true,
+                    "evidence": true
+                  },
+                  {
+                    "n": 5,
+                    "time": "08:01:06",
+                    "text": "   AssertionError: expected 10.000000000000002 to be 10",
+                    "error": true,
+                    "evidence": true
+                  },
+                  {
+                    "n": 6,
+                    "time": "08:01:06",
+                    "text": "    ❯ src/api/cart.test.ts:14:21"
+                  },
+                  {
+                    "n": 7,
+                    "time": "08:01:06",
+                    "text": " Test Files  1 failed | 2 passed (3)"
+                  },
+                  {
+                    "n": 8,
+                    "time": "08:01:06",
+                    "text": "##[error]Process completed with exit code 1.",
+                    "error": true,
+                    "evidence": true
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

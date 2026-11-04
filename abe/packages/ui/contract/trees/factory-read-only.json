@@ -1,0 +1,335 @@
+{
+  "kind": "Stack",
+  "props": {
+    "direction": "column",
+    "gap": 6,
+    "sizes": [
+      "auto",
+      {
+        "flex": 1
+      }
+    ]
+  },
+  "children": [
+    {
+      "kind": "LocalBand",
+      "id": "local-band",
+      "props": {
+        "lead": "Read-only board",
+        "text": "the board is read as usual; your changes stay on this machine, drawn over its cards, never sent.",
+        "links": [
+          {
+            "id": "local:held",
+            "label": "3 local changes"
+          },
+          {
+            "id": "local:discard",
+            "label": "Discard local changes"
+          },
+          {
+            "id": "local:settings",
+            "label": "Settings"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "Island",
+      "id": "board",
+      "props": {},
+      "children": [
+        {
+          "kind": "Stack",
+          "props": {
+            "direction": "column",
+            "sizes": [
+              "auto",
+              {
+                "flex": 1
+              }
+            ]
+          },
+          "children": [
+            {
+              "kind": "BoardHeader",
+              "id": "board-head",
+              "props": {
+                "title": "Board",
+                "tabs": [
+                  {
+                    "id": "tab:mine",
+                    "label": "Mine"
+                  },
+                  {
+                    "id": "tab:team",
+                    "label": "Team"
+                  },
+                  {
+                    "id": "tab:sessions",
+                    "label": "Sessions"
+                  }
+                ],
+                "selected": "tab:mine",
+                "active": true,
+                "counts": [
+                  {
+                    "text": "Sprint 14 · 8 cards",
+                    "hue": "dim"
+                  }
+                ]
+              }
+            },
+            {
+              "kind": "BoardColumns",
+              "id": "columns",
+              "props": {},
+              "children": [
+                {
+                  "kind": "BoardColumn",
+                  "id": "col:New",
+                  "props": {
+                    "name": "New",
+                    "count": 3
+                  },
+                  "children": [
+                    {
+                      "kind": "BoardCard",
+                      "id": "card:1251",
+                      "props": {
+                        "card": 1251,
+                        "type": "US",
+                        "initials": "AE",
+                        "title": "Saved carts survive sign-out",
+                        "rail": {
+                          "segments": [
+                            "wait",
+                            "todo",
+                            "todo",
+                            "todo",
+                            "todo"
+                          ],
+                          "stage": "Spec",
+                          "glyph": "●",
+                          "word": "Starting",
+                          "state": "starting",
+                          "time": "1 min",
+                          "box": "starting"
+                        },
+                        "emphasis": "normal",
+                        "selection": "default",
+                        "tooltip": "#1251 Saved carts survive sign-out · Starting"
+                      }
+                    },
+                    {
+                      "kind": "BoardCard",
+                      "id": "card:1262",
+                      "props": {
+                        "card": 1262,
+                        "type": "US",
+                        "initials": "AE",
+                        "title": "Greeted by time of day",
+                        "note": {
+                          "text": "No session"
+                        },
+                        "emphasis": "normal",
+                        "selection": "default",
+                        "tooltip": "#1262 Greeted by time of day"
+                      }
+                    },
+                    {
+                      "kind": "BoardCard",
+                      "id": "card:1271",
+                      "props": {
+                        "card": 1271,
+                        "type": "Bug",
+                        "bug": true,
+                        "initials": "AE",
+                        "title": "api() calls a double slash for a leading /",
+                        "note": {
+                          "text": "No session"
+                        },
+                        "emphasis": "normal",
+                        "selection": "default",
+                        "tooltip": "#1271 api() calls a double slash for a leading /"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "kind": "BoardColumn",
+                  "id": "col:Active",
+                  "props": {
+                    "name": "Active",
+                    "count": 3,
+                    "focused": true
+                  },
+                  "children": [
+                    {
+                      "kind": "BoardCard",
+                      "id": "card:1234",
+                      "props": {
+                        "card": 1234,
+                        "type": "US",
+                        "initials": "AE",
+                        "title": "Cart total includes shipping",
+                        "rail": {
+                          "segments": [
+                            "done",
+                            "need",
+                            "todo",
+                            "todo",
+                            "todo"
+                          ],
+                          "stage": "Build",
+                          "glyph": "◆",
+                          "word": "Needs you",
+                          "state": "needs-you",
+                          "time": "4 min",
+                          "box": "running"
+                        },
+                        "emphasis": "needs-you",
+                        "selection": "selected",
+                        "tooltip": "#1234 Cart total includes shipping · Needs you · waiting on you in Chat",
+                        "tipAdds": true
+                      }
+                    },
+                    {
+                      "kind": "BoardCard",
+                      "id": "card:1240",
+                      "props": {
+                        "card": 1240,
+                        "type": "US",
+                        "initials": "AE",
+                        "title": "Checkout copy for Nordic markets",
+                        "rail": {
+                          "segments": [
+                            "done",
+                            "done",
+                            "now",
+                            "todo",
+                            "todo"
+                          ],
+                          "stage": "Verify",
+                          "glyph": "●",
+                          "word": "Verifying",
+                          "state": "running",
+                          "time": "3 min"
+                        },
+                        "emphasis": "normal",
+                        "selection": "default",
+                        "local": "edited, 2 comments here · not on Azure",
+                        "tooltip": "#1240 Checkout copy for Nordic markets · Verifying · edited, 2 comments here · not on Azure"
+                      }
+                    },
+                    {
+                      "kind": "BoardCard",
+                      "id": "card:1266",
+                      "props": {
+                        "card": 1266,
+                        "type": "US",
+                        "initials": "AE",
+                        "title": "Greeted loudly with shout()",
+                        "rail": {
+                          "segments": [
+                            "todo",
+                            "todo",
+                            "todo",
+                            "todo",
+                            "todo"
+                          ],
+                          "glyph": "○",
+                          "word": "Queued",
+                          "state": "idle",
+                          "time": "1 min",
+                          "box": "queued"
+                        },
+                        "emphasis": "normal",
+                        "selection": "default",
+                        "tooltip": "#1266 Greeted loudly with shout() · Queued"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "kind": "BoardColumn",
+                  "id": "col:Resolved",
+                  "props": {
+                    "name": "Resolved",
+                    "count": 2
+                  },
+                  "children": [
+                    {
+                      "kind": "BoardCard",
+                      "id": "card:1263",
+                      "props": {
+                        "card": 1263,
+                        "type": "US",
+                        "initials": "AE",
+                        "title": "Friendly greeting with no name",
+                        "rail": {
+                          "segments": [
+                            "done",
+                            "done",
+                            "done",
+                            "ready",
+                            "todo"
+                          ],
+                          "stage": "PR",
+                          "glyph": "●",
+                          "word": "Ready for review",
+                          "state": "ready",
+                          "time": "25 min",
+                          "box": "asleep"
+                        },
+                        "emphasis": "normal",
+                        "selection": "default",
+                        "tooltip": "#1263 Friendly greeting with no name · Ready for review · waiting on you in Chat",
+                        "tipAdds": true
+                      }
+                    },
+                    {
+                      "kind": "BoardCard",
+                      "id": "card:1258",
+                      "props": {
+                        "card": 1258,
+                        "type": "US",
+                        "initials": "AE",
+                        "title": "Order history paginates",
+                        "rail": {
+                          "segments": [
+                            "done",
+                            "done",
+                            "done",
+                            "done",
+                            "done"
+                          ],
+                          "glyph": "✓",
+                          "word": "On test",
+                          "state": "on-test",
+                          "time": "50 min",
+                          "box": "asleep"
+                        },
+                        "emphasis": "normal",
+                        "selection": "default",
+                        "tooltip": "#1258 Order history paginates · On test"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "kind": "BoardColumn",
+                  "id": "col:Closed",
+                  "props": {
+                    "name": "Closed",
+                    "count": 0
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

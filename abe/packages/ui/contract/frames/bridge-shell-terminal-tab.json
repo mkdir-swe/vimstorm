@@ -1,0 +1,14 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "terminal-tab",
+    "argv": [
+      "abe",
+      "box",
+      "attach",
+      "demo-shop-1"
+    ],
+    "title": "demo-shop-1"
+  }
+}

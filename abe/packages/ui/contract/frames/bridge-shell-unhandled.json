@@ -1,0 +1,9 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "unhandled",
+    "slot": "chat",
+    "key": "<Esc>"
+  }
+}

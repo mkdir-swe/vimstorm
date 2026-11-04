@@ -1,0 +1,48 @@
+{
+  "v": 2,
+  "type": "shell",
+  "effect": {
+    "kind": "open-project",
+    "path": "/workspace/repo",
+    "attach": {
+      "nvim": [
+        "abe",
+        "box",
+        "attach",
+        "shop-4",
+        "--",
+        "env",
+        "-C",
+        "/workspace/repo",
+        "NVIM_APPNAME=vimstorm",
+        "nvim",
+        "--embed"
+      ],
+      "shell": [
+        "abe",
+        "box",
+        "attach",
+        "shop-4",
+        "--",
+        "env",
+        "-C",
+        "/workspace/repo",
+        "bash",
+        "-l"
+      ],
+      "exec": [
+        "abe",
+        "box",
+        "attach",
+        "shop-4",
+        "--"
+      ],
+      "box": {
+        "name": "shop-4",
+        "region": "eu-west-1"
+      },
+      "waking": true,
+      "download": "download:4-a1b2"
+    }
+  }
+}

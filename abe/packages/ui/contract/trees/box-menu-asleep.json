@@ -1,0 +1,56 @@
+{
+  "kind": "PickLayer",
+  "id": "action-menu",
+  "props": {
+    "title": "demo-shop-3",
+    "filter": "",
+    "rows": [
+      {
+        "id": "wake",
+        "text": "Wake",
+        "note": "⏎"
+      },
+      {
+        "id": "keep",
+        "text": "Keep awake",
+        "dim": "wakes it"
+      },
+      {
+        "id": "stop",
+        "text": "Stop now",
+        "reason": "asleep"
+      },
+      {
+        "id": "attach",
+        "text": "Attach",
+        "dim": "wakes it"
+      },
+      {
+        "id": "forward",
+        "text": "Forward port…",
+        "reason": "asleep"
+      },
+      {
+        "id": "resize",
+        "text": "Resize…"
+      },
+      {
+        "id": "terminate",
+        "text": "Terminate…",
+        "note": "t",
+        "risky": true
+      },
+      {
+        "id": "story",
+        "text": "Open card",
+        "reason": "no story"
+      },
+      {
+        "id": "workspace",
+        "text": "Open workspace",
+        "reason": "no workspace"
+      }
+    ],
+    "selected": "wake"
+  }
+}

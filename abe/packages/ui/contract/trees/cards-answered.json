@@ -1,0 +1,72 @@
+{
+  "kind": "Island",
+  "id": "cards:answered",
+  "props": {},
+  "children": [
+    {
+      "kind": "Stack",
+      "props": {
+        "direction": "column",
+        "gap": 8,
+        "pad": [
+          12,
+          12,
+          8,
+          12
+        ],
+        "sizes": [
+          "auto",
+          "auto",
+          "auto",
+          {
+            "flex": 1
+          },
+          "auto"
+        ]
+      },
+      "children": [
+        {
+          "kind": "Prose",
+          "id": "cards:prose",
+          "props": {
+            "markdown": "VAT can come from two places: the markets table in `markets.ts`, or a per-market value the story's comments ask for. That decides what the fix multiplies, so I'll wait for you before the pull request."
+          }
+        },
+        {
+          "kind": "CardLine",
+          "id": "answered:q-1",
+          "props": {
+            "head": "Answered",
+            "text": "The existing market table",
+            "n": 1
+          }
+        },
+        {
+          "kind": "StepRow",
+          "id": "cards:step",
+          "props": {
+            "mark": "live",
+            "verb": "Editing",
+            "object": "api/src/cart.ts",
+            "objectKind": "path",
+            "time": "2 s"
+          }
+        },
+        {
+          "kind": "Stack",
+          "props": {
+            "direction": "column"
+          },
+          "children": []
+        },
+        {
+          "kind": "Stack",
+          "props": {
+            "direction": "column"
+          },
+          "children": []
+        }
+      ]
+    }
+  ]
+}

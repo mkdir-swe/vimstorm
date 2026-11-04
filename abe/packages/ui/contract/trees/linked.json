@@ -1,0 +1,106 @@
+{
+  "kind": "LinkedLayer",
+  "id": "linked",
+  "props": {
+    "story": "#2 The cart total ignores quantity",
+    "keys": "⌃L",
+    "filter": "",
+    "rows": [
+      {
+        "id": "linked:row:story",
+        "label": "Story",
+        "value": [
+          {
+            "text": "Active · Bug · AE"
+          }
+        ]
+      },
+      {
+        "id": "linked:row:prototype",
+        "label": "Prototype",
+        "value": [
+          {
+            "text": "none"
+          }
+        ],
+        "dim": true
+      },
+      {
+        "id": "linked:row:spec",
+        "label": "Spec",
+        "value": [
+          {
+            "text": "none · Bug writes no spec"
+          }
+        ],
+        "dim": true
+      },
+      {
+        "id": "linked:row:sessions",
+        "label": "Sessions",
+        "value": [
+          {
+            "text": "1 · Local sandbox · 2 subagents"
+          }
+        ]
+      },
+      {
+        "id": "linked:row:pr",
+        "label": "Pull request",
+        "value": [
+          {
+            "text": "none yet"
+          }
+        ],
+        "dim": true
+      },
+      {
+        "id": "linked:row:pipelines",
+        "label": "Pipelines",
+        "value": [
+          {
+            "text": "ci "
+          },
+          {
+            "text": "✓ passed",
+            "hue": "good"
+          },
+          {
+            "text": " on card/2-… · 12 min ago"
+          }
+        ]
+      },
+      {
+        "id": "linked:row:worktree",
+        "label": "Worktree",
+        "value": [
+          {
+            "text": "~/projects/demo-shop-wt/2-the-cart-total-ignores-quantity"
+          }
+        ]
+      },
+      {
+        "id": "linked:row:box",
+        "label": "Box",
+        "value": [
+          {
+            "text": "none · Local sandbox"
+          }
+        ],
+        "dim": true
+      },
+      {
+        "id": "linked:row:sheets",
+        "label": "Sheets",
+        "value": [
+          {
+            "text": "none"
+          }
+        ],
+        "dim": true
+      }
+    ],
+    "selected": "linked:row:story",
+    "hint": "⏎ open · Esc close"
+  }
+}
